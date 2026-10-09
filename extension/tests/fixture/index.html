@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><title>Recording fixture</title
+  ><style>
+    body {
+      margin: 0;
+      background: #eee9de;
+      color: #182b24;
+      font:
+        18px 'Segoe UI',
+        sans-serif;
+    }
+    header {
+      background: #16382d;
+      color: #fff;
+      padding: 30px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 38px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      padding: 60px;
+    }
+    button {
+      padding: 30px;
+      border: 0;
+      border-radius: 8px;
+      font-size: 22px;
+      background: #b55737;
+      color: white;
+    }
+    .target-b {
+      background: #3777a0;
+    }
+    .panel {
+      padding: 35px;
+      background: white;
+      border-radius: 9px;
+    }
+    #clock {
+      font-family: monospace;
+      font-size: 26px;
+    }
+    footer {
+      position: fixed;
+      bottom: 15px;
+      left: 20px;
+    }
+  </style>
+  <header>
+    <h1>Camera & audio fixture</h1>
+    <p>Known targets, geometry and a 440 Hz tab audio tone.</p>
+  </header>
+  <main class="grid">
+    <section class="panel">
+      <button id="target-a">Target A</button>
+      <p>Upper left target</p>
+    </section>
+    <section class="panel">
+      <button class="target-b" id="target-b">Target B</button>
+      <p>Upper right target</p>
+    </section>
+    <section class="panel">
+      <input
+        id="typing"
+        aria-label="Typing field"
+        placeholder="Type here"
+        style="font-size: 22px; width: 90%"
+      />
+      <input
+        id="secret"
+        type="password"
+        aria-label="Secret field"
+        style="font-size: 22px; width: 90%; margin-top: 12px"
+      />
+    </section>
+    <button id="tone">Start test tone</button>
+    <div id="clock">0000</div>
+  </main>
+  <footer id="geometry"></footer>
+  <script>
+    window.addEventListener(
+      'pointerdown',
+      (e) => {
+        const marker = document.createElement('div');
+        marker.style.cssText =
+          'position:fixed;width:20px;height:20px;border-radius:50%;background:#ff00ff;pointer-events:none;z-index:9999;left:' +
+          (e.clientX - 10) +
+          'px;top:' +
+          (e.clientY - 10) +
+          'px';
+        document.body.append(marker);
+        setTimeout(() => marker.remove(), 200);
+      },
+      true,
+    );
+    let audio;
+    document.querySelector('#tone').onclick = () => {
+      audio ??= new AudioContext();
+      const osc = audio.createOscillator(),
+        gain = audio.createGain();
+      osc.frequency.value = 440;
+      gain.gain.value = 0.12;
+      osc.connect(gain).connect(audio.destination);
+      osc.start();
+      audio.resume();
+      document.querySelector('#tone').disabled = true;
+    };
+    let frame = 0;
+    setInterval(
+      () => (document.querySelector('#clock').textContent = String(frame++).padStart(4, '0')),
+      100,
+    );
+    function geo() {
+      document.querySelector('#geometry').textContent =
+        innerWidth + ' × ' + innerHeight + ' CSS · DPR ' + devicePixelRatio;
+    }
+    geo();
+    window.onresize = geo;
+  </script>
+</html>
