@@ -1,0 +1,28 @@
+# Dependencies, build output and test output
+node_modules/
+extension/.wxt/
+extension/.output/
+extension/test-results/
+extension/playwright-report/
+extension/.test-profile*/
+landing/.astro/
+landing/dist/
+landing/screenshots/
+
+# Local wallpaper pack and its sources: Apple and Microsoft images, never redistributed
+extension/local-assets/
+MacOSWallapapers/
+
+# Research inputs kept on disk only: proprietary reference package and its analysis
+download.zip
+extracted/
+REVERSE_ENGINEERING_REPORT.md
+
+# Handoff packages (they bundle the reference inputs)
+artifacts/
+
+# Local tool settings
+.claude/
+__pycache__/
+*.log
+.env*
