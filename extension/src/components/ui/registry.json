@@ -1,0 +1,142 @@
+{
+  "license": "MIT (shadcn/ui, Copyright (c) 2023 shadcn)",
+  "style": "base-maia",
+  "items": {
+    "accordion": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/accordion.json",
+      "files": ["src/components/ui/accordion.tsx"]
+    },
+    "alert": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/alert.json",
+      "files": ["src/components/ui/alert.tsx"]
+    },
+    "button": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/button.json",
+      "files": ["src/components/ui/button.tsx"]
+    },
+    "alert-dialog": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/alert-dialog.json",
+      "files": ["src/components/ui/alert-dialog.tsx"]
+    },
+    "badge": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/badge.json",
+      "files": ["src/components/ui/badge.tsx"]
+    },
+    "separator": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/separator.json",
+      "files": ["src/components/ui/separator.tsx"]
+    },
+    "card": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/card.json",
+      "files": ["src/components/ui/card.tsx"]
+    },
+    "input": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/input.json",
+      "files": ["src/components/ui/input.tsx"]
+    },
+    "textarea": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/textarea.json",
+      "files": ["src/components/ui/textarea.tsx"]
+    },
+    "input-group": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/input-group.json",
+      "files": ["src/components/ui/input-group.tsx"]
+    },
+    "dialog": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/dialog.json",
+      "files": ["src/components/ui/dialog.tsx"]
+    },
+    "command": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/command.json",
+      "files": ["src/components/ui/command.tsx"]
+    },
+    "context-menu": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/context-menu.json",
+      "files": ["src/components/ui/context-menu.tsx"]
+    },
+    "dropdown-menu": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/dropdown-menu.json",
+      "files": ["src/components/ui/dropdown-menu.tsx"]
+    },
+    "empty": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/empty.json",
+      "files": ["src/components/ui/empty.tsx"]
+    },
+    "label": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/label.json",
+      "files": ["src/components/ui/label.tsx"]
+    },
+    "kbd": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/kbd.json",
+      "files": ["src/components/ui/kbd.tsx"]
+    },
+    "menubar": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/menubar.json",
+      "files": ["src/components/ui/menubar.tsx"]
+    },
+    "popover": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/popover.json",
+      "files": ["src/components/ui/popover.tsx"]
+    },
+    "progress": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/progress.json",
+      "files": ["src/components/ui/progress.tsx"]
+    },
+    "resizable": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/resizable.json",
+      "files": ["src/components/ui/resizable.tsx"]
+    },
+    "scroll-area": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/scroll-area.json",
+      "files": ["src/components/ui/scroll-area.tsx"]
+    },
+    "select": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/select.json",
+      "files": ["src/components/ui/select.tsx"]
+    },
+    "skeleton": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/skeleton.json",
+      "files": ["src/components/ui/skeleton.tsx"]
+    },
+    "slider": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/slider.json",
+      "files": ["src/components/ui/slider.tsx"]
+    },
+    "sonner": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/sonner.json",
+      "files": ["src/components/ui/sonner.tsx"]
+    },
+    "spinner": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/spinner.json",
+      "files": ["src/components/ui/spinner.tsx"]
+    },
+    "switch": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/switch.json",
+      "files": ["src/components/ui/switch.tsx"]
+    },
+    "toggle": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/toggle.json",
+      "files": ["src/components/ui/toggle.tsx"]
+    },
+    "toggle-group": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/toggle-group.json",
+      "files": ["src/components/ui/toggle-group.tsx"]
+    },
+    "tooltip": {
+      "source": "https://ui.shadcn.com/r/styles/base-maia/tooltip.json",
+      "files": ["src/components/ui/tooltip.tsx"]
+    },
+    "@magicui/animated-theme-toggler": {
+      "source": "https://magicui.design/r/animated-theme-toggler.json",
+      "license": "MIT (Magic UI)",
+      "files": ["src/components/ui/animated-theme-toggler.tsx"]
+    }
+  },
+  "localChanges": {
+    "all": "Fetched by scripts/shadcn-add.mjs: icon placeholders → Hugeicons, imports → @/src paths; then Prettier.",
+    "slider": "thumbLabel prop (aria-label on thumbs); one thumb for a single number value; root w-full (overridable) instead of data-horizontal:w-full; largeStep = range/10.",
+    "spinner": "props spread cast for HugeiconsIcon typing.",
+    "sonner": "useTheme from src/ui/theme instead of next-themes.",
+    "animated-theme-toggler": "lucide Sun/Moon → Hugeicons (src/components/app/icons); cn path; plain switch when prefers-reduced-motion; registry css (view-transition root) added to globals.css. Used controlled by ThemeProvider. onClick is composed (props spread first) so a Tooltip trigger cannot replace the toggle handler; the button comes from event.currentTarget instead of an internal ref, so a wrapper's ref (React 19 ref-as-prop) passes through untouched (an earlier merged inline ref re-attached every render and hung the page)."
+  }
+}
