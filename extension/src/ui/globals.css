@@ -1,0 +1,312 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import './shadcn-tailwind.css';
+
+/* Font candidates (OFL, bundled, Latin subsets only). The user picks one; the rest get removed. */
+@import '@fontsource/fredoka/latin-500.css';
+@import '@fontsource/fredoka/latin-600.css';
+@import '@fontsource/nunito/latin-400.css';
+@import '@fontsource/nunito/latin-600.css';
+@import '@fontsource/nunito/latin-700.css';
+@import '@fontsource/nunito-sans/latin-400.css';
+@import '@fontsource/nunito-sans/latin-600.css';
+@import '@fontsource/nunito-sans/latin-700.css';
+@import '@fontsource/baloo-2/latin-600.css';
+@import '@fontsource/baloo-2/latin-700.css';
+@import '@fontsource/quicksand/latin-500.css';
+@import '@fontsource/quicksand/latin-700.css';
+@import '@fontsource/lexend/latin-400.css';
+@import '@fontsource/lexend/latin-600.css';
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Lensprout "Coral Playground" palette tokens,
+ * in shadcn names. Light: cream background, warm surfaces, purple text, deep coral primary.
+ * Dark: aubergine background, plum surfaces, cream text, light coral primary. Coral #E86A47 on
+ * cream is decorative only (2.9:1); text and buttons use the AA tones.
+ */
+:root {
+  --radius: 0.875rem;
+  --background: #fff4e5;
+  --foreground: #453d70;
+  --card: #fffcf7;
+  --card-foreground: #453d70;
+  --popover: #fffcf7;
+  --popover-foreground: #453d70;
+  --primary: #b94025;
+  --primary-foreground: #fff4e5;
+  --secondary: #f7e9d6;
+  --secondary-foreground: #453d70;
+  --muted: #f8ecdc;
+  --muted-foreground: #6c6182;
+  --accent: #fce2d8;
+  --accent-foreground: #9e3620;
+  --destructive: #b42318;
+  --border: #e7dcce;
+  /* shadcn: --input is the field border (fields fill with input/30). */
+  --input: #e2d4c1;
+  --ring: #e86a47;
+  --chart-1: #e86a47;
+  --chart-2: #fabd62;
+  --chart-3: #a6bfa0;
+  --chart-4: #7a63a8;
+  --chart-5: #453d70;
+  --brand: #e86a47;
+  --brand-apricot: #fabd62;
+  --brand-purple: #453d70;
+  --brand-sage: #a6bfa0;
+  --brand-cream: #fff4e5;
+  --stage: #f4e6d2;
+  --stage-check: #ecdcc6;
+  --seg-zoom: #7a63a8;
+  --seg-cut: #d45535;
+  --seg-speed: #9c4f86;
+  --seg-audio: #5c8a55;
+  --seg-text: #a8680c;
+  --seg-blur: #6b6a7e;
+  --seg-camera: #c2477a;
+  --trim: #e09a2c;
+  --app-font-body: 'Nunito', system-ui, sans-serif;
+  --app-font-heading: 'Fredoka', 'Nunito', system-ui, sans-serif;
+}
+
+.dark {
+  --background: #1e1930;
+  --foreground: #fff4e5;
+  --card: #29223f;
+  --card-foreground: #fff4e5;
+  --popover: #2d2645;
+  --popover-foreground: #fff4e5;
+  --primary: #ff8965;
+  --primary-foreground: #241c37;
+  --secondary: #332a4c;
+  --secondary-foreground: #fff4e5;
+  --muted: #2f2847;
+  --muted-foreground: #c7bedc;
+  --accent: #40304a;
+  --accent-foreground: #ff9d7f;
+  --destructive: #ff9a8c;
+  --border: #463c5c;
+  --input: #4b4064;
+  --ring: #ff8965;
+  --brand: #ff8965;
+  --stage: #191427;
+  --stage-check: #211b33;
+  --seg-zoom: #b6a2e0;
+  --seg-cut: #ff8965;
+  --seg-speed: #e09bcb;
+  --seg-audio: #a6bfa0;
+  --seg-text: #fabd62;
+  --seg-blur: #a9a7bd;
+  --seg-camera: #f28fb6;
+  --trim: #fabd62;
+}
+
+/* Font pairings for the View → Font switcher (data-font on <html>). */
+html[data-font='nunito'] {
+  --app-font-heading: 'Nunito', system-ui, sans-serif;
+}
+html[data-font='baloo'] {
+  --app-font-body: 'Nunito Sans', system-ui, sans-serif;
+  --app-font-heading: 'Baloo 2', 'Nunito Sans', system-ui, sans-serif;
+}
+html[data-font='quicksand'] {
+  --app-font-body: 'Nunito Sans', system-ui, sans-serif;
+  --app-font-heading: 'Quicksand', 'Nunito Sans', system-ui, sans-serif;
+}
+html[data-font='lexend'] {
+  --app-font-body: 'Lexend', system-ui, sans-serif;
+  --app-font-heading: 'Lexend', system-ui, sans-serif;
+}
+html[data-font='system'] {
+  --app-font-body: 'Segoe UI Variable Text', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --app-font-heading: 'Segoe UI Variable Display', 'Segoe UI', system-ui, sans-serif;
+}
+
+@theme inline {
+  --font-sans: var(--app-font-body);
+  --font-heading: var(--app-font-heading);
+  --font-mono: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-brand: var(--brand);
+  --color-brand-apricot: var(--brand-apricot);
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-sage: var(--brand-sage);
+  --color-brand-cream: var(--brand-cream);
+  --color-stage: var(--stage);
+  --color-trim: var(--trim);
+  --color-seg-zoom: var(--seg-zoom);
+  --color-seg-cut: var(--seg-cut);
+  --color-seg-speed: var(--seg-speed);
+  --color-seg-audio: var(--seg-audio);
+  --color-seg-text: var(--seg-text);
+  --color-seg-blur: var(--seg-blur);
+  --color-seg-camera: var(--seg-camera);
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 18px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    @apply min-h-screen bg-background font-sans text-sm text-foreground antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  .font-heading {
+    font-family: var(--app-font-heading);
+  }
+  kbd {
+    font-family: var(--font-mono);
+  }
+  /*
+   * Scrollbars styled like shadcn's ScrollArea: no track, a rounded thumb in the border color
+   * that darkens on hover, inset by a transparent border.
+   */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 9999px;
+    background-color: var(--border);
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in oklab, var(--muted-foreground) 55%, transparent);
+  }
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+}
+
+@layer components {
+  /* Checkerboard behind the preview canvas. */
+  .stage-checker {
+    background-color: var(--stage);
+    background-image:
+      linear-gradient(45deg, var(--stage-check) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--stage-check) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--stage-check) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--stage-check) 75%);
+    background-size: 18px 18px;
+    background-position:
+      0 0,
+      0 9px,
+      9px -9px,
+      -9px 0;
+  }
+  /* Timeline segment colors come from one --kind variable per segment type. */
+  .segment {
+    --kind: var(--seg-zoom);
+    background: color-mix(in oklab, var(--kind) 16%, var(--card));
+    border: 1.5px solid color-mix(in oklab, var(--kind) 55%, transparent);
+    color: color-mix(in oklab, var(--kind) 45%, var(--foreground));
+    border-radius: calc(var(--radius) - 2px);
+  }
+  .segment[data-kind='cut'] {
+    --kind: var(--seg-cut);
+    background: repeating-linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--kind) 10%, var(--card)) 0 8px,
+      color-mix(in oklab, var(--kind) 20%, var(--card)) 8px 16px
+    );
+  }
+  .segment[data-kind='speed'] {
+    --kind: var(--seg-speed);
+  }
+  .segment[data-kind='audio'] {
+    --kind: var(--seg-audio);
+  }
+  .segment[data-kind='text'] {
+    --kind: var(--seg-text);
+  }
+  .segment[data-kind='blur'] {
+    --kind: var(--seg-blur);
+  }
+  .segment[data-kind='camera'] {
+    --kind: var(--seg-camera);
+  }
+  .segment[data-provenance='generated'] {
+    border-style: dashed;
+  }
+  .segment[aria-pressed='true'] {
+    border: 2px solid var(--kind);
+    background: color-mix(in oklab, var(--kind) 26%, var(--card));
+    /* The tinted selection background needs darker text for 4.5:1 (axe). */
+    color: color-mix(in oklab, var(--kind) 32%, var(--foreground));
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--kind) 22%, transparent);
+  }
+  .segment .handle::after {
+    content: '';
+    position: absolute;
+    top: 30%;
+    bottom: 30%;
+    left: 4px;
+    width: 2px;
+    border-radius: 2px;
+    background: var(--kind);
+    opacity: 0.7;
+  }
+  .kind-dot {
+    background: var(--kind);
+  }
+}
+
+/* Magic UI theme toggler: the reveal is a clip-path animation on the new snapshot only. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
