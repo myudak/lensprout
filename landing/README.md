@@ -33,3 +33,13 @@ npm run check      # needs a build first: screenshots + axe + overflow checks
 ## Placeholders
 
 - "Add to Chrome" links to the on-page `#get` section, which says the Chrome Web Store listing is coming soon. Set `CHROME_STORE_URL` once a listing exists.
+
+## Deploy
+
+The site is live at https://lensprout-mu.vercel.app (Vercel project `myudaks-projects/lensprout`, linked in `.vercel/`, which is gitignored). From `landing/`, with the Vercel CLI signed in:
+
+```bash
+vercel deploy --prod
+```
+
+Vercel builds the site itself (`npm run build`). `src/site.ts` holds `SITE_URL`; change it if the domain changes. `/privacy/` is the Chrome Web Store privacy policy URL; update it whenever the extension's data handling or permissions change.

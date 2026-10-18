@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL } from '../site';
+
+const updated = '19 October 2026';
+---
+
+<Base
+  title="Privacy policy | Lensprout"
+  description="Lensprout records, edits and exports on your device. It has no servers and collects no personal data. Here is exactly what the extension stores and why it needs each permission."
+>
+  <article class="mx-auto max-w-3xl px-4 pt-10 pb-16 sm:px-6">
+    <header>
+      <h1 class="text-4xl leading-tight font-semibold tracking-tight sm:text-5xl">Privacy policy</h1>
+      <p class="text-muted-foreground mt-4 text-xl leading-relaxed">
+        Short version: Lensprout runs entirely on your computer. It has no servers, no accounts and
+        no analytics, and it never sends your recordings or any other data anywhere.
+      </p>
+      <p class="text-muted-foreground mt-4 text-sm font-bold">Last updated {updated}</p>
+    </header>
+
+    <div class="prose mt-10">
+      <p>
+        This policy covers the Lensprout Chrome extension and this website. "We" means the
+        developer of Lensprout.
+      </p>
+
+      <h2>What the extension collects</h2>
+      <p>
+        Lensprout collects nothing for us. We do not receive, sell, share or analyse any data from
+        the extension. Everything it creates stays in your browser profile on your device.
+      </p>
+
+      <h2>What the extension stores on your device</h2>
+      <ul>
+        <li>
+          <strong>Recordings:</strong> the screen, window, audio, microphone and webcam video you
+          choose to record.
+        </li>
+        <li>
+          <strong>Input timeline for automatic zoom:</strong> while a recording is running, on web
+          pages in Chrome, Lensprout notes pointer positions and clicks, the cursor shape, where the
+          text cursor is while you type, and the names of keyboard shortcuts you press (for example
+          "Ctrl+C"). It does <strong>not</strong> record the text you type. Password, one-time code
+          and payment card fields are skipped entirely.
+        </li>
+        <li>
+          <strong>Projects and settings:</strong> your edits, style presets, recorder preferences,
+          theme and font choice.
+        </li>
+        <li><strong>Exports:</strong> MP4 and GIF files you create, until you download or clear them.</li>
+      </ul>
+      <p>
+        This data lives in the extension's own storage (IndexedDB, the Origin Private File System
+        and <code>chrome.storage.local</code>). Other websites and extensions cannot read it. You can
+        delete any recording in the library. Uninstalling the extension or clearing its site data
+        removes everything.
+      </p>
+
+      <h2>Network access</h2>
+      <p>
+        The extension makes no network requests to us or to anyone else. Recording, editing and
+        exporting all happen locally. Export files are saved only where you choose to download
+        them.
+      </p>
+
+      <h2>Why the extension asks for each permission</h2>
+      <ul>
+        <li>
+          <strong>Screen and window capture</strong> (<code>desktopCapture</code>): to record the
+          screen or window you pick in Chrome's picker.
+        </li>
+        <li>
+          <strong>Access to web pages</strong> (<code>http/https</code> hosts, <code>scripting</code>,
+          <code>activeTab</code>): to show the countdown on your page and to note clicks and typing
+          positions for automatic zoom, only while you record.
+        </li>
+        <li>
+          <strong>Tabs and navigation</strong> (<code>tabs</code>, <code>webNavigation</code>): to
+          find the page you are recording and keep following it when it navigates.
+        </li>
+        <li>
+          <strong>Display information</strong> (<code>system.display</code>): to line up pointer
+          positions with the screen being recorded.
+        </li>
+        <li>
+          <strong>Storage</strong> (<code>storage</code>, <code>unlimitedStorage</code>): to keep
+          recordings and projects on your device. Videos can be large.
+        </li>
+        <li>
+          <strong>Camera and microphone:</strong> only when you choose a device in the recorder;
+          Chrome asks for your permission first.
+        </li>
+      </ul>
+
+      <h2>This website</h2>
+      <p>
+        This site has no analytics, no tracking cookies and no advertising. It is a static site
+        hosted on Vercel. Like any web host, Vercel may process standard request data such as your
+        IP address and browser type to deliver and protect the site; see
+        <a href="https://vercel.com/legal/privacy-policy">Vercel's privacy policy</a>.
+      </p>
+
+      <h2>Children</h2>
+      <p>Lensprout does not knowingly collect information from anyone, including children.</p>
+
+      <h2>Changes</h2>
+      <p>
+        If this policy changes, the new version will be posted on this page with a new "last
+        updated" date. Because we collect no data, changes cannot affect data we hold about you.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions about privacy: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
+    </div>
+  </article>
+</Base>

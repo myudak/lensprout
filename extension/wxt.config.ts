@@ -37,7 +37,9 @@ export default defineConfig({
     description: 'Record your screen with automatic zoom, edit it and export, all on your device.',
     minimum_chrome_version: '116',
     permissions: [
-      'tabCapture',
+      // Tab capture only serves the browser tests' tab mode (devCaptureMode); the store build
+      // records screens and windows, so it does not request it.
+      ...(release ? [] : ['tabCapture']),
       'desktopCapture',
       'system.display',
       'activeTab',

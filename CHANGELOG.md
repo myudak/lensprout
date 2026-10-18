@@ -2,7 +2,8 @@
 
 ## Unreleased (0.7.x)
 
-- **Store packaging:** `npm run zip` omits the manifest `key` (the Chrome Web Store assigns the ID), test files and the local wallpaper pack. The package is renamed `lensprout`.
+- **Privacy policy** page on the landing site (`/privacy/`). The site is deployed on Vercel at https://lensprout-mu.vercel.app.
+- **Store packaging:** the release manifest no longer requests `tabCapture` (only the browser tests' tab mode uses it). `npm run zip` omits the manifest `key` (the Chrome Web Store assigns the ID), test files and the local wallpaper pack. The package is renamed `lensprout`.
 - **Wallpaper backgrounds:** an optional local pack built from your own images by `scripts/build-wallpapers.py`. It is used by preview, MP4, GIF and the 3D stage, and is never part of a release zip.
 - **Inspector:** consistent spacing, round segmented controls that shrink in narrow panels, and the zoom time range on one line.
 - **Animated theme toggle** (Magic UI) with a View Transitions reveal; reduced motion switches instantly.
