@@ -1,0 +1,79 @@
+@import 'tailwindcss';
+
+/* A neutral shadcn-style theme for the demo dashboard (not Lensprout branding). */
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.5 0 0);
+  --accent: oklch(0.96 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --border: oklch(0.922 0 0);
+  --ring: oklch(0.6 0 0);
+  --chart-1: oklch(0.62 0.19 259);
+  --chart-2: oklch(0.7 0.15 162);
+  --chart-3: oklch(0.77 0.16 70);
+  --chart-4: oklch(0.63 0.22 303);
+  --chart-5: oklch(0.65 0.21 16);
+  --success: oklch(0.45 0.12 152);
+  --danger: oklch(0.48 0.19 27);
+  color-scheme: light;
+}
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.18 0 0);
+  --muted: oklch(0.24 0 0);
+  --muted-foreground: oklch(0.72 0 0);
+  --accent: oklch(0.27 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --border: oklch(1 0 0 / 12%);
+  --ring: oklch(0.55 0 0);
+  --chart-1: oklch(0.7 0.16 259);
+  --chart-2: oklch(0.74 0.14 162);
+  --chart-3: oklch(0.8 0.15 70);
+  --chart-4: oklch(0.7 0.2 303);
+  --chart-5: oklch(0.7 0.19 16);
+  --success: oklch(0.75 0.15 152);
+  --danger: oklch(0.72 0.17 27);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: ui-sans-serif, system-ui, 'Segoe UI', Roboto, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}

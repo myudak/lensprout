@@ -1,0 +1,161 @@
+---
+// Smart trim: the idle stretch gets a 4× speed-up, the silent pause gets cut, the timeline shrinks.
+---
+
+<div class="demo stage" aria-hidden="true">
+  <div class="ruler">
+    {Array.from({ length: 12 }, () => <span></span>)}
+  </div>
+  <div class="track">
+    <span class="seg talk">talk</span>
+    <span class="seg idle"><b>4×</b> idle</span>
+    <span class="seg talk2">demo</span>
+    <span class="seg silent"><b>cut</b></span>
+    <span class="seg talk3">wrap</span>
+  </div>
+  <span class="playhead"></span>
+  <div class="saved">-0:42 saved</div>
+</div>
+
+<style>
+  .stage {
+    position: relative;
+    height: 11rem;
+    border-radius: 1.25rem;
+    background: var(--tile-sage);
+    overflow: hidden;
+    padding: 1.4rem 1.2rem;
+  }
+  .ruler {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+  }
+  .ruler span {
+    width: 2px;
+    height: 0.5rem;
+    border-radius: 1px;
+    background: var(--outline);
+    opacity: 0.4;
+  }
+  .track {
+    display: flex;
+    gap: 0.35rem;
+    height: 2.6rem;
+  }
+  .seg {
+    display: grid;
+    place-items: center;
+    border-radius: 0.7rem;
+    border: 2px solid var(--outline);
+    background: var(--card);
+    font-weight: 800;
+    font-size: 0.75rem;
+    overflow: hidden;
+    white-space: nowrap;
+    min-width: 0;
+  }
+  .seg b {
+    font-weight: 800;
+  }
+  .talk {
+    flex: 2;
+  }
+  .talk2 {
+    flex: 2.2;
+  }
+  .talk3 {
+    flex: 1.4;
+  }
+  .idle {
+    flex: 3;
+    background: var(--tile-lilac);
+    animation: t-idle 6s ease-in-out infinite;
+  }
+  .silent {
+    flex: 1.6;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--tile-coral),
+      var(--tile-coral) 6px,
+      var(--card) 6px,
+      var(--card) 12px
+    );
+    animation: t-cut 6s ease-in-out infinite;
+  }
+  .playhead {
+    position: absolute;
+    top: 1.1rem;
+    bottom: 2.6rem;
+    left: 1.2rem;
+    width: 3px;
+    border-radius: 2px;
+    background: var(--primary);
+    animation: t-play 6s linear infinite;
+  }
+  .saved {
+    position: absolute;
+    right: 1.2rem;
+    bottom: 0.9rem;
+    font-weight: 800;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    background: var(--purple);
+    color: var(--cream);
+    animation: t-saved 6s ease-out infinite;
+  }
+  @keyframes t-idle {
+    0%,
+    25% {
+      flex-grow: 3;
+    }
+    40%,
+    85% {
+      flex-grow: 0.9;
+    }
+    100% {
+      flex-grow: 3;
+    }
+  }
+  @keyframes t-cut {
+    0%,
+    45% {
+      flex-grow: 1.6;
+      opacity: 1;
+    }
+    60%,
+    85% {
+      flex-grow: 0.001;
+      opacity: 0;
+      border-width: 0;
+    }
+    100% {
+      flex-grow: 1.6;
+      opacity: 1;
+    }
+  }
+  @keyframes t-play {
+    from {
+      left: 1.2rem;
+    }
+    to {
+      left: calc(100% - 1.2rem);
+    }
+  }
+  @keyframes t-saved {
+    0%,
+    58% {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    66%,
+    88% {
+      opacity: 1;
+      transform: none;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+</style>

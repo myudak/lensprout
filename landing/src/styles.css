@@ -1,0 +1,411 @@
+@import 'tailwindcss';
+
+/* Fredoka (headings) and Nunito (body), OFL, bundled Latin subsets via @fontsource. */
+@import '@fontsource/fredoka/latin-500.css';
+@import '@fontsource/fredoka/latin-600.css';
+@import '@fontsource/nunito/latin-400.css';
+@import '@fontsource/nunito/latin-600.css';
+@import '@fontsource/nunito/latin-700.css';
+@import '@fontsource/nunito/latin-800.css';
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Lensprout "Coral Playground" palette tokens, the
+ * same AA-adjusted values the extension uses. Coral #E86A47 on cream is only 2.9:1, so it is used
+ * for shapes and decoration; readable text and buttons use --primary.
+ */
+:root {
+  --background: #fff4e5;
+  --foreground: #453d70;
+  --card: #fffcf7;
+  --muted: #f8ecdc;
+  --muted-foreground: #6c6182;
+  --primary: #b94025;
+  --primary-hover: #a3361e;
+  --primary-foreground: #fff4e5;
+  --accent: #fce2d8;
+  --accent-foreground: #9e3620;
+  --border: #e7dcce;
+  --ink: #453d70;
+  --ring: #b94025;
+  --brand: #e86a47;
+  --apricot: #fabd62;
+  --sage: #a6bfa0;
+  --purple: #453d70;
+  --cream: #fff4e5;
+  --tile-apricot: #fde8c4;
+  --tile-sage: #e3ecdf;
+  --tile-lilac: #e8e2f3;
+  --tile-coral: #fce2d8;
+  --sticker: #453d70;
+  --outline: #453d70;
+  color-scheme: light;
+}
+
+.dark {
+  --background: #1e1930;
+  --foreground: #fff4e5;
+  --card: #29223f;
+  --muted: #2f2847;
+  --muted-foreground: #c7bedc;
+  --primary: #ff8965;
+  --primary-hover: #ff9d7f;
+  --primary-foreground: #241c37;
+  --accent: #40304a;
+  --accent-foreground: #ff9d7f;
+  --border: #463c5c;
+  --ink: #fff4e5;
+  --ring: #ff8965;
+  --brand: #ff8965;
+  --tile-apricot: #43354a;
+  --tile-sage: #2f3a3d;
+  --tile-lilac: #3a3157;
+  --tile-coral: #452e45;
+  --sticker: #120e1e;
+  --outline: #5e5280;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: 'Nunito', system-ui, sans-serif;
+  --font-heading: 'Fredoka', 'Nunito', system-ui, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ink: var(--ink);
+  --color-outline: var(--outline);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-apricot: var(--apricot);
+  --color-sage: var(--sage);
+  --color-purple: var(--purple);
+  --color-cream: var(--cream);
+  --color-tile-apricot: var(--tile-apricot);
+  --color-tile-sage: var(--tile-sage);
+  --color-tile-lilac: var(--tile-lilac);
+  --color-tile-coral: var(--tile-coral);
+  --shadow-sticker: 0 5px 0 0 var(--sticker);
+  --shadow-sticker-sm: 0 3px 0 0 var(--sticker);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    overflow-x: hidden;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-heading;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: 0.5rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Cartoon "sticker" surfaces: a solid ink outline and a hard offset shadow. */
+@utility sticker {
+  border: 2px solid var(--outline);
+  box-shadow: var(--shadow-sticker);
+}
+@utility sticker-sm {
+  border: 2px solid var(--outline);
+  box-shadow: var(--shadow-sticker-sm);
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+}
+@utility animate-bob {
+  animation: bob 4.5s ease-in-out infinite;
+}
+
+/* FAQ disclosure marker. */
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .faq-plus {
+  transform: rotate(45deg);
+}
+
+/* ------------------------------------------------------------------------------------------ */
+/* Mascot parts (src/components/AnimatedMascot.tsx). Transforms are on SVG groups, so each sets */
+/* its own box and origin.                                                                     */
+/* ------------------------------------------------------------------------------------------ */
+.mascot-anim .mascot-jump {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.mascot-anim .mascot-sprouts,
+.mascot-anim .mascot-sway {
+  transform-box: fill-box;
+  transform-origin: 30% 100%;
+}
+.mascot-anim .mascot-eye {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+.mascot-anim .mascot-pupil {
+  transition: transform 0.28s cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+.mascot-anim .mascot-shadow {
+  fill: var(--ink);
+  opacity: 0.12;
+}
+.mascot-anim[data-playing='true'] .mascot-sway {
+  animation: mascot-sway 3.6s ease-in-out infinite;
+}
+@keyframes mascot-sway {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+}
+.mascot-drop {
+  transform: translate(var(--dx), var(--dy));
+}
+.mascot-drop-body {
+  animation: mascot-drop 1.05s cubic-bezier(0.55, 0, 0.9, 0.5) both;
+}
+@keyframes mascot-drop {
+  0% {
+    transform: translateY(-34px) scale(0.2);
+    opacity: 0;
+  }
+  18% {
+    transform: translateY(-32px) scale(1);
+    opacity: 1;
+  }
+  78% {
+    transform: translateY(0) scale(0.95, 1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(2px) scale(1.4, 0.3);
+    opacity: 0;
+  }
+}
+.mascot-splash {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: mascot-splash 0.55s ease-out both;
+}
+@keyframes mascot-splash {
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.6) translateY(-3px);
+    opacity: 0;
+  }
+}
+.mascot-button {
+  transition: transform 0.2s;
+}
+.mascot-button:hover {
+  transform: rotate(-4deg) scale(1.03);
+}
+
+/* ------------------------------------------------------------------------------------------ */
+/* Scroll reveal. Content is only hidden when JavaScript runs (html.js) and motion is allowed, */
+/* so it stays readable without JavaScript.                                                    */
+/* ------------------------------------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] {
+    transition:
+      opacity 0.7s ease,
+      transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
+  html.js [data-reveal]:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(22px) scale(0.98);
+  }
+}
+
+/* Demos only run while visible (the observer toggles .is-playing). */
+.demo:not(.is-playing) *,
+.demo:not(.is-playing) *::before,
+.demo:not(.is-playing) *::after {
+  animation-play-state: paused !important;
+}
+
+/* Hero headline: words settle in one by one. */
+.hero-word {
+  display: inline-block;
+  animation: hero-word 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+  animation-delay: calc(var(--i) * 90ms + 100ms);
+}
+@keyframes hero-word {
+  from {
+    opacity: 0;
+    transform: translateY(0.4em) rotate(4deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.pop-in {
+  animation: pop-in 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.4) both;
+  animation-delay: var(--delay, 0.8s);
+}
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6) rotate(-6deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------------------------------ */
+/* Blog prose, in brand tokens.                                                                */
+/* ------------------------------------------------------------------------------------------ */
+.prose {
+  font-size: 1.125rem;
+  line-height: 1.75;
+}
+.prose > * + * {
+  margin-top: 1.1em;
+}
+.prose h2 {
+  font-size: 1.85rem;
+  line-height: 1.2;
+  font-weight: 600;
+  margin-top: 2.2em;
+}
+.prose h3 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-top: 1.8em;
+}
+.prose a {
+  color: var(--accent-foreground);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose a:hover {
+  color: var(--primary);
+}
+.prose strong {
+  font-weight: 800;
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.4em;
+}
+.prose ul {
+  list-style: disc;
+}
+.prose ol {
+  list-style: decimal;
+}
+.prose li + li {
+  margin-top: 0.4em;
+}
+.prose li::marker {
+  color: var(--brand);
+}
+.prose blockquote {
+  border-left: 4px solid var(--brand);
+  background: var(--muted);
+  padding: 0.8em 1.1em;
+  border-radius: 0 1rem 1rem 0;
+}
+.prose code {
+  background: var(--muted);
+  padding: 0.1em 0.35em;
+  border-radius: 0.4em;
+  font-size: 0.9em;
+}
+.prose table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  border: 2px solid var(--outline);
+  border-radius: 1rem;
+}
+.prose th,
+.prose td {
+  padding: 0.65em 0.9em;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+@media (max-width: 480px) {
+  .prose table {
+    font-size: 0.82rem;
+  }
+  .prose th,
+  .prose td {
+    padding: 0.5em 0.45em;
+  }
+}
+.prose thead th {
+  background: var(--muted);
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+.prose tbody tr:last-child td {
+  border-bottom: 0;
+}
+.prose hr {
+  border: 0;
+  border-top: 2px dashed var(--border);
+  margin: 2.5em 0;
+}

@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/sections/Hero.astro';
+import StageStory from '../components/sections/StageStory.astro';
+import Features from '../components/sections/Features.astro';
+import Showcase from '../components/sections/Showcase.astro';
+import HowItWorks from '../components/sections/HowItWorks.astro';
+import Pricing from '../components/sections/Pricing.astro';
+import Privacy from '../components/sections/Privacy.astro';
+import Faq from '../components/sections/Faq.astro';
+import GetIt from '../components/sections/GetIt.astro';
+import { FAQ } from '../content';
+import { SITE_URL } from '../site';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Lensprout',
+    applicationCategory: 'MultimediaApplication',
+    operatingSystem: 'Google Chrome (desktop)',
+    description:
+      'A free, open source Chrome extension that records your screen, zooms in on clicks and typing automatically, and edits and exports locally.',
+    url: SITE_URL + '/',
+    license: 'https://opensource.org/licenses/MIT',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQ.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+
+<Base
+  title="Lensprout: free screen recorder for Chrome with automatic zoom"
+  description="Lensprout records your screen, zooms in on your clicks and typing in Chrome automatically, and edits and exports MP4 or GIF locally. Free and open source."
+  jsonLd={jsonLd}
+>
+  <Hero />
+  <StageStory />
+  <Features />
+  <Showcase />
+  <HowItWorks />
+  <Pricing />
+  <Privacy />
+  <Faq />
+  <GetIt />
+</Base>

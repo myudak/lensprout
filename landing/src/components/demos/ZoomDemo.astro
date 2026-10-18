@@ -1,0 +1,191 @@
+---
+// Auto zoom: a cursor clicks a button, the view zooms in on it, then eases back out.
+---
+
+<div class="demo stage" aria-hidden="true">
+  <div class="page">
+    <div class="row">
+      <span class="field"></span>
+      <span class="field short"></span>
+    </div>
+    <div class="row">
+      <span class="field"></span>
+      <span class="btn">Sign up</span>
+    </div>
+    <span class="line"></span>
+    <span class="line half"></span>
+    <svg class="cursor" viewBox="0 0 24 24">
+      <path
+        d="M4 2.5l15 8.2-6.6 1.6 3.7 7-2.9 1.5-3.7-7L4.6 18.6z"
+        fill="#fff"
+        stroke="#453d70"
+        stroke-width="1.6"
+        stroke-linejoin="round"></path>
+    </svg>
+    <span class="ring"></span>
+  </div>
+  <span class="chip">2.0× zoom</span>
+</div>
+
+<style>
+  .stage {
+    position: relative;
+    height: 11rem;
+    border-radius: 1.25rem;
+    background: var(--tile-coral);
+    overflow: hidden;
+  }
+  .page {
+    position: absolute;
+    inset: 1.1rem 1.4rem;
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    transform-origin: 74% 46%;
+    animation: z-zoom 6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+  .row {
+    display: flex;
+    gap: 0.7rem;
+    align-items: center;
+  }
+  .field {
+    flex: 1;
+    height: 1.6rem;
+    border-radius: 999px;
+    border: 2px solid var(--border);
+    background: var(--muted);
+  }
+  .field.short {
+    flex: 0.6;
+  }
+  .btn {
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-weight: 800;
+    font-size: 0.8rem;
+    animation: z-press 6s infinite;
+  }
+  .line {
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--border);
+    width: 85%;
+  }
+  .line.half {
+    width: 50%;
+  }
+  .cursor {
+    position: absolute;
+    width: 1.4rem;
+    left: 74%;
+    top: 46%;
+    filter: drop-shadow(0 2px 2px rgb(0 0 0 / 0.2));
+    animation: z-cursor 6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+  .ring {
+    position: absolute;
+    left: 74%;
+    top: 46%;
+    width: 2.4rem;
+    height: 2.4rem;
+    margin: -1.2rem 0 0 -1.2rem;
+    border-radius: 50%;
+    border: 3px solid var(--brand);
+    opacity: 0;
+    animation: z-ring 6s ease-out infinite;
+  }
+  .chip {
+    position: absolute;
+    right: 0.8rem;
+    top: 0.7rem;
+    font-weight: 800;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: var(--purple);
+    color: var(--cream);
+    animation: z-chip 6s infinite;
+  }
+  @keyframes z-zoom {
+    0%,
+    30% {
+      transform: scale(1);
+    }
+    42%,
+    78% {
+      transform: scale(1.75);
+    }
+    92%,
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes z-cursor {
+    0% {
+      transform: translate(-9rem, 3rem);
+    }
+    24%,
+    86% {
+      transform: translate(0, 0);
+    }
+    27% {
+      transform: translate(0, 0) scale(0.8);
+    }
+    30% {
+      transform: translate(0, 0) scale(1);
+    }
+    100% {
+      transform: translate(-9rem, 3rem);
+    }
+  }
+  @keyframes z-ring {
+    0%,
+    26% {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    27% {
+      opacity: 1;
+    }
+    40%,
+    100% {
+      opacity: 0;
+      transform: scale(1.6);
+    }
+  }
+  @keyframes z-press {
+    0%,
+    25%,
+    31%,
+    100% {
+      transform: scale(1);
+    }
+    27% {
+      transform: scale(0.92);
+    }
+  }
+  @keyframes z-chip {
+    0%,
+    36% {
+      opacity: 0;
+      transform: translateY(-6px) scale(0.8);
+    }
+    44%,
+    78% {
+      opacity: 1;
+      transform: none;
+    }
+    88%,
+    100% {
+      opacity: 0;
+      transform: translateY(-6px) scale(0.8);
+    }
+  }
+</style>

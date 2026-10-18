@@ -1,0 +1,170 @@
+---
+// Cursor effects and sounds: a highlighted pointer clicks ("tick!") and keys get pressed ("tap").
+---
+
+<div class="demo stage" aria-hidden="true">
+  <div class="pointer">
+    <span class="halo"></span>
+    <span class="ring"></span>
+    <svg viewBox="0 0 24 24">
+      <path
+        d="M4 2.5l15 8.2-6.6 1.6 3.7 7-2.9 1.5-3.7-7L4.6 18.6z"
+        fill="#fff"
+        stroke="#453d70"
+        stroke-width="1.6"
+        stroke-linejoin="round"></path>
+    </svg>
+    <span class="note click">tick!</span>
+  </div>
+  <div class="keys">
+    <kbd class="k1">⌘</kbd>
+    <kbd class="k2">K</kbd>
+    <span class="note tap">tap tap</span>
+  </div>
+</div>
+
+<style>
+  .stage {
+    position: relative;
+    height: 11rem;
+    border-radius: 1.25rem;
+    background: var(--tile-coral);
+    overflow: hidden;
+  }
+  .pointer {
+    position: absolute;
+    left: 22%;
+    top: 22%;
+    width: 2rem;
+    animation: c-move 5s ease-in-out infinite;
+  }
+  .pointer svg {
+    position: relative;
+    width: 1.6rem;
+    filter: drop-shadow(0 2px 2px rgb(0 0 0 / 0.2));
+  }
+  .halo {
+    position: absolute;
+    left: -1.1rem;
+    top: -1.1rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: rgb(250 189 98 / 0.55);
+  }
+  .ring {
+    position: absolute;
+    left: -1.4rem;
+    top: -1.4rem;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    border: 3px solid var(--primary);
+    opacity: 0;
+    animation: c-ring 5s ease-out infinite;
+  }
+  .note {
+    position: absolute;
+    white-space: nowrap;
+    font-weight: 800;
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: var(--purple);
+    color: var(--cream);
+  }
+  .click {
+    left: 1.6rem;
+    top: -1.4rem;
+    animation: c-note 5s infinite;
+  }
+  .keys {
+    position: absolute;
+    right: 1.2rem;
+    bottom: 1.2rem;
+    display: flex;
+    gap: 0.4rem;
+  }
+  kbd {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 0.6rem;
+    background: var(--card);
+    border: 2px solid var(--outline);
+    box-shadow: 0 4px 0 var(--sticker);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--foreground);
+  }
+  .k1 {
+    animation: c-key 5s infinite;
+    animation-delay: 2.5s;
+  }
+  .k2 {
+    animation: c-key 5s infinite;
+    animation-delay: 2.8s;
+  }
+  .tap {
+    right: 0;
+    top: -1.7rem;
+    animation: c-note 5s infinite;
+    animation-delay: 2.5s;
+  }
+  @keyframes c-move {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    35%,
+    65% {
+      transform: translate(3rem, 2.2rem);
+    }
+  }
+  @keyframes c-ring {
+    0%,
+    36% {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+    37% {
+      opacity: 1;
+    }
+    55%,
+    100% {
+      opacity: 0;
+      transform: scale(1.5);
+    }
+  }
+  @keyframes c-note {
+    0%,
+    36% {
+      opacity: 0;
+      transform: translateY(6px) scale(0.7);
+    }
+    42%,
+    58% {
+      opacity: 1;
+      transform: none;
+    }
+    66%,
+    100% {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+  @keyframes c-key {
+    0%,
+    6%,
+    100% {
+      transform: translateY(0);
+      box-shadow: 0 4px 0 var(--sticker);
+    }
+    3% {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 var(--sticker);
+    }
+  }
+</style>

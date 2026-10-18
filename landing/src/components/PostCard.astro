@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate, readingMinutes } from '../lib/posts';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  index?: number;
+}
+const { post, index = 0 } = Astro.props;
+const tile = post.data.kind === 'comparison' ? 'bg-tile-lilac' : 'bg-tile-sage';
+---
+
+<li data-reveal style={`--i:${index % 2}`}>
+  <article
+    class="bg-card sticker group relative flex h-full flex-col rounded-3xl p-6 transition-transform hover:-translate-y-1"
+  >
+    <p class="flex flex-wrap items-center gap-2 text-sm font-bold">
+      <span class:list={[tile, 'rounded-full px-2.5 py-0.5 text-foreground']}>
+        {post.data.kind === 'comparison' ? 'Comparison' : 'Guide'}
+      </span>
+      <span class="text-muted-foreground">
+        {formatDate(post.data.pubDate)} · {readingMinutes(post.body ?? '')} min read
+      </span>
+    </p>
+    <h3 class="mt-3 text-2xl leading-tight font-semibold">
+      <a
+        href={`/blog/${post.id}/`}
+        class="group-hover:text-primary after:absolute after:inset-0 after:rounded-3xl"
+      >
+        {post.data.title}
+      </a>
+    </h3>
+    <p class="text-muted-foreground mt-2 leading-relaxed">{post.data.description}</p>
+    <span class="text-accent-foreground mt-auto pt-4 font-extrabold" aria-hidden="true">
+      Read it →
+    </span>
+  </article>
+</li>

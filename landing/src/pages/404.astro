@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import AnimatedMascot from '../components/AnimatedMascot';
+---
+
+<Base
+  title="Page not found | Lensprout"
+  description="This page wandered off. Head back to the Lensprout home page or browse the blog for screen recording guides."
+  noindex
+>
+  <section class="mx-auto flex max-w-2xl flex-col items-center px-4 py-20 text-center sm:px-6">
+    <div class="w-40">
+      <AnimatedMascot
+        client:load
+        interactive
+        pose="empty"
+        className="w-full"
+        behaviors={['blink', 'look', 'follow', 'sway', 'droplets']}
+        waterEvery={4}
+      />
+    </div>
+    <h1 class="mt-6 text-5xl font-semibold tracking-tight">This page wandered off</h1>
+    <p class="text-muted-foreground mt-4 text-lg">
+      We looked everywhere, even under the sprouts. Try the home page or the blog instead.
+    </p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a
+        href="/"
+        class="bg-primary text-primary-foreground hover:bg-primary-hover sticker rounded-full px-6 py-3 font-extrabold"
+      >
+        Back home
+      </a>
+      <a href="/blog/" class="bg-card sticker rounded-full px-6 py-3 font-extrabold">Read the blog</a>
+    </div>
+  </section>
+</Base>

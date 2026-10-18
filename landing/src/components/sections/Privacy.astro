@@ -1,0 +1,70 @@
+---
+import { HugeiconsIcon } from '@hugeicons/react';
+import { CloudOffIcon, Database01Icon, UserBlock01Icon } from '@hugeicons/core-free-icons';
+import AnimatedMascot from '../AnimatedMascot';
+
+const POINTS = [
+  {
+    icon: CloudOffIcon,
+    title: 'No uploads',
+    body: 'Lensprout has no server. Recording, editing and export run in your browser.',
+  },
+  {
+    icon: UserBlock01Icon,
+    title: 'No account',
+    body: 'Install it and press record. There is nothing to sign up for.',
+  },
+  {
+    icon: Database01Icon,
+    title: 'Your originals stay intact',
+    body: 'The raw recording is kept as captured, and your edits are saved alongside it.',
+  },
+];
+---
+
+<section id="privacy" aria-labelledby="privacy-title" class="px-4 py-12 sm:px-6">
+  <div
+    class="bg-purple dark:bg-card sticker text-cream relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] px-6 py-14 sm:px-12 sm:py-16"
+    data-reveal
+  >
+    <div aria-hidden="true" class="bg-brand/25 absolute -top-20 -right-20 size-72 rounded-full blur-3xl">
+    </div>
+    <div class="relative grid items-center gap-10 lg:grid-cols-[auto_1fr]">
+      <div class="mx-auto">
+        <div class="bg-cream/10 grid size-44 place-items-center rounded-full sm:size-52">
+          <div class="w-32 sm:w-36">
+            <AnimatedMascot
+              client:visible
+              interactive
+              className="w-full"
+              behaviors={['blink', 'look', 'sway', 'droplets']}
+              waterEvery={6}
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="text-apricot mb-3 text-sm font-extrabold tracking-widest uppercase">Local-first</p>
+        <h2 id="privacy-title" class="text-3xl font-semibold tracking-tight sm:text-5xl">
+          Your screen is your business
+        </h2>
+        <p class="text-cream/85 mt-4 max-w-2xl text-lg leading-relaxed">
+          Screen recordings show inboxes, dashboards and half-written messages. So Lensprout keeps
+          everything on your device, from the first frame to the exported file. It just waters its
+          sprouts and minds its own business.
+        </p>
+        <ul class="mt-8 grid gap-5 sm:grid-cols-3">
+          {
+            POINTS.map((p, i) => (
+              <li class="bg-cream/10 rounded-2xl p-5" data-reveal style={`--i:${i + 1}`}>
+                <HugeiconsIcon icon={p.icon} size={26} strokeWidth={1.8} className="text-apricot" />
+                <h3 class="mt-3 text-lg font-semibold">{p.title}</h3>
+                <p class="text-cream/85 mt-1 text-sm leading-relaxed">{p.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

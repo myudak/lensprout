@@ -1,0 +1,120 @@
+---
+// Presets: one click swaps the whole look; the swatches follow along.
+---
+
+<div class="demo stage" aria-hidden="true">
+  <div class="preview">
+    <div class="shot">
+      <span class="bar"></span>
+      <span class="line"></span>
+      <span class="line short"></span>
+    </div>
+  </div>
+  <div class="swatches">
+    <span class="s s1"></span>
+    <span class="s s2"></span>
+    <span class="s s3"></span>
+  </div>
+</div>
+
+<style>
+  .stage {
+    height: 11rem;
+    border-radius: 1.25rem;
+    background: var(--tile-apricot);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1rem;
+  }
+  .preview {
+    height: 100%;
+    border-radius: 0.9rem;
+    display: grid;
+    place-items: center;
+    animation: p-bg 6s steps(1) infinite;
+  }
+  .shot {
+    width: 72%;
+    background: #fffcf7;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    display: grid;
+    gap: 0.35rem;
+    box-shadow: 0 8px 16px rgb(0 0 0 / 0.2);
+    animation: p-shot 6s steps(1) infinite;
+  }
+  .bar {
+    height: 0.5rem;
+    border-radius: 0.2rem;
+    background: #453d70;
+  }
+  .line {
+    height: 0.35rem;
+    border-radius: 999px;
+    background: #e7dcce;
+  }
+  .line.short {
+    width: 60%;
+  }
+  .swatches {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .s {
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    border: 2px solid var(--card);
+    box-shadow: 0 0 0 2px transparent;
+    animation: p-ring 6s steps(1) infinite;
+  }
+  .s1 {
+    background: linear-gradient(135deg, #e86a47, #fabd62);
+  }
+  .s2 {
+    background: linear-gradient(135deg, #453d70, #8f7cc7);
+    animation-delay: -4s;
+  }
+  .s3 {
+    background: linear-gradient(135deg, #a6bfa0, #5c8a55);
+    animation-delay: -2s;
+  }
+  @keyframes p-bg {
+    0% {
+      background: linear-gradient(135deg, #e86a47, #fabd62);
+    }
+    33.33% {
+      background: linear-gradient(135deg, #453d70, #8f7cc7);
+    }
+    66.66% {
+      background: linear-gradient(135deg, #a6bfa0, #5c8a55);
+    }
+  }
+  @keyframes p-shot {
+    0% {
+      border-radius: 0.5rem;
+      transform: rotate(-2deg);
+    }
+    33.33% {
+      border-radius: 0.15rem;
+      transform: none;
+    }
+    66.66% {
+      border-radius: 1rem;
+      transform: rotate(2deg) scale(0.95);
+    }
+  }
+  @keyframes p-ring {
+    0% {
+      box-shadow: 0 0 0 3px var(--outline);
+      transform: scale(1.12);
+    }
+    33.33%,
+    100% {
+      box-shadow: 0 0 0 2px transparent;
+      transform: none;
+    }
+  }
+</style>

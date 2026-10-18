@@ -1,0 +1,52 @@
+---
+import { HugeiconsIcon } from '@hugeicons/react';
+import { CheckmarkCircle02Icon } from '@hugeicons/core-free-icons';
+import AnimatedMascot from '../AnimatedMascot';
+import AddToChrome from '../AddToChrome.astro';
+---
+
+<section id="get" aria-labelledby="get-title" class="px-4 pb-20 sm:px-6 sm:pb-24">
+  <div
+    class="bg-accent sticker relative mx-auto max-w-4xl overflow-hidden rounded-[2rem] px-6 py-14 text-center sm:px-12"
+    data-reveal
+  >
+    <div class="mx-auto w-28">
+      <AnimatedMascot
+        client:visible
+        interactive
+        pose="success"
+        className="w-full"
+        behaviors={['sway', 'droplets', 'jumpOnVisible']}
+        jumpDelay={600}
+        waterEvery={8}
+      />
+    </div>
+    <h2 id="get-title" class="mt-2 text-3xl font-semibold tracking-tight sm:text-5xl">
+      Ready when you are
+    </h2>
+    <p class="text-foreground mx-auto mt-4 max-w-xl text-lg">
+      Lensprout is coming soon to the Chrome Web Store. The button will take you there as soon as
+      the listing is live.
+    </p>
+    <ul
+      class="text-foreground mx-auto mt-6 flex max-w-xl flex-wrap justify-center gap-x-6 gap-y-2 font-bold"
+    >
+      {
+        ['Automatic zoom', 'Local editor', 'MP4 and GIF', 'Free and open source'].map((t) => (
+          <li class="inline-flex items-center gap-1.5">
+            <HugeiconsIcon
+              icon={CheckmarkCircle02Icon}
+              size={20}
+              strokeWidth={2}
+              className="text-accent-foreground"
+            />
+            {t}
+          </li>
+        ))
+      }
+    </ul>
+    <div class="mt-8">
+      <AddToChrome />
+    </div>
+  </div>
+</section>

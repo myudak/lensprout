@@ -1,0 +1,23 @@
+---
+// Fictional dashboard used as recording material for Lensprout demos. Not linked, not indexed.
+import '../../demo/dashboard.css';
+import Dashboard from '../../demo/Dashboard';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Acme dashboard (demo)</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      if (new URLSearchParams(location.search).get('theme') === 'dark')
+        document.documentElement.classList.add('dark');
+    </script>
+  </head>
+  <body>
+    <Dashboard client:load />
+  </body>
+</html>

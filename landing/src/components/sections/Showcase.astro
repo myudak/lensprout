@@ -1,0 +1,76 @@
+---
+import { Image } from 'astro:assets';
+import SectionHeading from '../SectionHeading.astro';
+import BrowserFrame from '../BrowserFrame.astro';
+import recorderShot from '../../assets/screens/recorder.png';
+import libraryShot from '../../assets/screens/library-cards.webp';
+import stageShot from '../../assets/screens/editor-3d-webcam.png';
+import DemoVideo from '../DemoVideo.astro';
+
+const SHOTS = [
+  {
+    src: recorderShot,
+    title: 'Set up in seconds',
+    alt: 'The Lensprout recorder page with camera, microphone, audio and countdown options.',
+  },
+  {
+    src: stageShot,
+    title: 'Put it on a 3D stage',
+    alt: 'The Lensprout editor: a dashboard recording inside a 3D laptop frame on a purple background, a round webcam bubble, Style panel stage settings and a timeline with zoom and camera segments.',
+  },
+  {
+    src: libraryShot,
+    title: 'Keep your library close',
+    alt: 'Your recordings: the Lensprout library with recording cards showing thumbnails, dates and durations, a search box and storage used on this device.',
+  },
+];
+---
+
+<section aria-labelledby="showcase-title" class="bg-muted border-border border-y py-20 sm:py-24">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <SectionHeading id="showcase-title" eyebrow="A closer look">
+      From the first click to the final cut
+    </SectionHeading>
+    <div class="mx-auto mb-12 max-w-5xl" data-reveal>
+      <BrowserFrame>
+        <DemoVideo
+          src="/media/editor-demo.mp4"
+          poster="/media/editor-demo.jpg"
+          width={1600}
+          height={884}
+          label="The Lensprout editor playing back a dashboard recording while background wallpapers are tried, with zoom and camera segments on the timeline."
+        />
+      </BrowserFrame>
+      <p class="text-muted-foreground mt-4 text-center">
+        The editor, recorded as-is: preview, style panel and timeline.
+      </p>
+    </div>
+    <div class="grid gap-8 md:grid-cols-3">
+      {
+        SHOTS.map((s, i) => (
+          <figure
+            data-reveal
+            style={`--i:${i}`}
+            class:list={[
+              'transition-transform duration-300 hover:-rotate-1 hover:scale-[1.02]',
+              i === 1 && 'md:-translate-y-4',
+            ]}
+          >
+            <BrowserFrame>
+              <Image
+                src={s.src}
+                alt={s.alt}
+                widths={[480, 800]}
+                sizes="(min-width: 768px) 360px, 100vw"
+                class="block h-auto w-full"
+              />
+            </BrowserFrame>
+            <figcaption class="font-heading mt-4 text-center text-lg font-semibold">
+              {s.title}
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>

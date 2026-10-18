@@ -1,0 +1,43 @@
+{
+  "name": "lensprout-landing",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "typecheck": "astro check",
+    "favicon": "node scripts/build-favicon.ts",
+    "check": "node scripts/check.mjs",
+    "og": "node scripts/build-og.mjs",
+    "stage-shot": "node scripts/build-stage-shot.mjs"
+  },
+  "dependencies": {
+    "@astrojs/react": "7.1.0",
+    "@astrojs/rss": "4.0.19",
+    "@astrojs/sitemap": "3.7.4",
+    "@fontsource/fredoka": "5.3.0",
+    "@fontsource/nunito": "5.3.0",
+    "@hugeicons/core-free-icons": "4.3.5",
+    "@hugeicons/react": "1.1.10",
+    "astro": "7.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.64.0",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/node": "^25.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "tailwindcss": "4.3.3",
+    "typescript": "6.0.3"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  }
+}

@@ -1,0 +1,166 @@
+---
+import { HugeiconsIcon } from '@hugeicons/react';
+import { CheckmarkCircle02Icon, Github01Icon, SourceCodeIcon } from '@hugeicons/core-free-icons';
+import SectionHeading from '../SectionHeading.astro';
+import AnimatedMascot from '../AnimatedMascot';
+import AddToChrome from '../AddToChrome.astro';
+import { INCLUDED, PRICING_TIERS } from '../../content';
+import { GITHUB_IS_PLACEHOLDER, GITHUB_URL } from '../../site';
+---
+
+<section
+  id="pricing"
+  aria-labelledby="pricing-title"
+  class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-24"
+>
+  <SectionHeading
+    id="pricing-title"
+    eyebrow="Pricing"
+    lead="We spent weeks on a pricing strategy. Then we made everything free for everyone."
+  >
+    Pick a plan. <span class="text-primary">They’re all free.</span>
+  </SectionHeading>
+
+  <div class="mx-auto mb-10 flex w-fit items-end gap-4" data-reveal>
+    <div class="w-20 sm:w-24">
+      <AnimatedMascot
+        client:visible
+        interactive
+        pose="idle"
+        className="w-full"
+        behaviors={['blink', 'look', 'sway', 'jumpOnVisible']}
+        jumpDelay={1500}
+      />
+    </div>
+    <p class="bg-card sticker-sm relative mb-8 rounded-2xl rounded-bl-none px-4 py-2 font-bold">
+      Psst. Every plan has every feature.
+    </p>
+  </div>
+
+  <ul class="grid gap-6 lg:grid-cols-3">
+    {
+      PRICING_TIERS.map((t, i) => (
+        <li
+          data-reveal
+          style={`--i:${i}`}
+          class:list={[
+            'price-card sticker relative flex flex-col rounded-3xl p-6 sm:p-7',
+            t.featured ? 'bg-accent lg:-translate-y-3' : 'bg-card',
+          ]}
+        >
+          {t.featured && (
+            <span class="bg-purple text-cream absolute -top-4 left-1/2 -translate-x-1/2 rounded-full px-3 py-1 text-xs font-extrabold whitespace-nowrap">
+              Most popular (with nobody paying)
+            </span>
+          )}
+          <h3 class="text-2xl font-semibold">{t.name}</h3>
+          <p class="text-muted-foreground mt-1 min-h-12">{t.tagline}</p>
+          <p class="mt-5 flex items-baseline gap-3">
+            {t.fakePrice !== '$0' && (
+              <s class="fake text-muted-foreground font-heading text-2xl" aria-hidden="true">
+                {t.fakePrice}
+              </s>
+            )}
+            <span class="real font-heading text-6xl font-semibold">$0</span>
+            <span class="text-muted-foreground font-bold">/ forever</span>
+          </p>
+          <p class="text-muted-foreground mt-1 text-sm font-bold">{t.note}</p>
+          <div class="mt-6">
+            <AddToChrome size="md" label={t.cta} />
+          </div>
+          {i === 0 ? (
+            <ul class="mt-6 space-y-2">
+              {INCLUDED.map((f) => (
+                <li class="flex items-start gap-2">
+                  <HugeiconsIcon
+                    icon={CheckmarkCircle02Icon}
+                    size={20}
+                    strokeWidth={2}
+                    className="text-accent-foreground mt-0.5 shrink-0"
+                  />
+                  {f}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="mt-6 flex items-start gap-2 font-bold">
+              <HugeiconsIcon
+                icon={CheckmarkCircle02Icon}
+                size={20}
+                strokeWidth={2}
+                className="text-accent-foreground mt-0.5 shrink-0"
+              />
+              {i === 1
+                ? 'Everything in Free, which is everything.'
+                : 'Everything in Pro, which is everything in Free, which is everything.'}
+            </p>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+
+  <div
+    class="bg-muted mx-auto mt-10 flex max-w-3xl flex-col items-center gap-4 rounded-3xl px-6 py-6 text-center sm:flex-row sm:text-left"
+    data-reveal
+  >
+    <span class="bg-card sticker-sm grid size-14 shrink-0 place-items-center rounded-2xl">
+      <HugeiconsIcon icon={SourceCodeIcon} size={28} strokeWidth={1.8} />
+    </span>
+    <div class="flex-1">
+      <p class="font-heading text-xl font-semibold">Open source, MIT licensed</p>
+      <p class="text-muted-foreground">
+        Read it, fork it, ship it in your own product. Just keep the license notice.
+      </p>
+    </div>
+    <div class="flex flex-wrap justify-center gap-2">
+      <a
+        href="/license.txt"
+        class="hover:bg-accent rounded-full border-2 border-current px-4 py-2 text-sm font-extrabold"
+      >
+        Read the license
+      </a>
+      {
+        GITHUB_IS_PLACEHOLDER ? (
+          <span class="bg-card inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold">
+            <HugeiconsIcon icon={Github01Icon} size={18} strokeWidth={2} />
+            Repo coming soon
+          </span>
+        ) : (
+          <a
+            href={GITHUB_URL}
+            class="bg-card inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold"
+          >
+            <HugeiconsIcon icon={Github01Icon} size={18} strokeWidth={2} />
+            GitHub
+          </a>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  /* When a card reveals, the fake price gets struck off and $0 pops in. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js) .price-card .fake {
+      text-decoration-color: transparent;
+      transition: text-decoration-color 0.4s 0.5s;
+    }
+    :global(html.js) .price-card.is-visible .fake {
+      text-decoration-color: currentColor;
+    }
+    :global(html.js) .price-card .real {
+      display: inline-block;
+      opacity: 0;
+      transform: scale(0.4) rotate(-10deg);
+      transition:
+        opacity 0.3s 0.9s,
+        transform 0.6s 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.5);
+    }
+    :global(html.js) .price-card.is-visible .real {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

@@ -1,0 +1,82 @@
+---
+// 3D stage: the recording tilts and orbits inside a laptop frame.
+---
+
+<div class="demo stage" aria-hidden="true">
+  <div class="scene">
+    <div class="laptop">
+      <div class="screen">
+        <span class="bar"></span>
+        <span class="tile a"></span>
+        <span class="tile b"></span>
+        <span class="tile c"></span>
+      </div>
+      <div class="base"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .stage {
+    position: relative;
+    height: 11rem;
+    border-radius: 1.25rem;
+    background: linear-gradient(135deg, #8f7cc7, #e86a47 60%, #fabd62);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .scene {
+    perspective: 600px;
+  }
+  .laptop {
+    transform-style: preserve-3d;
+    animation: s-orbit 7s ease-in-out infinite;
+  }
+  .screen {
+    width: 9.5rem;
+    height: 6rem;
+    border-radius: 0.6rem 0.6rem 0.2rem 0.2rem;
+    border: 0.4rem solid #2a2438;
+    background: #fff9f0;
+    padding: 0.4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr 1fr;
+    gap: 0.3rem;
+  }
+  .bar {
+    grid-column: 1 / -1;
+    height: 0.6rem;
+    border-radius: 0.2rem;
+    background: #1f4d3a;
+  }
+  .tile {
+    border-radius: 0.25rem;
+    background: #eadfce;
+  }
+  .tile.a {
+    background: #b94025;
+  }
+  .tile.c {
+    grid-column: 1 / -1;
+  }
+  .base {
+    width: 11.5rem;
+    height: 0.7rem;
+    margin-left: -1rem;
+    border-radius: 0 0 0.8rem 0.8rem;
+    background: #3b3448;
+    transform: rotateX(55deg);
+    transform-origin: top;
+  }
+  @keyframes s-orbit {
+    0%,
+    100% {
+      transform: rotateY(-24deg) rotateX(12deg);
+    }
+    50% {
+      transform: rotateY(24deg) rotateX(4deg) translateZ(20px);
+    }
+  }
+</style>

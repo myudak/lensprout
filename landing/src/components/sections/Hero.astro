@@ -1,0 +1,113 @@
+---
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ArrowRight01Icon, ZoomInAreaIcon } from '@hugeicons/core-free-icons';
+import AnimatedMascot from '../AnimatedMascot';
+import AddToChrome from '../AddToChrome.astro';
+import DemoVideo from '../DemoVideo.astro';
+
+const plain = ['Screen', 'recordings', 'that'];
+const accent = ['zoom', 'where', 'you', 'click'];
+---
+
+<section id="top" aria-labelledby="hero-title" class="relative overflow-hidden">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+    <div
+      class="bg-apricot/35 dark:bg-apricot/10 absolute -top-24 -right-24 size-96 rounded-full blur-3xl"
+    >
+    </div>
+    <div class="bg-brand/20 dark:bg-brand/10 absolute top-1/2 -left-32 size-80 rounded-full blur-3xl">
+    </div>
+    <div
+      class="bg-sage/30 dark:bg-sage/10 absolute -bottom-20 left-1/2 size-72 rounded-full blur-3xl"
+    >
+    </div>
+  </div>
+  <div
+    class="relative mx-auto grid max-w-6xl items-center gap-14 px-4 pt-12 pb-20 sm:px-6 sm:pt-16 lg:grid-cols-[1fr_1.1fr] lg:gap-10 lg:pt-20 lg:pb-28"
+  >
+    <div class="text-center lg:text-left">
+      <p
+        class="bg-card sticker-sm text-foreground pop-in mb-6 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-bold"
+        style="--delay: 0s"
+      >
+        <span class="bg-sage size-2.5 animate-pulse rounded-full" aria-hidden="true"></span>
+        Free and open source · coming soon to Chrome
+      </p>
+      <h1
+        id="hero-title"
+        class="text-[2.6rem] leading-[1.05] font-semibold tracking-tight sm:text-6xl lg:text-[3.4rem] xl:text-[3.8rem]"
+      >
+        {
+          plain.map((w, i) => (
+            <>
+              <span class="hero-word" style={`--i:${i}`}>{w}</span>{' '}
+            </>
+          ))
+        }
+        <span class="text-primary">
+          {
+            accent.map((w, i) => (
+              <>
+                <span class="hero-word" style={`--i:${i + plain.length}`}>{w}</span>{' '}
+              </>
+            ))
+          }
+        </span>
+      </h1>
+      <p
+        class="text-muted-foreground mx-auto mt-6 max-w-xl text-lg leading-relaxed sm:text-xl lg:mx-0"
+      >
+        Record your screen, and Lensprout follows your clicks and typing in Chrome with smooth automatic zooms.
+        Polish it in a local editor and export, without your video ever leaving your device.
+      </p>
+      <div
+        class="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start"
+      >
+        <AddToChrome />
+        <a
+          href="#how"
+          class="text-foreground hover:text-primary inline-flex items-center gap-1.5 rounded-full px-3 py-2 font-bold underline-offset-4 hover:underline"
+        >
+          See how it works
+          <HugeiconsIcon icon={ArrowRight01Icon} size={18} strokeWidth={2.2} />
+        </a>
+      </div>
+      <p class="text-muted-foreground mt-4 text-sm">
+        No account, no upload, no watermark. Chrome Web Store listing coming soon.
+      </p>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-2xl lg:max-w-none">
+      <div class="absolute -top-20 -left-4 z-10 w-28 sm:-top-24 sm:-left-8 sm:w-36">
+        <AnimatedMascot
+          client:load
+          interactive
+          className="w-full"
+          behaviors={['blink', 'look', 'follow', 'sway', 'droplets', 'jumpOnVisible']}
+          jumpDelay={900}
+        />
+      </div>
+      <div class="sticker overflow-hidden rounded-2xl bg-[#2a1f5c]">
+        <DemoVideo
+          src="/media/auto-zoom-demo.mp4"
+          poster="/media/auto-zoom-demo.jpg"
+          width={1280}
+          height={706}
+          label="An exported Lensprout video: a dashboard recording on a 3D stage zooms in on each click and form field, with a round webcam bubble in the corner."
+        />
+      </div>
+      <div
+        class="bg-card sticker-sm pop-in absolute -right-2 -bottom-5 flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-bold sm:-right-5"
+        style="--delay: 1.2s"
+        aria-hidden="true"
+      >
+        <span
+          class="bg-tile-coral text-accent-foreground grid size-7 place-items-center rounded-full"
+        >
+          <HugeiconsIcon icon={ZoomInAreaIcon} size={16} strokeWidth={2.2} />
+        </span>
+        Auto zoom 1.8×
+      </div>
+    </div>
+  </div>
+</section>

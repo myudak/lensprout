@@ -1,0 +1,147 @@
+---
+import '../styles.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_NAME } from '../site';
+import ogImage from '../assets/og.png';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Extra JSON-LD objects for this page. */
+  jsonLd?: object[];
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+}
+const { title, description, jsonLd = [], ogType = 'website', noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogUrl = new URL(ogImage.src, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#FFF4E5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1E1930" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Lensprout blog" href="/rss.xml" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogUrl} />
+    {jsonLd.map((data) => <script type="application/ld+json" set:html={JSON.stringify(data)} />)}
+    <script is:inline>
+      // Theme before first paint (saved choice, else the system preference), and mark JS as on.
+      (function () {
+        var t = null;
+        try {
+          t = localStorage.getItem('lensprout-landing-theme');
+        } catch (e) {}
+        var d = document.documentElement;
+        d.classList.toggle(
+          'dark',
+          t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches,
+        );
+        d.classList.add('js');
+      })();
+    </script>
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="bg-primary text-primary-foreground sr-only z-50 rounded-full px-4 py-2 font-bold focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+    >
+      Skip to content
+    </a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      // Theme toggle.
+      const KEY = 'lensprout-landing-theme';
+      const root = document.documentElement;
+      const btn = document.getElementById('theme-toggle');
+      const label = () =>
+        btn?.setAttribute(
+          'aria-label',
+          root.classList.contains('dark') ? 'Switch to light theme' : 'Switch to dark theme',
+        );
+      label();
+      btn?.addEventListener('click', () => {
+        const dark = !root.classList.contains('dark');
+        root.classList.toggle('dark', dark);
+        try {
+          localStorage.setItem(KEY, dark ? 'dark' : 'light');
+        } catch {
+          // Storage can be blocked; the toggle still works for this visit.
+        }
+        label();
+      });
+
+      // Reveal on scroll (once), and run demos only while they are on screen.
+      const reveal = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            e.target.classList.add('is-visible');
+            reveal.unobserve(e.target);
+          }
+        },
+        { rootMargin: '0px 0px -8% 0px' },
+      );
+      document.querySelectorAll('[data-reveal]').forEach((el) => reveal.observe(el));
+      const play = new IntersectionObserver((entries) => {
+        for (const e of entries) e.target.classList.toggle('is-playing', e.isIntersecting);
+      });
+      document.querySelectorAll('.demo').forEach((el) => play.observe(el));
+
+      // Demo videos: autoplay (muted) only on screen and only when motion is allowed; the
+      // button pauses or resumes, and a pause by the viewer sticks.
+      const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.querySelectorAll<HTMLElement>('.demo-video').forEach((fig) => {
+        const video = fig.querySelector('video');
+        const btn = fig.querySelector<HTMLButtonElement>('.demo-video-toggle');
+        if (!video || !btn) return;
+        let userPaused = still;
+        const sync = () => {
+          const playing = !video.paused;
+          fig.classList.toggle('is-playing-video', playing);
+          btn.setAttribute('aria-label', playing ? 'Pause video' : 'Play video');
+        };
+        video.addEventListener('play', sync);
+        video.addEventListener('pause', sync);
+        btn.addEventListener('click', () => {
+          if (video.paused) {
+            userPaused = false;
+            void video.play();
+          } else {
+            userPaused = true;
+            video.pause();
+          }
+        });
+        new IntersectionObserver(([e]) => {
+          if (e?.isIntersecting && !userPaused) void video.play().catch(() => {});
+          else video.pause();
+        }).observe(video);
+        sync();
+      });
+    </script>
+  </body>
+</html>

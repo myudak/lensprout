@@ -1,0 +1,56 @@
+---
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ChromeIcon, Moon02Icon, Sun01Icon } from '@hugeicons/core-free-icons';
+import { Logo } from '../brand/brand';
+import { CHROME_STORE_URL, NAV } from '../site';
+---
+
+<header class="bg-background/85 border-border sticky top-0 z-40 border-b backdrop-blur-md">
+  <div class="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 sm:px-6">
+    <a href="/" class="rounded-lg" aria-label="Lensprout home">
+      <Logo />
+    </a>
+    <nav aria-label="Main" class="ml-auto hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {
+          NAV.map((n) => (
+            <li>
+              <a
+                href={n.href}
+                class="hover:bg-accent hover:text-accent-foreground rounded-full px-3 py-2 text-sm font-bold transition-colors"
+              >
+                {n.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div class="ml-auto flex items-center gap-1 lg:ml-2">
+      <a
+        href="/blog/"
+        class="hover:bg-accent hover:text-accent-foreground rounded-full px-3 py-2 text-sm font-bold lg:hidden"
+      >
+        Blog
+      </a>
+      <button
+        id="theme-toggle"
+        type="button"
+        aria-label="Switch theme"
+        class="hover:bg-accent text-foreground grid size-10 place-items-center rounded-full transition-colors"
+      >
+        <span class="dark:hidden"><HugeiconsIcon icon={Moon02Icon} size={20} strokeWidth={2} /></span>
+        <span class="hidden dark:inline">
+          <HugeiconsIcon icon={Sun01Icon} size={20} strokeWidth={2} />
+        </span>
+      </button>
+      <a
+        href={CHROME_STORE_URL}
+        class="bg-primary text-primary-foreground hover:bg-primary-hover sticker-sm ml-1 hidden items-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold transition-transform active:translate-y-0.5 sm:inline-flex"
+      >
+        <HugeiconsIcon icon={ChromeIcon} size={18} strokeWidth={2} />
+        Add to Chrome
+      </a>
+    </div>
+  </div>
+</header>

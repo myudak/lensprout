@@ -1,0 +1,121 @@
+---
+// Vertical 9:16 fill: a portrait window slides across the wide recording, chasing the cursor.
+---
+
+<div class="demo stage" aria-hidden="true">
+  <div class="wide">
+    <span class="bar"></span>
+    <div class="cols">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <svg class="cursor" viewBox="0 0 24 24">
+      <path
+        d="M4 2.5l15 8.2-6.6 1.6 3.7 7-2.9 1.5-3.7-7L4.6 18.6z"
+        fill="#fff"
+        stroke="#453d70"
+        stroke-width="1.6"
+        stroke-linejoin="round"></path>
+    </svg>
+    <span class="portrait"><b>9:16</b></span>
+  </div>
+</div>
+
+<style>
+  .stage {
+    height: 11rem;
+    border-radius: 1.25rem;
+    background: var(--tile-coral);
+    display: grid;
+    place-items: center;
+    padding: 0.8rem;
+  }
+  .wide {
+    position: relative;
+    width: min(100%, 17rem);
+    aspect-ratio: 16 / 9;
+    max-height: 100%;
+    border-radius: 0.6rem;
+    background: var(--card);
+    border: 2px solid var(--border);
+    padding: 0.5rem;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 0.4rem;
+  }
+  .bar {
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--border);
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem;
+  }
+  .cols span {
+    border-radius: 0.35rem;
+    background: var(--muted);
+  }
+  .cols span:nth-child(2) {
+    background: var(--tile-lilac);
+  }
+  .cols span:nth-child(4) {
+    background: var(--tile-apricot);
+  }
+  .cursor {
+    position: absolute;
+    width: 1.1rem;
+    top: 55%;
+    left: 18%;
+    z-index: 2;
+    animation: v-cursor 6s ease-in-out infinite;
+  }
+  .portrait {
+    position: absolute;
+    top: -6%;
+    bottom: -6%;
+    left: 8%;
+    aspect-ratio: 9 / 16;
+    border-radius: 0.5rem;
+    border: 3px solid var(--primary);
+    box-shadow: 0 0 0 999px rgb(30 25 48 / 0.35);
+    display: grid;
+    place-items: end center;
+    padding-bottom: 0.3rem;
+    animation: v-pan 6s ease-in-out infinite;
+  }
+  .portrait b {
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0.05rem 0.4rem;
+    border-radius: 999px;
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  .wide {
+    overflow: hidden;
+  }
+  @keyframes v-cursor {
+    0%,
+    100% {
+      left: 18%;
+      top: 55%;
+    }
+    45%,
+    55% {
+      left: 74%;
+      top: 40%;
+    }
+  }
+  @keyframes v-pan {
+    0%,
+    8%,
+    100% {
+      left: 6%;
+    }
+    50%,
+    60% {
+      left: 58%;
+    }
+  }
+</style>

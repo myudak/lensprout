@@ -1,0 +1,99 @@
+---
+import SectionHeading from '../SectionHeading.astro';
+import AnimatedMascot from '../AnimatedMascot';
+import { Mascot } from '../../brand/brand';
+import type { MascotPose } from '../../brand/mascot-shapes';
+import { STEPS } from '../../content';
+
+const STEP_POSES: MascotPose[] = ['recording', 'thinking', 'idle', 'success'];
+---
+
+<section id="how" aria-labelledby="how-title" class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
+  <SectionHeading id="how-title" eyebrow="How it works">
+    Four steps, <span class="text-primary">one happy video</span>
+  </SectionHeading>
+  <div class="relative lg:pt-16">
+    <div
+      aria-hidden="true"
+      class="border-outline/40 absolute top-28 right-[12%] left-[12%] hidden border-t-[3px] border-dashed lg:block"
+    >
+    </div>
+    <!-- A little mascot hops from step to step above the circles (large screens only). -->
+    <div class="walker hidden lg:block" aria-hidden="true">
+      <div class="hop">
+        <AnimatedMascot client:visible className="w-14" behaviors={['blink', 'look', 'sway']} />
+      </div>
+    </div>
+    <ol class="relative grid gap-10 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+      {
+        STEPS.map((s, i) => (
+          <li
+            data-reveal
+            style={`--i:${i}`}
+            class="relative flex flex-col items-center text-center"
+          >
+            <div class="bg-card sticker relative grid size-24 place-items-center rounded-full">
+              <Mascot pose={STEP_POSES[i]} className="size-16" />
+              <span class="bg-primary text-primary-foreground font-heading absolute -top-1 -right-1 grid size-8 place-items-center rounded-full text-base font-semibold">
+                {i + 1}
+              </span>
+            </div>
+            <h3 class="mt-5 text-2xl font-semibold">{s.title}</h3>
+            <p class="text-muted-foreground mt-2 max-w-xs leading-relaxed">{s.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .walker {
+    position: absolute;
+    top: 0;
+    left: calc(12.5% - 1.75rem);
+    width: 3.5rem;
+    animation: walk 12s ease-in-out infinite;
+  }
+  .hop {
+    animation: hop 3s ease-in-out infinite;
+  }
+  /* Rests over each step for a moment, then moves on; the hop is synced to the moves. */
+  @keyframes walk {
+    0%,
+    15% {
+      left: calc(12.5% - 1.75rem);
+    }
+    25%,
+    40% {
+      left: calc(37.5% - 1.75rem);
+    }
+    50%,
+    65% {
+      left: calc(62.5% - 1.75rem);
+    }
+    75%,
+    90% {
+      left: calc(87.5% - 1.75rem);
+    }
+    100% {
+      left: calc(12.5% - 1.75rem);
+    }
+  }
+  @keyframes hop {
+    0%,
+    50%,
+    100% {
+      transform: translateY(0) scale(1, 1);
+    }
+    62% {
+      transform: translateY(0) scale(1.1, 0.88);
+    }
+    75% {
+      transform: translateY(-18px) scale(0.95, 1.06);
+    }
+    88% {
+      transform: translateY(0) scale(1.06, 0.94);
+    }
+  }
+</style>

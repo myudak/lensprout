@@ -1,0 +1,16 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<div class:list={['bg-card sticker overflow-hidden rounded-2xl', className]}>
+  <div class="border-outline flex items-center gap-1.5 border-b-2 px-3 py-2" aria-hidden="true">
+    <span class="bg-brand size-2.5 rounded-full"></span>
+    <span class="bg-apricot size-2.5 rounded-full"></span>
+    <span class="bg-sage size-2.5 rounded-full"></span>
+    <span class="bg-muted ml-3 h-4 flex-1 rounded-full"></span>
+  </div>
+  <slot />
+</div>

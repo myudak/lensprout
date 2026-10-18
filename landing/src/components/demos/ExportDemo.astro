@@ -1,0 +1,124 @@
+---
+// Export: an MP4 and a GIF render side by side, then both get a check mark.
+---
+
+<div class="demo stage" aria-hidden="true">
+  <div class="file">
+    <span class="tag mp4">MP4</span>
+    <div class="body">
+      <strong>demo.mp4</strong>
+      <span class="bar"><span class="fill f1"></span></span>
+    </div>
+    <span class="tick t1">✓</span>
+  </div>
+  <div class="file">
+    <span class="tag gif">GIF</span>
+    <div class="body">
+      <strong>demo.gif</strong>
+      <span class="bar"><span class="fill f2"></span></span>
+    </div>
+    <span class="tick t2">✓</span>
+  </div>
+</div>
+
+<style>
+  .stage {
+    height: 11rem;
+    border-radius: 1.25rem;
+    background: var(--tile-lilac);
+    display: grid;
+    align-content: center;
+    gap: 0.6rem;
+    padding: 1rem;
+  }
+  .file {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--card);
+    border: 2px solid var(--outline);
+    border-radius: 0.9rem;
+    padding: 0.5rem 0.7rem;
+  }
+  .tag {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    font-weight: 800;
+    font-size: 0.7rem;
+    color: var(--cream);
+  }
+  .mp4 {
+    background: var(--purple);
+  }
+  .gif {
+    background: #9e3620;
+  }
+  .body {
+    flex: 1;
+    display: grid;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+  }
+  .bar {
+    height: 0.45rem;
+    border-radius: 999px;
+    background: var(--muted);
+    overflow: hidden;
+  }
+  .fill {
+    display: block;
+    height: 100%;
+    background: var(--primary);
+    transform-origin: left;
+  }
+  .f1 {
+    animation: e-fill 5s ease-in-out infinite;
+  }
+  .f2 {
+    animation: e-fill 5s ease-in-out infinite;
+    animation-delay: 0.6s;
+  }
+  .tick {
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+  .t1 {
+    animation: e-tick 5s ease-out infinite;
+  }
+  .t2 {
+    animation: e-tick 5s ease-out infinite;
+    animation-delay: 0.6s;
+  }
+  @keyframes e-fill {
+    0% {
+      transform: scaleX(0);
+    }
+    60%,
+    100% {
+      transform: scaleX(1);
+    }
+  }
+  @keyframes e-tick {
+    0%,
+    58% {
+      transform: scale(0);
+    }
+    66% {
+      transform: scale(1.25);
+    }
+    72%,
+    100% {
+      transform: scale(1);
+    }
+  }
+</style>

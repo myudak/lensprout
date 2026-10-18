@@ -1,0 +1,44 @@
+---
+import { Logo } from '../brand/brand';
+import { NAV } from '../site';
+
+const links = [
+  ...NAV,
+  { href: '/license.txt', label: 'MIT license' },
+  { href: '/rss.xml', label: 'RSS' },
+];
+---
+
+<footer class="border-border bg-muted border-t">
+  <div
+    class="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 md:flex-row md:items-start md:justify-between"
+  >
+    <div class="max-w-sm">
+      <Logo />
+      <p class="text-muted-foreground mt-3">
+        A free, open source screen recorder for Chrome that zooms where you click and edits on your
+        device.
+      </p>
+    </div>
+    <nav aria-label="Footer">
+      <ul class="flex flex-wrap gap-x-6 gap-y-2 font-bold">
+        {
+          links.map((n) => (
+            <li>
+              <a href={n.href} class="hover:text-primary rounded underline-offset-4 hover:underline">
+                {n.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+  <div class="border-border border-t">
+    <p class="text-muted-foreground mx-auto max-w-6xl px-4 py-6 text-sm sm:px-6">
+      © 2026 Lensprout contributors, MIT license. Chrome is a trademark of Google LLC. Other product
+      names on this site belong to their owners and are used only to describe and compare. Fonts:
+      Fredoka and Nunito (SIL Open Font License).
+    </p>
+  </div>
+</footer>

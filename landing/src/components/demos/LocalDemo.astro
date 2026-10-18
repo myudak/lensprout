@@ -1,0 +1,130 @@
+---
+// Local editor: saving fills up on the device, the upload counter never moves.
+import { HugeiconsIcon } from '@hugeicons/react';
+import { LockIcon, CloudOffIcon } from '@hugeicons/core-free-icons';
+---
+
+<div class="demo stage" aria-hidden="true">
+  <div class="disk">
+    <span class="lock"><HugeiconsIcon icon={LockIcon} size={22} strokeWidth={2} /></span>
+    <div class="body">
+      <strong>Saved on this device</strong>
+      <span class="bar"><span class="fill"></span></span>
+    </div>
+    <span class="tick">✓</span>
+  </div>
+  <div class="cloud">
+    <HugeiconsIcon icon={CloudOffIcon} size={18} strokeWidth={2} />
+    Uploaded: 0 bytes
+  </div>
+</div>
+
+<style>
+  .stage {
+    position: relative;
+    height: 11rem;
+    border-radius: 1.25rem;
+    background: var(--tile-sage);
+    display: grid;
+    place-content: center;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+  .disk {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--card);
+    border: 2px solid var(--outline);
+    box-shadow: var(--shadow-sticker-sm);
+    border-radius: 1rem;
+    padding: 0.7rem 0.9rem;
+    min-width: 15rem;
+  }
+  .lock {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 0.8rem;
+    background: var(--tile-sage);
+    animation: l-lock 4s ease-in-out infinite;
+  }
+  .body {
+    flex: 1;
+    display: grid;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+  }
+  .bar {
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--muted);
+    overflow: hidden;
+  }
+  .fill {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: var(--primary);
+    transform-origin: left;
+    animation: l-fill 4s ease-in-out infinite;
+  }
+  .tick {
+    display: grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-weight: 800;
+    animation: l-tick 4s ease-out infinite;
+  }
+  .cloud {
+    display: inline-flex;
+    justify-self: center;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 800;
+    font-size: 0.8rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: var(--card);
+  }
+  @keyframes l-fill {
+    0% {
+      transform: scaleX(0);
+    }
+    60%,
+    100% {
+      transform: scaleX(1);
+    }
+  }
+  @keyframes l-tick {
+    0%,
+    58% {
+      transform: scale(0);
+    }
+    68% {
+      transform: scale(1.25);
+    }
+    76%,
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes l-lock {
+    0%,
+    60%,
+    100% {
+      transform: rotate(0);
+    }
+    65% {
+      transform: rotate(-12deg);
+    }
+    72% {
+      transform: rotate(10deg);
+    }
+  }
+</style>

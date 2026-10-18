@@ -1,0 +1,821 @@
+---
+/**
+ * Scroll story: a sticky stage shows one recording while each scroll step switches on another
+ * effect (frame, auto zoom, cursor, 3D, webcam, vertical + export). The left column names the
+ * feature and shows its settings moving. Vanilla script, no hydration: it sets data-step and the
+ * in-step progress --p on the section; CSS does the rest. Without JS it shows step 5 statically.
+ */
+import { Image } from 'astro:assets';
+import SectionHeading from '../SectionHeading.astro';
+import shot from '../../assets/screens/dashboard-demo.png';
+import face from '../../assets/webcam-face.jpg';
+
+type Row =
+  | { kind: 'slider'; label: string; from: number; to: number | 'p'; vFrom: string; vTo: string; min?: number; max?: number; unit?: string }
+  | { kind: 'segment'; label: string; options: string[]; from: number; to: number; half?: boolean }
+  | { kind: 'toggle'; label: string }
+  | { kind: 'chips'; label: string; chips: string[] };
+
+const STEPS: { title: string; body: string; card: string; rows: Row[] }[] = [
+  {
+    title: 'Start with a plain capture',
+    body: 'This is the raw recording, exactly as captured. Lensprout keeps it untouched: everything that follows is an edit you can change or undo.',
+    card: 'Recording',
+    rows: [{ kind: 'chips', label: 'Source', chips: ['Original', 'Kept as captured'] }],
+  },
+  {
+    title: 'Frame it your way',
+    body: 'Add a background, padding, rounded corners and a shadow. Every value previews live.',
+    card: 'Style',
+    rows: [
+      { kind: 'slider', label: 'Padding', from: 0, to: 0.62, vFrom: '0%', vTo: '12%' },
+      { kind: 'slider', label: 'Roundness', from: 0, to: 0.5, vFrom: '0 px', vTo: '24 px' },
+      { kind: 'segment', label: 'Shadow', options: ['None', 'Light', 'Medium'], from: 0, to: 2 },
+    ],
+  },
+  {
+    title: 'Zooms that follow your clicks',
+    body: 'You clicked “3 months”, so the view glides in on it and follows the cursor. No keyframes to place by hand.',
+    card: 'Zoom',
+    rows: [
+      { kind: 'slider', label: 'Depth', from: 0, to: 0.53, vFrom: '1.0×', vTo: '1.8×' },
+      { kind: 'toggle', label: 'Follow cursor' },
+    ],
+  },
+  {
+    title: 'A cursor you can actually see',
+    body: 'A larger overlay cursor, a soft highlight and a click pulse make every action easy to follow. Click and key sounds are optional.',
+    card: 'Cursor',
+    rows: [
+      { kind: 'slider', label: 'Size', from: 0.2, to: 0.7, vFrom: '1.0×', vTo: '1.6×' },
+      { kind: 'toggle', label: 'Highlight' },
+      { kind: 'toggle', label: 'Click sounds' },
+    ],
+  },
+  {
+    title: 'Put it on a 3D stage',
+    body: 'Tilt, orbit, dolly or swing the shot in 3D. Here your scroll turns it; in the editor, each zoom can.',
+    card: 'Stage',
+    rows: [
+      { kind: 'segment', label: 'Stage', options: ['Flat', '3D'], from: 0, to: 1 },
+      { kind: 'slider', label: 'Turn', from: 0, to: 'p', vFrom: '0°', vTo: '', min: -14, max: 14, unit: '°' },
+      { kind: 'slider', label: 'Lean', from: 0, to: 'p', vFrom: '0°', vTo: '', min: 10, max: 2, unit: '°' },
+    ],
+  },
+  {
+    title: 'Bring your face in',
+    body: 'Your webcam is recorded separately, so you can change its layout any time: picture in picture, then side by side.',
+    card: 'Camera',
+    rows: [
+      { kind: 'segment', label: 'Layout', options: ['Hidden', 'Picture in picture', 'Side by side'], from: 0, to: 1, half: true },
+    ],
+  },
+  {
+    title: 'Go vertical, then export',
+    body: 'Fill a 9:16 frame that pans with the cursor, then export an MP4 or a GIF, rendered on your device.',
+    card: 'Output',
+    rows: [
+      { kind: 'segment', label: 'Aspect', options: ['16:9', '9:16'], from: 0, to: 1 },
+      { kind: 'chips', label: 'Export', chips: ['MP4', 'GIF'] },
+    ],
+  },
+];
+---
+
+<section id="story" aria-labelledby="story-title" class="story relative py-20 sm:py-24" data-step="5" style="--p:0.5">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <SectionHeading
+      id="story-title"
+      eyebrow="See it change"
+      lead="Scroll to switch on one effect at a time, the same way you would in the editor."
+    >
+      One recording, <span class="text-primary">every effect</span>
+    </SectionHeading>
+
+    <div class="story-grid">
+      <!-- Sticky stage -->
+      <div class="stage-col">
+        <div class="stage sticker" aria-hidden="true">
+          <div class="bg"></div>
+          <div class="persp">
+            <div class="win">
+              <div class="zoom">
+                <Image
+                  src={shot}
+                  alt=""
+                  widths={[800, 1280, 1800]}
+                  sizes="(min-width: 1024px) 680px, 100vw"
+                  loading="lazy"
+                />
+                <div class="cursor">
+                  <span class="halo"></span>
+                  <span class="ripple"></span>
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M4 2.5l15 8.2-6.6 1.6 3.7 7-2.9 1.5-3.7-7L4.6 18.6z"
+                      fill="#fff"
+                      stroke="#1f1a2e"
+                      stroke-width="1.6"
+                      stroke-linejoin="round"></path>
+                  </svg>
+                  <span class="tick">tick!</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cam">
+            <Image src={face} alt="" width={250} height={250} loading="lazy" />
+          </div>
+          <div class="crop"><b>9:16</b></div>
+          <div class="export">
+            <span class="chip">MP4 <i class="bar"><i></i></i> <i class="done">✓</i></span>
+            <span class="chip">GIF <i class="bar"><i></i></i> <i class="done">✓</i></span>
+          </div>
+          <span class="badge">Before</span>
+        </div>
+        <ol class="rail" aria-label="Story steps">
+          {
+            STEPS.map((s, i) => (
+              <li>
+                <a href={`#story-step-${i + 1}`} data-rail={i + 1} aria-label={`Step ${i + 1}: ${s.title}`}>
+                  <span />
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <!-- Steps -->
+      <div class="steps">
+        {
+          STEPS.map((s, i) => (
+            <article id={`story-step-${i + 1}`} class="story-step" data-index={i + 1}>
+              <div class="step-inner">
+                <p class="text-accent-foreground text-sm font-extrabold tracking-widest uppercase">
+                  Step {i + 1}
+                </p>
+                <h3 class="mt-1 text-2xl font-semibold sm:text-3xl">{s.title}</h3>
+                <p class="text-muted-foreground mt-2 leading-relaxed">{s.body}</p>
+                <div class="card bg-card sticker-sm mt-5 rounded-2xl" aria-hidden="true">
+                  <p class="card-title font-heading">{s.card}</p>
+                  {s.rows.map((r) => (
+                    <div class="row">
+                      {r.kind === 'slider' && (
+                        <>
+                          <div class="row-head">
+                            <span>{r.label}</span>
+                            {r.to === 'p' ? (
+                              <span data-p-value data-min={r.min} data-max={r.max} data-unit={r.unit}>
+                                {r.vFrom}
+                              </span>
+                            ) : (
+                              <span>
+                                <span class="v-from">{r.vFrom}</span>
+                                <span class="v-to">{r.vTo}</span>
+                              </span>
+                            )}
+                          </div>
+                          <div class="track">
+                            <span
+                              class:list={['fill', r.to === 'p' && 'fill-p']}
+                              style={`--from:${r.from};--to:${r.to === 'p' ? 0 : r.to}`}
+                            />
+                          </div>
+                        </>
+                      )}
+                      {r.kind === 'segment' && (
+                        <>
+                          <div class="row-head">
+                            <span>{r.label}</span>
+                          </div>
+                          <div class="seg">
+                            {r.options.map((o, oi) => (
+                              <span
+                                class:list={[
+                                  oi === r.from && 'seg-from',
+                                  oi === r.to && 'seg-to',
+                                  r.half && oi === r.to + 1 && 'seg-half',
+                                ]}
+                              >
+                                {o}
+                              </span>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                      {r.kind === 'toggle' && (
+                        <div class="row-head">
+                          <span>{r.label}</span>
+                          <span class="toggle">
+                            <span />
+                          </span>
+                        </div>
+                      )}
+                      {r.kind === 'chips' && (
+                        <div class="row-head">
+                          <span>{r.label}</span>
+                          <span class="chips">
+                            {r.chips.map((c) => (
+                              <span>{c}</span>
+                            ))}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const section = document.getElementById('story');
+  if (section) {
+    const steps = [...section.querySelectorAll<HTMLElement>('.story-step')];
+    const rails = [...section.querySelectorAll<HTMLElement>('[data-rail]')];
+    const pValues = [...section.querySelectorAll<HTMLElement>('[data-p-value]')];
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const wide = window.matchMedia('(min-width: 1024px)');
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const vh = window.innerHeight;
+      // The trigger line sits mid-screen on desktop, below the sticky stage on phones.
+      const line = vh * (wide.matches ? 0.5 : 0.72);
+      let active = 0;
+      let p = 0;
+      steps.forEach((el, i) => {
+        const r = el.getBoundingClientRect();
+        if (r.top <= line) {
+          active = i;
+          p = Math.min(1, Math.max(0, (line - r.top) / r.height));
+        }
+      });
+      if (still) p = 0.5;
+      section.dataset.step = String(active + 1);
+      section.dataset.half = p >= 0.5 ? '1' : '0';
+      section.style.setProperty('--p', p.toFixed(3));
+      steps.forEach((el, i) => el.classList.toggle('is-active', i === active));
+      rails.forEach((el, i) => el.classList.toggle('is-active', i <= active));
+      for (const v of pValues) {
+        const min = Number(v.dataset.min);
+        const max = Number(v.dataset.max);
+        v.textContent = `${Math.round(min + (max - min) * p)}${v.dataset.unit ?? ''}`;
+      }
+    };
+    const schedule = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    update();
+  }
+</script>
+
+<style>
+  .story-grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 1024px) {
+    .story-grid {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: 3.5rem;
+    }
+    .stage-col {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .steps {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+
+  /* ---- Sticky stage ---- */
+  .stage-col {
+    position: sticky;
+    top: 4.5rem;
+    z-index: 5;
+    align-self: start;
+    padding: 0.5rem 0 0.75rem;
+    background: var(--background);
+  }
+  @media (min-width: 1024px) {
+    .stage-col {
+      top: max(5rem, calc(50vh - 15rem));
+      background: none;
+      padding: 0;
+    }
+  }
+  .stage {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    max-height: 42vh;
+    margin: 0 auto;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: #ece4d6;
+    isolation: isolate;
+  }
+  @media (min-width: 1024px) {
+    .stage {
+      max-height: none;
+    }
+  }
+  .bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    background:
+      radial-gradient(60% 80% at 15% 20%, #ff8965 0%, transparent 60%),
+      radial-gradient(55% 70% at 85% 30%, #fabd62 0%, transparent 60%),
+      radial-gradient(70% 90% at 70% 100%, #6b4fa8 0%, transparent 65%),
+      linear-gradient(135deg, #e86a47, #453d70);
+    transition: opacity 0.6s ease;
+  }
+  .persp {
+    position: absolute;
+    inset: 0;
+    perspective: 1100px;
+    display: grid;
+    place-items: center;
+  }
+  .win {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition:
+      transform 0.7s cubic-bezier(0.3, 0.7, 0.3, 1),
+      border-radius 0.5s,
+      box-shadow 0.5s,
+      border-width 0.5s;
+    border: 0 solid #26203a;
+  }
+  .zoom {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    transform-origin: 66.5% 42%;
+    transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+    background: #fff;
+  }
+  .zoom :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Cursor (inside the zoomed layer so it zooms with the page) */
+  .cursor {
+    position: absolute;
+    left: 38%;
+    top: 74%;
+    width: 2.6%;
+    opacity: 0;
+    transition:
+      left 0.8s cubic-bezier(0.65, 0, 0.35, 1),
+      top 0.8s cubic-bezier(0.65, 0, 0.35, 1),
+      opacity 0.3s,
+      transform 0.4s;
+    transform-origin: 0 0;
+  }
+  .cursor svg {
+    position: relative;
+    width: 100%;
+    filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.3));
+  }
+  .halo,
+  .ripple {
+    position: absolute;
+    left: -110%;
+    top: -110%;
+    width: 220%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    opacity: 0;
+  }
+  .halo {
+    background: rgb(250 189 98 / 0.55);
+    transition: opacity 0.4s;
+  }
+  .ripple {
+    border: 2px solid #e86a47;
+  }
+  .tick {
+    position: absolute;
+    left: 140%;
+    top: -120%;
+    font: 800 0.6rem/1 var(--font-sans);
+    white-space: nowrap;
+    padding: 0.2rem 0.4rem;
+    border-radius: 999px;
+    background: #453d70;
+    color: #fff4e5;
+    opacity: 0;
+  }
+
+  /* Webcam bubble */
+  .cam {
+    position: absolute;
+    right: 4%;
+    bottom: 6%;
+    width: 19%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 6px 18px rgb(0 0 0 / 0.25);
+    background: #f8dccd;
+    overflow: hidden;
+    transform: scale(0);
+    transform-origin: 80% 80%;
+    transition:
+      transform 0.6s cubic-bezier(0.3, 1.4, 0.4, 1),
+      width 0.7s cubic-bezier(0.3, 0.7, 0.3, 1),
+      border-radius 0.7s,
+      right 0.7s,
+      bottom 0.7s;
+  }
+  .cam :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.12);
+  }
+
+  /* 9:16 crop and export */
+  .crop {
+    position: absolute;
+    top: 3%;
+    bottom: 3%;
+    left: calc(22% + var(--p) * 30%);
+    aspect-ratio: 9 / 16;
+    border: 3px solid #fff;
+    border-radius: 0.8rem;
+    box-shadow: 0 0 0 999px rgb(30 25 48 / 0.6);
+    display: grid;
+    place-items: end center;
+    padding-bottom: 0.4rem;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .crop b {
+    font: 800 0.7rem/1 var(--font-sans);
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    background: #fff4e5;
+    color: #453d70;
+  }
+  .export {
+    position: absolute;
+    left: 3%;
+    top: 4%;
+    display: grid;
+    gap: 0.35rem;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition:
+      opacity 0.4s,
+      transform 0.4s;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.55rem;
+    border-radius: 0.6rem;
+    background: #fff4e5;
+    color: #453d70;
+    font: 800 0.7rem/1 var(--font-sans);
+    font-style: normal;
+  }
+  .bar {
+    display: inline-block;
+    width: 3.5rem;
+    height: 0.35rem;
+    border-radius: 999px;
+    background: #e7dcce;
+    overflow: hidden;
+  }
+  .bar i {
+    display: block;
+    height: 100%;
+    width: calc(var(--p) * 100%);
+    background: #b94025;
+  }
+  .done {
+    font-style: normal;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .story[data-half='1'] .done {
+    opacity: 1;
+  }
+  .badge {
+    position: absolute;
+    left: 3%;
+    bottom: 5%;
+    font: 800 0.7rem/1 var(--font-sans);
+    padding: 0.3rem 0.6rem;
+    border-radius: 999px;
+    background: #453d70;
+    color: #fff4e5;
+    transition: opacity 0.4s;
+  }
+
+  /* Progress rail */
+  .rail {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+    margin-top: 0.6rem;
+  }
+  .rail a {
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+  }
+  .rail a span {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--border);
+    transition:
+      background 0.3s,
+      transform 0.3s;
+  }
+  .rail a.is-active span {
+    background: var(--primary);
+    transform: scale(1.2);
+  }
+
+  /* ---- Step states (cumulative) ---- */
+  .story:not([data-step='1']) .bg {
+    opacity: 1;
+  }
+  .story:not([data-step='1']) .badge {
+    opacity: 0;
+  }
+  .story:not([data-step='1']) .win {
+    transform: scale(0.8);
+    border-radius: 1rem;
+    box-shadow: 0 24px 50px rgb(20 10 40 / 0.45);
+  }
+  .story[data-step='3'] .zoom {
+    transform: scale(1.8);
+  }
+  .story:not([data-step='1']):not([data-step='2']) .cursor {
+    left: 66.5%;
+    top: 42%;
+    opacity: 1;
+  }
+  .story[data-step='3'] .ripple {
+    animation: story-ripple 2.2s 0.8s ease-out infinite;
+  }
+  .story[data-step='4'] .cursor,
+  .story[data-step='5'] .cursor,
+  .story[data-step='6'] .cursor,
+  .story[data-step='7'] .cursor {
+    transform: scale(1.6);
+  }
+  .story[data-step='4'] .halo,
+  .story[data-step='5'] .halo,
+  .story[data-step='6'] .halo,
+  .story[data-step='7'] .halo {
+    opacity: 1;
+  }
+  .story[data-step='4'] .ripple {
+    animation: story-ripple 1.6s ease-out infinite;
+  }
+  .story[data-step='4'] .tick {
+    animation: story-tick 1.6s ease-out infinite;
+  }
+  /* 3D stage: no device frame, zoomed in close so the tilt reads as a camera move. */
+  .story[data-step='5'] .win {
+    transform: scale(calc(1.05 + var(--p) * 0.2)) rotateY(calc(-24deg + var(--p) * 48deg))
+      rotateX(calc(14deg - var(--p) * 8deg));
+    transition-duration: 0.25s;
+  }
+  .story[data-step='6'] .win {
+    transform: scale(0.95) rotateY(-14deg) rotateX(8deg);
+  }
+  .story[data-step='6'] .cam,
+  .story[data-step='7'] .cam {
+    transform: scale(1);
+  }
+  .story[data-step='6'][data-half='1'] .win {
+    transform: translateX(-16%) scale(0.72) rotateY(-12deg) rotateX(6deg);
+  }
+  .story[data-step='6'][data-half='1'] .cam {
+    width: 34%;
+    right: 5%;
+    bottom: 20%;
+  }
+  .story[data-step='7'] .win {
+    transform: scale(0.8);
+  }
+  .story[data-step='7'] .cursor {
+    left: calc(30% + var(--p) * 40%);
+    top: calc(55% - var(--p) * 15%);
+    transition-duration: 0.2s;
+  }
+  .story[data-step='7'] .cam {
+    width: 12%;
+  }
+  .story[data-step='7'] .crop,
+  .story[data-step='7'] .export {
+    opacity: 1;
+    transform: none;
+  }
+  @keyframes story-ripple {
+    0% {
+      opacity: 1;
+      transform: scale(0.3);
+    }
+    60%,
+    100% {
+      opacity: 0;
+      transform: scale(1.6);
+    }
+  }
+  @keyframes story-tick {
+    0%,
+    10% {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    20%,
+    70% {
+      opacity: 1;
+      transform: none;
+    }
+    90%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /* ---- Steps column ---- */
+  .story-step {
+    display: flex;
+    align-items: center;
+    min-height: 62vh;
+    padding: 1rem 0;
+  }
+  @media (min-width: 1024px) {
+    .story-step {
+      min-height: 85vh;
+    }
+  }
+  /* The active step gets a coral bar and slides in a little; text keeps full contrast. */
+  .step-inner {
+    max-width: 28rem;
+    padding-left: 1.1rem;
+    border-left: 4px solid var(--border);
+    transition:
+      border-color 0.4s,
+      transform 0.4s;
+  }
+  .story-step.is-active .step-inner {
+    border-left-color: var(--brand);
+    transform: translateX(0.35rem);
+  }
+  .card {
+    padding: 1rem 1.1rem;
+  }
+  .card-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+  .row + .row {
+    margin-top: 0.75rem;
+  }
+  .row-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .row-head > span:last-child {
+    color: var(--muted-foreground);
+    font-variant-numeric: tabular-nums;
+  }
+  .track {
+    margin-top: 0.4rem;
+    height: 0.4rem;
+    border-radius: 999px;
+    background: var(--muted);
+    overflow: hidden;
+  }
+  .fill {
+    display: block;
+    height: 100%;
+    width: calc(var(--from) * 100%);
+    border-radius: inherit;
+    background: var(--primary);
+    transition: width 0.8s cubic-bezier(0.3, 0.7, 0.3, 1);
+  }
+  .story-step.is-active .fill {
+    width: calc(var(--to) * 100%);
+  }
+  .story-step.is-active .fill-p {
+    width: calc(var(--p) * 100%);
+    transition-duration: 0.15s;
+  }
+  .v-to {
+    display: none;
+  }
+  .story-step.is-active .v-from {
+    display: none;
+  }
+  .story-step.is-active .v-to {
+    display: inline;
+  }
+  .seg {
+    display: flex;
+    gap: 0.25rem;
+    margin-top: 0.4rem;
+    padding: 0.2rem;
+    border-radius: 0.8rem;
+    background: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .seg span {
+    flex: 1;
+    text-align: center;
+    padding: 0.3rem 0.4rem;
+    border-radius: 0.6rem;
+    color: var(--muted-foreground);
+    transition:
+      background 0.3s,
+      color 0.3s;
+  }
+  .story-step:not(.is-active) .seg-from,
+  .story-step.is-active .seg-to {
+    background: var(--card);
+    color: var(--foreground);
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+  :global(.story[data-half='1']) .story-step.is-active .seg:has(.seg-half) .seg-to {
+    background: none;
+    color: var(--muted-foreground);
+    box-shadow: none;
+  }
+  :global(.story[data-half='1']) .story-step.is-active .seg-half {
+    background: var(--card);
+    color: var(--foreground);
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+  .toggle {
+    display: inline-block;
+    width: 2.2rem;
+    height: 1.25rem;
+    padding: 0.15rem;
+    border-radius: 999px;
+    background: var(--muted);
+    border: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+  .toggle span {
+    display: block;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 50%;
+    background: var(--card);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
+    transition: transform 0.3s;
+  }
+  .story-step.is-active .toggle {
+    background: var(--primary);
+  }
+  .story-step.is-active .toggle span {
+    transform: translateX(0.95rem);
+  }
+  .chips {
+    display: inline-flex;
+    gap: 0.3rem;
+  }
+  .chips span {
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--accent-foreground);
+    font-size: 0.8rem;
+  }
+</style>

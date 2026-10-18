@@ -1,0 +1,53 @@
+---
+/**
+ * A muted, looping product clip. It only plays while on screen and never under reduced motion
+ * (see the script in layouts/Base.astro), and it has a pause button (WCAG 2.2.2).
+ */
+interface Props {
+  src: string;
+  poster: string;
+  width: number;
+  height: number;
+  label: string;
+  class?: string;
+}
+const { src, poster, width, height, label, class: className = '' } = Astro.props;
+---
+
+<figure class:list={['demo-video group relative', className]}>
+  <video
+    src={src}
+    poster={poster}
+    width={width}
+    height={height}
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    aria-label={label}
+    class="block h-auto w-full"
+  >
+  </video>
+  <button
+    type="button"
+    class="demo-video-toggle bg-card/90 text-foreground absolute bottom-3 left-3 grid size-10 place-items-center rounded-full font-bold shadow-md backdrop-blur"
+    aria-label="Play video"
+  >
+    <svg class="icon-play size-4" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M4 2.5v11l9-5.5z" fill="currentColor"></path>
+    </svg>
+    <svg class="icon-pause hidden size-4" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M3.5 2.5h3v11h-3zm6 0h3v11h-3z" fill="currentColor"></path>
+    </svg>
+  </button>
+  <figcaption class="sr-only">{label}</figcaption>
+</figure>
+
+<style>
+  .demo-video.is-playing-video .icon-play {
+    display: none;
+  }
+  .demo-video.is-playing-video .icon-pause {
+    display: block;
+  }
+</style>
