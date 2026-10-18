@@ -1,3 +1,4 @@
+import { settings } from '../platform';
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
 
 export type ThemeChoice = 'light' | 'dark' | 'system';
@@ -34,30 +35,28 @@ const resolve = (theme: ThemeChoice) =>
 
 /**
  * Light/dark/system theme shared by every extension page. The choice lives in
- * chrome.storage.local so the recorder and editor stay in sync; `.dark` on <html> drives tokens.
+ * shared settings (chrome.storage.local, or localStorage in the web editor) so open pages stay in
+ * sync; `.dark` on <html> drives tokens.
  */
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setChoice] = useState<ThemeChoice>('system');
   const [font, setFontChoice] = useState<FontChoice>('fredoka');
   const [resolvedTheme, setResolved] = useState<'light' | 'dark'>(() => resolve('system'));
   useEffect(() => {
-    void chrome.storage?.local
-      ?.get([KEY, FONT_KEY])
+    void settings
+      .get([KEY, FONT_KEY])
       .then((stored) => {
         const value = stored[KEY];
         if (value === 'light' || value === 'dark' || value === 'system') setChoice(value);
         if (isFont(stored[FONT_KEY])) setFontChoice(stored[FONT_KEY]);
       })
       .catch(() => {});
-    const changed = (changes: Record<string, chrome.storage.StorageChange>, area: string) => {
+    return settings.onChanged((changes) => {
       const value = changes[KEY]?.newValue;
-      if (area === 'local' && (value === 'light' || value === 'dark' || value === 'system'))
-        setChoice(value);
+      if (value === 'light' || value === 'dark' || value === 'system') setChoice(value);
       const nextFont = changes[FONT_KEY]?.newValue;
-      if (area === 'local' && isFont(nextFont)) setFontChoice(nextFont);
-    };
-    chrome.storage?.onChanged?.addListener(changed);
-    return () => chrome.storage?.onChanged?.removeListener(changed);
+      if (isFont(nextFont)) setFontChoice(nextFont);
+    });
   }, []);
   useEffect(() => {
     const apply = () => {
@@ -76,11 +75,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [font]);
   const setFont = useCallback((next: FontChoice) => {
     setFontChoice(next);
-    void chrome.storage?.local?.set({ [FONT_KEY]: next }).catch(() => {});
+    void settings.set({ [FONT_KEY]: next }).catch(() => {});
   }, []);
   const setTheme = useCallback((next: ThemeChoice) => {
     setChoice(next);
-    void chrome.storage?.local?.set({ [KEY]: next }).catch(() => {});
+    void settings.set({ [KEY]: next }).catch(() => {});
   }, []);
   return (
     <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme, font, setFont }}>

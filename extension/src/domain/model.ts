@@ -121,8 +121,11 @@ export const CAMERA_LAYOUTS: CameraLayout[] = [
 export type WebcamArrangement = 'pip' | 'side-by-side' | 'stacked';
 export type SegmentKind = Segment['kind'];
 export const SPEEDS = [0.25, 0.5, 0.75, 1.25, 1.5, 2, 3, 4, 8];
-/** tab: tabCapture of one tab. monitor/window: desktop capture through Chrome's picker. */
-export type CaptureSource = 'tab' | 'monitor' | 'window';
+/**
+ * tab: tabCapture of one tab. monitor/window: desktop capture through Chrome's picker. file: an
+ * imported video (no input events, so no automatic zooms).
+ */
+export type CaptureSource = 'tab' | 'monitor' | 'window' | 'file';
 export type Recording = {
   id: string;
   schemaVersion: number;

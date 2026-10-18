@@ -2,6 +2,7 @@
 node_modules/
 extension/.wxt/
 extension/.output/
+extension/dist-web/
 extension/test-results/
 extension/playwright-report/
 extension/.test-profile*/

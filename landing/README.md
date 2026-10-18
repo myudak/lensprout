@@ -9,14 +9,14 @@ Stack: Astro 7 (static output, React islands), React 19, TypeScript 7, Tailwind 
 ```bash
 npm install
 npm run dev        # http://localhost:5180
-npm run build      # typecheck, then static site in dist/
+npm run build      # typecheck, static site in dist/, then the web editor in dist/editor/
 npm run preview    # serve dist/ on http://localhost:5181
 npm run check      # needs a build first: screenshots + axe + overflow checks
 ```
 
 `npm run check -- <dir>` writes full-page screenshots (light/dark × 1440 px/360 px), axe results, horizontal-overflow measurements and theme-toggle/FAQ interaction results to `<dir>` (default `screenshots/`). It uses the Playwright Chromium build; run `npx playwright install chromium` if it is missing.
 
-`dist/` uses relative asset URLs (`base: './'`), so it can be served from any static host or sub-path.
+`npm run build` also builds the web editor from `../extension` (`npm run build:web` there, installing its dependencies if needed) and copies it to `dist/editor/`, served at `/editor/`. `npm run dev` does not serve it; run `npm run dev:web` in `../extension` (http://localhost:5190/editor/) to work on it.
 
 ## Where things are
 
@@ -36,10 +36,9 @@ npm run check      # needs a build first: screenshots + axe + overflow checks
 
 ## Deploy
 
-The site is live at https://lensprout-mu.vercel.app (Vercel project `myudaks-projects/lensprout`, linked in `.vercel/`, which is gitignored). From `landing/`, with the Vercel CLI signed in:
+The site is live at https://lensprout.myudak.com (Vercel project `myudaks-projects/lensprout`, connected to the GitHub repository `myudak/lensprout`).
 
-```bash
-vercel deploy --prod
-```
-
-Vercel builds the site itself (`npm run build`). `src/site.ts` holds `SITE_URL`; change it if the domain changes. `/privacy/` is the Chrome Web Store privacy policy URL; update it whenever the extension's data handling or permissions change.
+- **Every push to `main` deploys to production.** Other branches and pull requests get preview deployments.
+- Vercel builds from the repository with Root Directory `landing` (Astro preset), so `scripts/build-editor.mjs` can reach `../extension` to build the web editor. A CLI deploy from `landing/` alone uploads only that folder and fails at the editor step; push instead.
+- `src/site.ts` holds `SITE_URL`; change it if the domain changes.
+- `/privacy/` is the Chrome Web Store privacy policy URL; update it whenever the extension's data handling or permissions change.

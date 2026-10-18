@@ -40,8 +40,22 @@ Paths are relative to `extension/`.
 | Store | `src/storage/store.ts` | IndexedDB v4 (migration in upgrade), OPFS media/webcam/backgrounds/exports, revisions, cleanup |
 | Editor | `src/ui/` | Editor state/preview, Timeline, panels (Style/Zoom/Clip/Help), ExportDialog, Library, thumbnails, icons, light theme CSS |
 | Export | `src/export/` | Module worker; Mediabunny/WebCodecs conversion with shared rendering |
+| Platform | `src/platform.ts` | What differs between extension pages and the web editor: settings storage, the active recording session, asset URLs |
+| Import | `src/capture/import-file.ts`, `seekable.ts` | A video file from disk becomes a ready recording (`source: 'file'`) and a new project; WebM is remuxed for seeking like a capture |
+| Web editor | `web/`, `vite.web.config.ts` | The library and editor built as a plain site (`npm run build:web` → `dist-web/`, base `/editor/`) |
 
-Recorder and editor are normal extension pages. There is no Chrome offscreen document, website, backend or native bridge.
+Recorder and editor are normal extension pages. There is no Chrome offscreen document, backend or native bridge.
+
+## Web editor
+
+The same library and editor also run as a website at https://lensprout.myudak.com/editor/. The landing build (`landing/scripts/build-editor.mjs`) runs `npm run build:web` in `extension/` and copies `dist-web/` to `landing/dist/editor/`.
+
+- **What differs** is confined to `src/platform.ts` (`IS_EXTENSION` is true on `chrome-extension:` pages and their workers):
+  - theme, font and style presets use `localStorage` (prefix `lensprout:`) instead of `chrome.storage.local`, with change events across tabs;
+  - there is no recording session, update notice or wallpaper pack (the web build has `publicDir` off, so the Apple and Microsoft images can never ship).
+- **Storage** is the site's own IndexedDB (`zoom-recorder`) and OPFS, separate from the extension's. Nothing is uploaded.
+- **Videos come from disk:** "Import video" (button or drag and drop) copies the file into OPFS, checks that WebCodecs can decode it, and creates the recording and project. It also works in the extension library.
+- **Imported recordings have no input events:** `source: 'file'` and `pointerTracked: false`, so there are no automatic zooms or crop suggestions. Zooms are added by hand; smart trim, styling, 3D, export and everything else work unchanged.
 
 ## Capture and lifecycle
 

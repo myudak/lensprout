@@ -1,3 +1,4 @@
+import { IS_EXTENSION } from '../platform';
 /** mm:ss.cc */
 export function formatTime(us: number) {
   const s = Math.max(0, us / 1_000_000);
@@ -16,6 +17,7 @@ export function errorText(error: unknown) {
  * (permissions) and service worker until it is reloaded in chrome://extensions.
  */
 export function staleInstall() {
+  if (!IS_EXTENSION) return false;
   const m = chrome.runtime.getManifest();
   return m.version !== __BUILD_VERSION__ || !m.permissions?.includes('desktopCapture');
 }

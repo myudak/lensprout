@@ -1316,17 +1316,20 @@ export function ZoomPanel({
             {recording.pointerTracked === false && (
               <Alert>
                 <AlertDescription className="text-xs">
-                  Cursor tracking was unavailable for this capture, so no automatic zooms exist. Add
-                  zooms manually with fixed focus.
+                  {recording.source === 'file'
+                    ? 'Imported videos carry no click or typing data, so there are no automatic zooms. Add zooms at the playhead and give each a fixed focus.'
+                    : 'Cursor tracking was unavailable for this capture, so no automatic zooms exist. Add zooms manually with fixed focus.'}
                 </AlertDescription>
               </Alert>
             )}
-            {recording.source !== 'tab' && recording.pointerTracked !== false && (
-              <p className="text-xs text-muted-foreground">
-                Screen recordings track the cursor over Chrome web pages; other apps get no
-                automatic zoom.
-              </p>
-            )}
+            {recording.source !== 'tab' &&
+              recording.source !== 'file' &&
+              recording.pointerTracked !== false && (
+                <p className="text-xs text-muted-foreground">
+                  Screen recordings track the cursor over Chrome web pages; other apps get no
+                  automatic zoom.
+                </p>
+              )}
           </Section>
           <Block>
             <p className="text-xs text-muted-foreground tabular-nums">
@@ -1354,7 +1357,9 @@ export function ClipPanel({
       ? 'Browser tab'
       : recording.source === 'window'
         ? 'Window'
-        : 'Entire screen';
+        : recording.source === 'file'
+          ? 'Imported video'
+          : 'Entire screen';
   return (
     <Inspector id="clip">
       <Section title="Trim">

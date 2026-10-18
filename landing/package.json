@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && node scripts/build-editor.mjs",
     "preview": "astro preview",
     "typecheck": "astro check",
     "favicon": "node scripts/build-favicon.ts",

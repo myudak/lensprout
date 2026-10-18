@@ -3,18 +3,18 @@
  * wallpapers/ inside the extension; release zips leave it out, so every caller must handle an
  * empty pack and a missing image.
  */
+import { IS_EXTENSION, assetUrl } from '../platform';
 export type PackWallpaper = { id: string; name: string; width: number; height: number };
 
-const url = (path: string) =>
-  typeof chrome !== 'undefined' && chrome.runtime?.getURL
-    ? chrome.runtime.getURL(`/wallpapers/${path}`)
-    : `/wallpapers/${path}`;
+const url = (path: string) => assetUrl(`wallpapers/${path}`);
 
 export const wallpaperThumbUrl = (id: string) => url(`${id}-thumb.webp`);
 
 let index: Promise<PackWallpaper[]> | undefined;
 /** The pack's wallpapers, or an empty list when this build has none. */
 export function loadWallpaperIndex(): Promise<PackWallpaper[]> {
+  // The web editor never ships the pack.
+  if (!IS_EXTENSION) return Promise.resolve([]);
   index ??= fetch(url('index.json'))
     .then((r) => (r.ok ? (r.json() as Promise<PackWallpaper[]>) : []))
     .then((list) =>

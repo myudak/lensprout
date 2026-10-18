@@ -239,9 +239,11 @@ export function CropPanel({
         <p className="text-xs leading-relaxed text-muted-foreground">
           {recording.source === 'tab'
             ? 'Tab recordings contain only the page, so there are no browser bars to remove. Drag the frame to crop anything else.'
-            : auto
-              ? 'Crop browser bars keeps just the web page you used during recording, so the video feels full screen.'
-              : 'No web page was detected in this capture. Drag the frame to crop manually.'}
+            : recording.source === 'file'
+              ? 'Imported videos have no page data, so drag the frame to crop.'
+              : auto
+                ? 'Crop browser bars keeps just the web page you used during recording, so the video feels full screen.'
+                : 'No web page was detected in this capture. Drag the frame to crop manually.'}
         </p>
         <RectEditor
           canvasRef={fullmapRef}

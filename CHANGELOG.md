@@ -2,6 +2,7 @@
 
 ## Unreleased (0.7.x)
 
+- **Web editor and video import:** the library and editor also run at https://lensprout.myudak.com/editor/. "Import video" (button or drag and drop, MP4, WebM or MOV) brings your own video into the library, in the extension too. Imported videos have no automatic zooms. The site moved to https://lensprout.myudak.com.
 - **Privacy policy** page on the landing site (`/privacy/`). The site is deployed on Vercel at https://lensprout-mu.vercel.app.
 - **Store packaging:** the release manifest no longer requests `tabCapture` (only the browser tests' tab mode uses it). `npm run zip` omits the manifest `key` (the Chrome Web Store assigns the ID), test files and the local wallpaper pack. The package is renamed `lensprout`.
 - **Wallpaper backgrounds:** an optional local pack built from your own images by `scripts/build-wallpapers.py`. It is used by preview, MP4, GIF and the 3D stage, and is never part of a release zip.

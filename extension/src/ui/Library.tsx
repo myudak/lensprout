@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type DragEvent } from 'react';
 import {
   AppWindow,
   EllipsisVertical,
@@ -6,11 +6,15 @@ import {
   Monitor,
   PanelsTopLeft,
   Pencil,
+  Plus,
+  Video,
   Search,
   Trash2,
 } from '@/src/components/app/icons';
 import { toast } from 'sonner';
-import type { Recording, Session } from '../domain/model';
+import type { Recording } from '../domain/model';
+import { IS_EXTENSION, activeSessionId } from '../platform';
+import { IMPORT_ACCEPT, importVideo } from '../capture/import-file';
 import {
   deleteRecording,
   listRecordings,
@@ -74,7 +78,8 @@ function Poster({ recording }: { recording: Recording }) {
       if (created) URL.revokeObjectURL(created);
     };
   }, [recording.id, recording.status, recording.mediaRef]);
-  const SourceIcon = recording.source === 'tab' ? AppWindow : Monitor;
+  const SourceIcon =
+    recording.source === 'tab' ? AppWindow : recording.source === 'file' ? Video : Monitor;
   return (
     <div className="relative grid aspect-[16/9] place-items-center overflow-hidden bg-gradient-to-br from-accent to-muted text-muted-foreground">
       {url ? (
@@ -231,16 +236,41 @@ export function Library() {
     [query, setQuery] = useState(''),
     [sort, setSort] = useState<Sort>('newest'),
     [pendingDelete, setPendingDelete] = useState<Recording | null>(null),
-    [confirmClear, setConfirmClear] = useState(false);
+    [confirmClear, setConfirmClear] = useState(false),
+    [importing, setImporting] = useState(false),
+    [dragging, setDragging] = useState(false);
+  const picker = useRef<HTMLInputElement>(null);
+  async function importFile(file: File | undefined) {
+    if (!file || importing) return;
+    if (!file.type.startsWith('video/') && !/.(mp4|webm|mov|m4v|mkv)$/i.test(file.name)) {
+      toast.error('Choose a video file (MP4, WebM or MOV).');
+      return;
+    }
+    setImporting(true);
+    const pending = toast.loading(`Importing “${file.name}”…`);
+    try {
+      const id = await importVideo(file);
+      toast.success('Imported', { id: pending });
+      location.search = `?project=${encodeURIComponent(id)}`;
+    } catch (e) {
+      toast.error(errorText(e), { id: pending });
+      setImporting(false);
+    }
+  }
+  const onDrop = (e: DragEvent) => {
+    e.preventDefault();
+    setDragging(false);
+    void importFile(e.dataTransfer.files[0]);
+  };
   async function refresh() {
     try {
-      const [records, stored, estimate] = await Promise.all([
+      const [records, sessionId, estimate] = await Promise.all([
         listRecordings(),
-        chrome.storage.session.get('session'),
+        activeSessionId(),
         navigator.storage.estimate(),
       ]);
       setRecordings(records);
-      setActiveId((stored.session as Session | undefined)?.id);
+      setActiveId(sessionId);
       setUsage(`${((estimate.usage ?? 0) / 1024 / 1024).toFixed(1)} MB on this device`);
     } catch (e) {
       toast.error(errorText(e));
@@ -263,7 +293,35 @@ export function Library() {
     return [...list].sort(by[sort]);
   }, [recordings, query, sort]);
   return (
-    <div className="min-h-screen">
+    <div
+      className="min-h-screen"
+      onDragOver={(e) => {
+        if (![...e.dataTransfer.types].includes('Files')) return;
+        e.preventDefault();
+        setDragging(true);
+      }}
+      onDragLeave={(e) => {
+        if (e.currentTarget === e.target) setDragging(false);
+      }}
+      onDrop={onDrop}
+    >
+      {dragging && (
+        <div className="pointer-events-none fixed inset-3 z-50 grid place-items-center rounded-2xl border-2 border-dashed border-primary bg-background/80 text-lg font-bold backdrop-blur-sm">
+          Drop a video to import it
+        </div>
+      )}
+      <input
+        ref={picker}
+        type="file"
+        accept={IMPORT_ACCEPT}
+        className="hidden"
+        aria-hidden
+        tabIndex={-1}
+        onChange={(e) => {
+          void importFile(e.target.files?.[0]);
+          e.target.value = '';
+        }}
+      />
       <AppHeader>
         <span className="hidden text-xs text-muted-foreground md:inline">{usage}</span>
         <Button variant="ghost" size="sm" onClick={() => setConfirmClear(true)}>
@@ -275,11 +333,20 @@ export function Library() {
           <div className="grid gap-1.5">
             <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Your recordings</h1>
             <p className="text-sm text-muted-foreground">
-              Click Lensprout in the toolbar (or press <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>Y</Kbd>
-              ) to record your screen or a window.
+              {IS_EXTENSION ? (
+                <>
+                  Click Lensprout in the toolbar (or press <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd>{' '}
+                  <Kbd>Y</Kbd>) to record your screen or a window, or import a video.
+                </>
+              ) : (
+                'Import a video to edit it here. It stays in this browser; nothing is uploaded.'
+              )}
             </p>
           </div>
           <div className="flex w-full flex-wrap gap-2 sm:w-auto">
+            <Button disabled={importing} onClick={() => picker.current?.click()}>
+              <Plus /> Import video
+            </Button>
             <InputGroup className="h-9 w-full sm:w-64">
               <InputGroupAddon>
                 <Search aria-hidden />
@@ -319,10 +386,24 @@ export function Library() {
               </EmptyMedia>
               <EmptyTitle className="font-heading text-xl">No recordings yet</EmptyTitle>
               <EmptyDescription>
-                Click Lensprout in the toolbar (or press <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd>{' '}
-                <Kbd>Y</Kbd>) and pick a screen or window. Clicks and typing become smooth zooms.
+                {IS_EXTENSION ? (
+                  <>
+                    Click Lensprout in the toolbar (or press <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd>{' '}
+                    <Kbd>Y</Kbd>) and pick a screen or window. Clicks and typing become smooth
+                    zooms. You can also import a video you already have.
+                  </>
+                ) : (
+                  <>
+                    Drop a video here or choose one to import (MP4, WebM or MOV). Add zooms, a
+                    background, a 3D stage and more, then export MP4 or GIF. Automatic zooms from
+                    your clicks need the Lensprout Chrome extension.
+                  </>
+                )}
               </EmptyDescription>
             </EmptyHeader>
+            <Button disabled={importing} onClick={() => picker.current?.click()}>
+              <Plus /> Import video
+            </Button>
           </Empty>
         ) : !visible.length ? (
           <Empty className="rounded-xl border border-dashed py-12">
@@ -357,8 +438,9 @@ export function Library() {
         )}
         <p className="flex items-center gap-2 text-xs text-muted-foreground">
           <PanelsTopLeft className="size-4" aria-hidden />
-          Recordings live in this extension’s browser profile. Uninstalling the extension or
-          clearing its storage removes them, so download finished videos to keep a copy.
+          {IS_EXTENSION
+            ? 'Recordings live in this extension’s browser profile. Uninstalling the extension or clearing its storage removes them, so download finished videos to keep a copy.'
+            : 'Videos and edits live in this browser’s storage for this site. Clearing site data removes them, so download finished videos to keep a copy.'}
         </p>
       </main>
       <AlertDialog open={!!pendingDelete} onOpenChange={(open) => !open && setPendingDelete(null)}>

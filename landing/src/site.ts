@@ -2,7 +2,7 @@
  * Site-wide settings. SITE_URL is the production domain (Vercel project myudaks-projects/lensprout):
  * canonical URLs, the sitemap, RSS and Open Graph tags are all built from it.
  */
-export const SITE_URL = 'https://lensprout-mu.vercel.app';
+export const SITE_URL = 'https://lensprout.myudak.com';
 export const SITE_NAME = 'Lensprout';
 /** Placeholder until the Chrome Web Store listing exists: jumps to the "get it" section. */
 export const CHROME_STORE_URL = '/#get';
@@ -19,4 +19,5 @@ export const NAV = [
   { href: '/#pricing', label: 'Pricing' },
   { href: '/#faq', label: 'FAQ' },
   { href: '/blog/', label: 'Blog' },
+  { href: '/editor/', label: 'Editor' },
 ];

@@ -1,5 +1,6 @@
 node_modules
 .output
+dist-web
 .wxt
 test-results
 playwright-report

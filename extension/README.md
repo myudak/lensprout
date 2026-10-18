@@ -49,6 +49,8 @@ A single isolated click does not zoom.
 
 ## Edit
 
+- **Import video:** the library's **Import video** button (or dropping a file on it) brings in an MP4, WebM or MOV that this browser can decode. Imports have no click or typing data, so add zooms by hand.
+- **Web editor:** the same library and editor run as a website at https://lensprout.myudak.com/editor/, for imported videos only. `npm run dev:web` serves it at http://localhost:5190/editor/ and `npm run build:web` writes `dist-web/` (the landing build copies it).
 - **Preview:** volume, frame step, jump to start/end, play, scrub, speed, loop, fullscreen. The clock shows the exported video's time, after cuts and speed changes.
 - **Timeline:**
   - **Add segment** adds Zoom, Trim (cut out), Crop, Speed, Audio, Text or Blur at the playhead; the magnifier button adds a zoom directly.

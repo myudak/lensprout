@@ -1,3 +1,4 @@
+import { settings } from '../platform';
 import { validateProject, type Project, type Recording } from './model';
 
 /**
@@ -43,13 +44,12 @@ export function applyStyle(project: Project, style: Style, recording: Recording)
 
 const KEY = 'stylePresets';
 export async function loadPresets(): Promise<PresetStore> {
-  const stored = (await chrome.storage.local.get(KEY).catch(() => ({}) as Record<string, unknown>))[
-    KEY
-  ] as Partial<PresetStore> | undefined;
+  const stored = (await settings.get([KEY]).catch(() => ({}) as Record<string, unknown>))[KEY] as
+    Partial<PresetStore> | undefined;
   return { presets: stored?.presets ?? [], defaultId: stored?.defaultId ?? null };
 }
 export async function savePresets(store: PresetStore) {
-  await chrome.storage.local.set({ [KEY]: store });
+  await settings.set({ [KEY]: store });
 }
 export const defaultPreset = (store: PresetStore) =>
   store.presets.find((p) => p.id === store.defaultId) ?? null;

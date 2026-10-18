@@ -158,7 +158,7 @@ try {
     const html = readFileSync(file, 'utf8');
     const rel = file.slice(DIST.length).replace(/\\/g, '/');
     // The demo dashboard is unlisted recording material, not a site page.
-    if (rel.startsWith('/demo/')) continue;
+    if (rel.startsWith('/demo/') || rel.startsWith('/editor/')) continue;
     const h1 = (html.match(/<h1[\s>]/g) ?? []).length;
     const title = /<title>([^<]*)<\/title>/.exec(html)?.[1] ?? '';
     const desc = /<meta name="description" content="([^"]*)"/.exec(html)?.[1] ?? '';
@@ -287,6 +287,39 @@ try {
     results.motion[`story-${scheme}-${vp}`] = story;
     if (seen.join() !== '1,3,5,7') fail(`story ${scheme} ${vp}: steps seen ${seen.join()}`);
     if (!(Number(story.pLater) > Number(story.pAtStart))) fail(`story ${scheme} ${vp}: --p did not grow in step 5`);
+    await context.close();
+  }
+
+  // 4c. Web editor: import a video, open it in the editor, export an MP4 and check the file.
+  {
+    const context = await browser.newContext({ viewport: VIEWPORTS.desktop, acceptDownloads: true });
+    const page = await context.newPage();
+    const errors = [];
+    page.on('pageerror', (e) => errors.push(String(e)));
+    await page.goto(ORIGIN + '/editor/', { waitUntil: 'networkidle' });
+    const libraryAxe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
+    await page.locator('input[type=file]').setInputFiles(resolve('scripts/fixtures/sample.mp4'));
+    await page.waitForURL(/\?project=/, { timeout: 30000 });
+    await page.getByRole('button', { name: 'Export video' }).first().waitFor({ timeout: 30000 });
+    await page.waitForTimeout(4000);
+    await page.screenshot({ path: join(outDir, 'editor-web.png') });
+    await page.getByRole('button', { name: 'Export video' }).first().click();
+    await page.getByRole('button', { name: 'Start export' }).click();
+    const link = page.getByRole('link', { name: 'Download MP4' });
+    await link.waitFor({ timeout: 120000 });
+    const [download] = await Promise.all([page.waitForEvent('download'), link.click()]);
+    const saved = join(outDir, 'editor-web-export.mp4');
+    await download.saveAs(saved);
+    const size = statSync(saved).size;
+    results.webEditor = {
+      libraryAxeViolations: libraryAxe.violations.map((v) => v.id),
+      exportedBytes: size,
+      pageErrors: errors,
+    };
+    console.log('web editor', results.webEditor);
+    if (libraryAxe.violations.length) fail(`web editor library: axe ${libraryAxe.violations.map((v) => v.id)}`);
+    if (size < 10_000) fail(`web editor export too small (${size} bytes)`);
+    if (errors.length) fail(`web editor page errors: ${errors.join(' | ')}`);
     await context.close();
   }
 

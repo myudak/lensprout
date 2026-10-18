@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+/* Explicit, so the web build (vite.web.config.ts, root web/) scans the same components. */
+@source '..';
 @import 'tw-animate-css';
 @import './shadcn-tailwind.css';
 
