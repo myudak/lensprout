@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import AnimatedMascot from '../../components/AnimatedMascot';
+import PostCard from '../../components/PostCard.astro';
+import { SITE_URL } from '../../site';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const comparisons = posts.filter((p) => p.data.kind === 'comparison');
+const guides = posts.filter((p) => p.data.kind === 'guide');
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'Lensprout blog',
+    url: SITE_URL + '/blog/',
+    blogPost: posts.map((p) => ({
+      '@type': 'BlogPosting',
+      headline: p.data.title,
+      url: `${SITE_URL}/blog/${p.id}/`,
+      datePublished: p.data.pubDate.toISOString(),
+    })),
+  },
+];
+---
+
+<Base
+  title="Lensprout blog: screen recording guides and comparisons"
+  description="How-to guides for recording your screen in Chrome with automatic zoom, plus honest, sourced comparisons with other screen recorders."
+  jsonLd={jsonLd}
+>
+  <section class="relative overflow-hidden">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+      <div class="bg-apricot/35 dark:bg-apricot/10 absolute -top-24 -right-24 size-96 rounded-full blur-3xl">
+      </div>
+    </div>
+    <div
+      class="relative mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 pt-14 pb-10 text-center sm:px-6 md:flex-row md:text-left"
+    >
+      <div class="w-24 shrink-0 sm:w-28">
+        <AnimatedMascot
+          client:load
+          interactive
+          pose="thinking"
+          className="w-full"
+          behaviors={['blink', 'look', 'follow', 'sway', 'droplets']}
+        />
+      </div>
+      <div>
+        <h1 class="text-4xl font-semibold tracking-tight sm:text-6xl">The Lensprout blog</h1>
+        <p class="text-muted-foreground mt-3 max-w-2xl text-lg">
+          Guides for making clear screen recordings in Chrome, and honest comparisons with other
+          tools. Every comparison lists its sources and the date we checked them.
+        </p>
+        <nav aria-label="Blog sections" class="mt-5 flex flex-wrap justify-center gap-2 md:justify-start">
+          <a href="#comparisons" class="bg-card sticker-sm rounded-full px-4 py-1.5 font-bold">
+            Comparisons ({comparisons.length})
+          </a>
+          <a href="#guides" class="bg-card sticker-sm rounded-full px-4 py-1.5 font-bold">
+            Guides ({guides.length})
+          </a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="comparisons" class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <h2 id="comparisons" class="mb-6 text-3xl font-semibold">Comparisons</h2>
+    <ul class="grid gap-6 md:grid-cols-2">
+      {comparisons.map((p, i) => <PostCard post={p} index={i} />)}
+    </ul>
+  </section>
+  <section aria-labelledby="guides" class="mx-auto max-w-6xl px-4 pt-6 pb-20 sm:px-6">
+    <h2 id="guides" class="mb-6 text-3xl font-semibold">Guides</h2>
+    <ul class="grid gap-6 md:grid-cols-2">
+      {guides.map((p, i) => <PostCard post={p} index={i} />)}
+    </ul>
+  </section>
+</Base>
