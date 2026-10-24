@@ -1,0 +1,15 @@
+{
+  "name": "promo-video",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "audio": "node scripts/make-audio.mjs",
+    "dev": "npx --yes hyperframes@0.8.172 preview",
+    "check": "npx --yes hyperframes@0.8.172 check",
+    "check:vertical": "node scripts/sync-vertical.mjs && cd vertical && npx --yes hyperframes@0.8.172 check",
+    "render": "npx --yes hyperframes@0.8.172 render -o out/lensprout-promo-1920x1080.mp4 --quality delivery",
+    "render:vertical": "node scripts/sync-vertical.mjs && cd vertical && npx --yes hyperframes@0.8.172 render -o ../out/lensprout-promo-1080x1920.mp4 --quality delivery",
+    "render:all": "npm run render && npm run render:vertical",
+    "publish": "npx --yes hyperframes@0.8.172 publish"
+  }
+}

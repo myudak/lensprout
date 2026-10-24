@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #s8 .ex {
+          position: absolute;
+          top: 30px;
+          width: 470px;
+          height: 540px;
+          padding: 40px 38px;
+        }
+        #s8 .ex.mp4 {
+          left: 10px;
+        }
+        #s8 .ex.gif {
+          left: 520px;
+        }
+        #s8 .fmt {
+          display: flex;
+          align-items: center;
+          gap: 18px;
+          font: 700 112px/1 var(--font-head);
+          color: var(--coral-text);
+        }
+        #s8 .gif .fmt {
+          color: var(--purple);
+        }
+        #s8 .fmt .ico {
+          width: 86px;
+          height: 86px;
+          border-radius: 24px;
+          display: grid;
+          place-items: center;
+          background: var(--coral);
+        }
+        #s8 .gif .fmt .ico {
+          background: var(--sage);
+        }
+        #s8 .chips {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-top: 34px;
+        }
+        #s8 .chips span {
+          height: 46px;
+          padding: 0 18px;
+          border-radius: 23px;
+          background: #f6ebdd;
+          font: 800 21px/46px var(--font-body);
+          color: var(--purple);
+        }
+        #s8 .prog {
+          position: absolute;
+          left: 38px;
+          right: 38px;
+          bottom: 104px;
+          height: 22px;
+          border-radius: 11px;
+          background: #f1e3d2;
+          overflow: hidden;
+        }
+        #s8 .prog i {
+          display: block;
+          width: 100%;
+          height: 100%;
+          border-radius: 11px;
+          background: var(--coral);
+          transform-origin: 0 50%;
+        }
+        #s8 .gif .prog i {
+          background: var(--purple-soft);
+        }
+        #s8 .status {
+          position: absolute;
+          left: 38px;
+          right: 38px;
+          bottom: 40px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font: 800 24px/1 var(--font-body);
+          color: var(--purple-soft);
+        }
+        #s8 .done {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          background: #4f8a52;
+          display: grid;
+          place-items: center;
+        }
+        #s8 .local {
+          position: absolute;
+          left: 50%;
+          bottom: -6px;
+          width: 560px;
+          margin-left: -280px;
+          height: 62px;
+          border-radius: 31px;
+          background: var(--purple);
+          color: var(--cream);
+          font: 800 24px/62px var(--font-body);
+          text-align: center;
+        }
+      </style>
+      <div id="s8" class="scene-root" data-composition-id="s8-export" data-duration="4">
+        <div class="scene" data-layout-allow-overlap>
+          <div class="copy">
+            <div class="kicker">
+              <span class="chip-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFF4E5" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 20h16" /></svg></span>
+              Export
+            </div>
+            <h2 class="headline">MP4 or <span class="hl">GIF</span>, your call</h2>
+            <p class="body">Up to 4K at 60 fps. What you see in the preview is what you get.</p>
+          </div>
+          <div class="stagebox">
+            <div class="stage">
+              <div class="ex mp4 card">
+                <div class="fmt"><span class="ico"><svg width="44" height="44" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="#FFF4E5" /></svg></span>MP4</div>
+                <div class="chips"><span>720p to 4K</span><span>30 or 60 fps</span><span>With audio</span></div>
+                <div class="prog"><i></i></div>
+                <div class="status"><span class="pct">0%</span><span class="done"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span></div>
+              </div>
+              <div class="ex gif card">
+                <div class="fmt"><span class="ico"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#453D70" stroke-width="2.8" stroke-linecap="round"><path d="M19 12a7 7 0 1 1-2.05-4.95M19 4v4h-4" /></svg></span>GIF</div>
+                <div class="chips"><span>480 to 960 px</span><span>10 to 20 fps</span><span>Loops</span></div>
+                <div class="prog"><i></i></div>
+                <div class="status"><span class="pct">0%</span><span class="done"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span></div>
+              </div>
+              <div class="local">Encoded on your device with WebCodecs</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (function () {
+          const q = (s) => "#s8 " + s;
+          const tl = gsap.timeline({ paused: true });
+          tl.fromTo(q(".scene"), { x: 180, opacity: 0, filter: "blur(10px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.55, ease: "power3.out" }, 0.18);
+          tl.fromTo(q(".copy > *"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.1 }, 0.15);
+          tl.fromTo(q(".ex"), { y: 90, opacity: 0, rotation: (i) => (i ? 4 : -4) }, { y: 0, opacity: 1, rotation: 0, duration: 0.7, ease: "back.out(1.5)", stagger: 0.12 }, 0.1);
+          tl.fromTo(q(".chips span"), { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)", stagger: 0.04 }, 0.55);
+          tl.fromTo(q(".local"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.45, ease: "back.out(1.8)" }, 1.0);
+          // Progress fills; the percentage reads the tween's own value, so it is seek-safe.
+          const run = (cls, t, d) => {
+            const pct = document.querySelector("#s8 " + cls + " .pct");
+            const o = { v: 0 };
+            tl.fromTo(q(cls + " .prog i"), { scaleX: 0 }, { scaleX: 1, duration: d, ease: "power1.inOut" }, t);
+            tl.fromTo(o, { v: 0 }, { v: 100, duration: d, ease: "power1.inOut", onUpdate: () => (pct.textContent = Math.round(o.v) + "%") }, t);
+            tl.fromTo(q(cls + " .done"), { scale: 0, rotation: -90 }, { scale: 1, rotation: 0, duration: 0.4, ease: "back.out(2.6)" }, t + d);
+          };
+          run(".mp4", 0.8, 1.7);
+          run(".gif", 1.0, 1.4);
+          tl.to(q(".scene"), { x: -180, opacity: 0, filter: "blur(10px)", duration: 0.36, ease: "power2.in" }, 3.5);
+          window.__timelines["s8-export"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

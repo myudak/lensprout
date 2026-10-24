@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #s2 .scene {
+          justify-content: flex-start;
+          padding-left: 200px;
+        }
+        #s2 .tag {
+          font: 600 132px/1.12 var(--font-head);
+          letter-spacing: -0.015em;
+          color: var(--purple);
+        }
+        #s2 .line {
+          display: block;
+          overflow: hidden;
+          padding: 0 30px 14px 0;
+          margin-bottom: -14px;
+        }
+        #s2 .line > .in {
+          display: block;
+        }
+        #s2 .pill {
+          position: relative;
+          display: inline-block;
+          padding: 0 34px 6px;
+          border-radius: 999px;
+          background: var(--coral-text);
+          color: var(--cream);
+        }
+        #s2 .ring {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 240px;
+          height: 240px;
+          margin: -120px 0 0 -120px;
+          border-radius: 50%;
+          border: 8px solid var(--apricot);
+          opacity: 0;
+        }
+        #s2 .click {
+          position: relative;
+          display: inline-block;
+          isolation: isolate;
+          color: var(--coral-text);
+        }
+        #s2 .underline {
+          position: absolute;
+          left: 4px;
+          right: 4px;
+          bottom: 4px;
+          height: 16px;
+          border-radius: 8px;
+          background: var(--apricot);
+          transform-origin: 0 50%;
+        }
+        #s2 .ct {
+          position: relative;
+        }
+        #s2 .cursor {
+          position: absolute;
+          left: 62%;
+          top: 52%;
+          width: 74px;
+          height: 74px;
+          z-index: 3;
+        }
+        #s2 .ripple {
+          position: absolute;
+          left: 62%;
+          top: 52%;
+          width: 160px;
+          height: 160px;
+          margin: -80px 0 0 -80px;
+          border-radius: 50%;
+          border: 6px solid var(--coral);
+          opacity: 0;
+        }
+        #s2 .eyebrow {
+          font: 800 28px/1 var(--font-body);
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: var(--coral-text);
+          margin-bottom: 30px;
+        }
+        @container (orientation: portrait) {
+          #s2 .scene {
+            justify-content: center;
+            padding: 0 60px;
+          }
+          #s2 .tag {
+            font-size: 104px;
+            text-align: center;
+          }
+          #s2 .line {
+            padding-right: 0;
+          }
+          #s2 .eyebrow {
+            text-align: center;
+          }
+        }
+      </style>
+      <div id="s2" class="scene-root" data-composition-id="s2-tagline" data-duration="4.5">
+        <div class="scene" data-layout-allow-overlap>
+          <div>
+            <div class="eyebrow"><span class="in">Screen recorder for Chrome</span></div>
+            <div class="tag">
+              <span class="line"><span class="in">Screen recordings</span></span>
+              <span class="line"><span class="in">that <span class="pill"><span class="ring"></span>zoom</span></span></span>
+              <span class="line"
+                ><span class="in"
+                  >where you
+                  <span class="click"
+                    ><span class="underline"></span><span class="ct">click.</span><span class="ripple"></span
+                    ><svg class="cursor" viewBox="0 0 24 24"><path d="M4 2.5L19.5 12.6L12.4 13.9L16.3 21.2L13.4 22.6L9.6 15.2L4.3 19.9Z" fill="#453D70" stroke="#FFF4E5" stroke-width="1.6" stroke-linejoin="round" /></svg></span
+                ></span></span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (function () {
+          const q = (s) => "#s2 " + s;
+          const tl = gsap.timeline({ paused: true });
+          // Push in from the right (the other half of the previous scene's push out).
+          tl.fromTo(q(".scene"), { x: 180, opacity: 0, filter: "blur(10px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.55, ease: "power3.out" }, 0.18);
+          tl.fromTo(q(".eyebrow"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.1);
+          tl.fromTo(q(".line > .in"), { yPercent: 105 }, { yPercent: 0, duration: 0.7, ease: "power4.out", stagger: 0.14 }, 0.15);
+          // "zoom" punches in with a lens ring.
+          tl.fromTo(q(".pill"), { scale: 1 }, { scale: 1.2, duration: 0.35, ease: "back.out(2.5)" }, 1.0);
+          tl.to(q(".pill"), { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1.55);
+          tl.fromTo(q(".ring"), { scale: 0.5, opacity: 1 }, { scale: 1.7, opacity: 0, duration: 0.7, ease: "power2.out" }, 1.0);
+          // The cursor glides in and clicks "click".
+          tl.fromTo(q(".cursor"), { x: 380, y: 260, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 0.75, ease: "power3.out" }, 1.45);
+          tl.to(q(".cursor"), { scale: 0.82, duration: 0.08, ease: "power2.in", transformOrigin: "0% 0%" }, 2.22);
+          tl.to(q(".cursor"), { scale: 1, duration: 0.18, ease: "back.out(3)", transformOrigin: "0% 0%" }, 2.3);
+          tl.fromTo(q(".ripple"), { scale: 0.2, opacity: 0.9 }, { scale: 1.6, opacity: 0, duration: 0.6, ease: "power2.out" }, 2.25);
+          tl.fromTo(q(".click"), { scale: 1 }, { scale: 1.1, duration: 0.14, ease: "power2.out", transformOrigin: "50% 80%" }, 2.25);
+          tl.to(q(".click"), { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.5)", transformOrigin: "50% 80%" }, 2.39);
+          tl.fromTo(q(".underline"), { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.out" }, 2.3);
+          // Second lens pulse while the line holds.
+          tl.fromTo(q(".ring"), { scale: 0.5, opacity: 0.8 }, { scale: 1.7, opacity: 0, duration: 0.7, ease: "power2.out", immediateRender: false }, 3.0);
+          tl.to(q(".scene"), { x: -180, opacity: 0, filter: "blur(10px)", duration: 0.36, ease: "power2.in" }, 4.0);
+          window.__timelines["s2-tagline"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

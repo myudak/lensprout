@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #s9 .scene {
+          flex-direction: row-reverse;
+        }
+        #s9 .vis {
+          position: relative;
+          flex: none;
+          width: 640px;
+          height: 640px;
+        }
+        #s9 .orb {
+          position: absolute;
+          left: 40px;
+          top: 40px;
+          width: 560px;
+          height: 560px;
+          border-radius: 50%;
+          background: radial-gradient(circle at 50% 45%, #fffbf5 0, #fde9d6 70%);
+          box-shadow: 0 40px 80px -30px rgba(69, 61, 112, 0.4);
+        }
+        #s9 .ringsvg {
+          position: absolute;
+          left: 30px;
+          top: 30px;
+          width: 580px;
+          height: 580px;
+          overflow: visible;
+        }
+        #s9 .mascot {
+          position: absolute;
+          left: 210px;
+          top: 200px;
+          width: 220px;
+          height: 216px;
+        }
+        #s9 .orbit {
+          position: absolute;
+          left: 320px;
+          top: 320px;
+          width: 0;
+          height: 0;
+        }
+        #s9 .file {
+          position: absolute;
+          width: 104px;
+          height: 74px;
+          margin: -37px 0 0 -52px;
+          border-radius: 16px;
+          display: grid;
+          place-items: center;
+          font: 800 24px/1 var(--font-body);
+          color: var(--cream);
+          box-shadow: 0 12px 24px -10px rgba(30, 25, 48, 0.45);
+        }
+        #s9 .lock {
+          position: absolute;
+          right: 62px;
+          top: 50px;
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          background: var(--purple);
+          border: 6px solid var(--cream);
+          display: grid;
+          place-items: center;
+        }
+        #s9 .cloud {
+          position: absolute;
+          left: -10px;
+          top: 6px;
+          width: 150px;
+          height: 110px;
+        }
+        #s9 .pills {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 14px;
+          margin-top: 34px;
+        }
+        #s9 .pills span {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          height: 62px;
+          padding: 0 24px 0 18px;
+          border-radius: 31px;
+          background: var(--purple);
+          color: var(--cream);
+          font: 800 26px/1 var(--font-body);
+        }
+        #s9 .copy {
+          width: 700px;
+        }
+        #s9 .headline {
+          font-size: 100px;
+        }
+        @container (orientation: portrait) {
+          #s9 .scene {
+            flex-direction: column-reverse;
+          }
+          #s9 .copy {
+            width: 940px;
+          }
+          #s9 .pills {
+            justify-content: center;
+          }
+          #s9 .headline {
+            font-size: 112px;
+          }
+        }
+      </style>
+      <div id="s9" class="scene-root" data-composition-id="s9-private" data-duration="4">
+        <div class="scene" data-layout-allow-overlap>
+          <div class="copy">
+            <div class="kicker">
+              <span class="chip-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFF4E5" stroke-width="2.4" stroke-linejoin="round"><path d="M12 2.8l7.5 3v6c0 4.6-3.2 8-7.5 9.4C7.7 19.8 4.5 16.4 4.5 11.8v-6z" /><path d="M8.6 12l2.4 2.4 4.4-4.6" stroke-linecap="round" /></svg></span>
+              Private
+            </div>
+            <h2 class="headline">Nothing <span class="hl">leaves</span> your device</h2>
+            <div class="pills">
+              <span><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FABD62" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>No account</span>
+              <span><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FABD62" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>No upload</span>
+              <span><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FABD62" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>No watermark</span>
+            </div>
+          </div>
+          <div class="vis">
+            <div class="orb"></div>
+            <svg class="ringsvg" viewBox="0 0 580 580"><circle class="ring" cx="290" cy="290" r="284" fill="none" stroke="#B94025" stroke-width="6" stroke-dasharray="18 14" stroke-linecap="round" /></svg>
+            <div class="orbit">
+              <div class="file f1" style="background: #b94025">MP4</div>
+              <div class="file f2" style="background: #5b537f">GIF</div>
+              <div class="file f3" style="background: #6f8f69"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FFF4E5" stroke-width="2.4" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3" /><path d="M15.5 10.5l6-3.5v10l-6-3.5z" /></svg></div>
+            </div>
+            <svg class="mascot" viewBox="-3 -2 108 106" aria-hidden="true">
+              <ellipse cx="51.5" cy="19" rx="12" ry="6.2" transform="rotate(55 51.5 19)" fill="#E86A47" />
+              <ellipse cx="78.2" cy="11.8" rx="12.4" ry="6.5" transform="rotate(-55 78.2 11.8)" fill="#E86A47" />
+              <ellipse cx="91.2" cy="25.3" rx="8.8" ry="5.3" transform="rotate(-25 91.2 25.3)" fill="#FABD62" />
+              <path d="M1.8 74.1C0 57.6 14.1 31.8 37.6 30.6C47.1 30.1 58.8 28.2 69.4 30.6C82.4 36.5 88.2 51.8 87.6 69.4C87.1 88.2 80 96.5 65.9 98.2C47.1 100 21.2 100 10.6 96.5C3.5 93.5 2.4 83.5 1.8 74.1Z" fill="#E86A47" />
+              <path d="M87.6 69.4C87.1 88.2 80 96.5 65.9 98.2C47.1 100 21.2 100 10.6 96.5C24 97 52 95.5 68 90C79 86 85 79 87.6 69.4Z" fill="#D4573A" opacity="0.55" />
+              <g class="eye">
+                <circle cx="48" cy="60.4" r="23.5" fill="#FFF4E5" />
+                <g class="pupil"><circle cx="57.1" cy="60.6" r="14.1" fill="#453D70" /><circle cx="61.2" cy="53.5" r="3.2" fill="#FFFFFF" /></g>
+              </g>
+              <path d="M64.1 81.8Q70 86.5 75.9 80" fill="none" stroke="#453D70" stroke-width="2.6" stroke-linecap="round" />
+            </svg>
+            <div class="lock"><svg width="58" height="58" viewBox="0 0 24 24" fill="none" stroke="#FFF4E5" stroke-width="2.4" stroke-linecap="round"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.5" fill="#FFF4E5" /><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" /></svg></div>
+            <svg class="cloud" viewBox="0 0 150 110"><path d="M40 92h70a28 28 0 0 0 0-56 38 38 0 0 0-72-6A30 30 0 0 0 40 92z" fill="none" stroke="#8A819F" stroke-width="7" stroke-linejoin="round" /><path class="slash" d="M18 102L132 8" stroke="#B94025" stroke-width="9" stroke-linecap="round" /></svg>
+          </div>
+        </div>
+      </div>
+      <script>
+        (function () {
+          const q = (s) => "#s9 " + s;
+          const tl = gsap.timeline({ paused: true });
+          // Three files on a 190 px orbit, 120° apart.
+          const R = 190;
+          const files = gsap.utils.toArray(q(".file"));
+          const orbit = { a: 0 };
+          const place = () =>
+            files.forEach((f, i) => {
+              const a = ((orbit.a + i * 120 - 90) * Math.PI) / 180;
+              gsap.set(f, { x: Math.cos(a) * R, y: Math.sin(a) * R });
+            });
+          place();
+          tl.fromTo(q(".scene"), { x: 180, opacity: 0, filter: "blur(10px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.55, ease: "power3.out" }, 0.18);
+          tl.fromTo(q(".copy > .kicker, .copy > .headline"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.1 }, 0.15);
+          tl.fromTo(q(".pills span"), { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.4, ease: "back.out(2)", stagger: 0.12 }, 0.7);
+          tl.fromTo(q(".orb"), { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, ease: "back.out(1.6)" }, 0.05);
+          tl.fromTo(q(".ringsvg"), { rotation: -90, opacity: 0 }, { rotation: 0, opacity: 1, duration: 0.9, ease: "power3.out" }, 0.15);
+          tl.to(q(".ringsvg"), { rotation: 40, duration: 3, ease: "none" }, 1.05);
+          tl.fromTo(q(".mascot"), { scale: 0, rotation: -12 }, { scale: 1, rotation: 0, duration: 0.6, ease: "back.out(2.2)" }, 0.35);
+          tl.fromTo(q(".file"), { scale: 0 }, { scale: 1, duration: 0.4, ease: "back.out(2.4)", stagger: 0.1 }, 0.55);
+          tl.fromTo(orbit, { a: 0 }, { a: 140, duration: 3.4, ease: "sine.inOut", onUpdate: place }, 0.55);
+          tl.fromTo(q(".lock"), { scale: 0, rotation: 30 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(2.6)" }, 1.0);
+          tl.to(q(".lock"), { rotation: -10, duration: 0.12, yoyo: true, repeat: 3 }, 1.55);
+          tl.fromTo(q(".cloud"), { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 1.2);
+          tl.fromTo(q(".cloud .slash"), { strokeDasharray: 150, strokeDashoffset: 150 }, { strokeDashoffset: 0, duration: 0.35, ease: "power3.out" }, 1.6);
+          tl.to(q(".pupil"), { x: -6, y: -4, duration: 0.3, ease: "power2.out" }, 1.4);
+          tl.to(q(".pupil"), { x: 0, y: 0, duration: 0.3, ease: "power2.inOut" }, 2.4);
+          tl.to(q(".eye"), { scaleY: 0.08, duration: 0.07, yoyo: true, repeat: 1, svgOrigin: "48 60.4" }, 2.9);
+          tl.to(q(".scene"), { x: -180, opacity: 0, filter: "blur(10px)", duration: 0.36, ease: "power2.in" }, 3.5);
+          window.__timelines["s9-private"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

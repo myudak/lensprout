@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #s10 .scene {
+          flex-direction: column;
+          gap: 64px;
+        }
+        #s10 .lockup {
+          display: flex;
+          align-items: center;
+          gap: 40px;
+        }
+        #s10 .mascot {
+          width: 300px;
+          height: 295px;
+          flex: none;
+          overflow: visible;
+        }
+        #s10 .wordmark {
+          display: flex;
+          font: 600 172px/1 var(--font-head);
+          letter-spacing: -0.02em;
+          padding-bottom: 18px;
+        }
+        #s10 .wordmark span {
+          display: inline-block;
+        }
+        #s10 .wordmark .a {
+          color: var(--purple);
+        }
+        #s10 .wordmark .b {
+          color: var(--coral-text);
+        }
+        #s10 .cta {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          height: 112px;
+          padding: 0 52px 0 36px;
+          border-radius: 56px;
+          background: var(--coral-text);
+          color: var(--cream);
+          font: 600 50px/1 var(--font-head);
+          box-shadow: 0 26px 50px -20px rgba(185, 64, 37, 0.7);
+        }
+        #s10 .cta .plus {
+          width: 64px;
+          height: 64px;
+          border-radius: 50%;
+          background: var(--cream);
+          display: grid;
+          place-items: center;
+        }
+        #s10 .sub {
+          margin-top: -30px;
+          font: 700 32px/1.3 var(--font-body);
+          color: var(--purple-soft);
+          text-align: center;
+        }
+        #s10 .sparkle {
+          position: absolute;
+        }
+        @container (orientation: portrait) {
+          #s10 .lockup {
+            flex-direction: column;
+            gap: 20px;
+          }
+          #s10 .mascot {
+            width: 420px;
+            height: 413px;
+          }
+          #s10 .wordmark {
+            font-size: 170px;
+          }
+          #s10 .cta {
+            font-size: 46px;
+            padding: 0 40px 0 30px;
+          }
+          #s10 .sub {
+            font-size: 38px;
+          }
+        }
+      </style>
+      <div id="s10" class="scene-root" data-composition-id="s10-outro" data-duration="5">
+        <div class="scene" data-layout-allow-overlap>
+          <div class="lockup">
+            <svg class="mascot" viewBox="-3 -2 108 106" aria-hidden="true">
+              <g class="leafL"><ellipse cx="51.5" cy="19" rx="12" ry="6.2" transform="rotate(55 51.5 19)" fill="#E86A47" /></g>
+              <g class="leafR"><ellipse cx="78.2" cy="11.8" rx="12.4" ry="6.5" transform="rotate(-55 78.2 11.8)" fill="#E86A47" /></g>
+              <ellipse cx="91.2" cy="25.3" rx="8.8" ry="5.3" transform="rotate(-25 91.2 25.3)" fill="#FABD62" />
+              <path d="M1.8 74.1C0 57.6 14.1 31.8 37.6 30.6C47.1 30.1 58.8 28.2 69.4 30.6C82.4 36.5 88.2 51.8 87.6 69.4C87.1 88.2 80 96.5 65.9 98.2C47.1 100 21.2 100 10.6 96.5C3.5 93.5 2.4 83.5 1.8 74.1Z" fill="#E86A47" />
+              <path d="M87.6 69.4C87.1 88.2 80 96.5 65.9 98.2C47.1 100 21.2 100 10.6 96.5C24 97 52 95.5 68 90C79 86 85 79 87.6 69.4Z" fill="#D4573A" opacity="0.55" />
+              <g class="idle">
+                <g class="eye">
+                  <circle cx="48" cy="60.4" r="23.5" fill="#FFF4E5" />
+                  <circle cx="57.1" cy="60.6" r="14.1" fill="#453D70" />
+                  <circle cx="61.2" cy="53.5" r="3.2" fill="#FFFFFF" />
+                </g>
+                <path d="M64.1 81.8Q70 86.5 75.9 80" fill="none" stroke="#453D70" stroke-width="2.6" stroke-linecap="round" />
+              </g>
+              <!-- Success pose from mascot-shapes.ts: happy closed eye, wide smile, two sparkles. -->
+              <g class="happy">
+                <path d="M34 63Q48 46 62 63" fill="none" stroke="#453D70" stroke-width="5.5" stroke-linecap="round" />
+                <path d="M60 80Q70 90 80 79" fill="none" stroke="#453D70" stroke-width="3" stroke-linecap="round" />
+                <path class="hs" d="M14 35Q14.9 39.1 19 40Q14.9 40.9 14 45Q13.1 40.9 9 40Q13.1 39.1 14 35Z" fill="#FABD62" />
+                <path class="hs" d="M96 48Q96.7 51.3 100 52Q96.7 52.7 96 56Q95.3 52.7 92 52Q95.3 51.3 96 48Z" fill="#FABD62" />
+              </g>
+            </svg>
+            <div class="wordmark">
+              <span class="a">L</span><span class="a">e</span><span class="a">n</span><span class="a">s</span><span class="b">p</span><span class="b">r</span><span class="b">o</span><span class="b">u</span><span class="b">t</span>
+            </div>
+          </div>
+          <div class="cta">
+            <span class="plus"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B94025" stroke-width="3.4" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg></span>
+            Free on the Chrome Web Store
+          </div>
+          <div class="sub">Screen recordings that zoom where you click</div>
+        </div>
+        <svg class="sparkle sp1" viewBox="-10 -10 20 20" style="left: 14%; top: 18%; width: 74px; height: 74px"><path d="M0 -9Q1.6 -1.6 9 0Q1.6 1.6 0 9Q-1.6 1.6 -9 0Q-1.6 -1.6 0 -9Z" fill="#FABD62" /></svg>
+        <svg class="sparkle sp2" viewBox="-10 -10 20 20" style="right: 13%; top: 24%; width: 56px; height: 56px"><path d="M0 -9Q1.6 -1.6 9 0Q1.6 1.6 0 9Q-1.6 1.6 -9 0Q-1.6 -1.6 0 -9Z" fill="#E86A47" /></svg>
+        <svg class="sparkle sp3" viewBox="-10 -10 20 20" style="left: 20%; bottom: 16%; width: 52px; height: 52px"><path d="M0 -9Q1.6 -1.6 9 0Q1.6 1.6 0 9Q-1.6 1.6 -9 0Q-1.6 -1.6 0 -9Z" fill="#A6BFA0" /></svg>
+        <svg class="sparkle sp4" viewBox="-10 -10 20 20" style="right: 18%; bottom: 14%; width: 66px; height: 66px"><path d="M0 -9Q1.6 -1.6 9 0Q1.6 1.6 0 9Q-1.6 1.6 -9 0Q-1.6 -1.6 0 -9Z" fill="#FABD62" /></svg>
+      </div>
+      <script>
+        (function () {
+          const q = (s) => "#s10 " + s;
+          const tl = gsap.timeline({ paused: true });
+          tl.set(q(".happy"), { opacity: 0 }, 0);
+          tl.fromTo(q(".scene"), { x: 180, opacity: 0, filter: "blur(10px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.55, ease: "power3.out" }, 0.18);
+          tl.fromTo(q(".mascot"), { scale: 0, rotation: -15 }, { scale: 1, rotation: 0, duration: 0.7, ease: "back.out(2)", transformOrigin: "50% 90%" }, 0.1);
+          tl.fromTo(q(".leafL"), { scale: 0, svgOrigin: "58.4 28.8" }, { scale: 1, duration: 0.5, ease: "back.out(2.6)", svgOrigin: "58.4 28.8" }, 0.45);
+          tl.fromTo(q(".leafR"), { scale: 0, svgOrigin: "71.1 22" }, { scale: 1, duration: 0.5, ease: "back.out(2.6)", svgOrigin: "71.1 22" }, 0.55);
+          tl.fromTo(q(".wordmark span"), { opacity: 0, y: 70, rotation: 6 }, { opacity: 1, y: 0, rotation: 0, duration: 0.55, ease: "back.out(1.8)", stagger: 0.04 }, 0.35);
+          tl.fromTo(q(".cta"), { opacity: 0, y: 60, scale: 0.85 }, { opacity: 1, y: 0, scale: 1, duration: 0.65, ease: "back.out(1.8)" }, 0.95);
+          tl.fromTo(q(".cta .plus"), { rotation: -180, scale: 0 }, { rotation: 0, scale: 1, duration: 0.6, ease: "back.out(2)" }, 1.15);
+          tl.fromTo(q(".sub"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 1.35);
+          // Blink, then the mascot beams (success pose) as the sparkles pop.
+          tl.to(q(".eye"), { scaleY: 0.08, duration: 0.08, ease: "power2.in", svgOrigin: "48 60.4" }, 1.9);
+          tl.set(q(".idle"), { opacity: 0 }, 1.98);
+          tl.set(q(".happy"), { opacity: 1 }, 1.98);
+          tl.fromTo(q(".mascot"), { scaleY: 1 }, { scaleY: 1.08, duration: 0.14, yoyo: true, repeat: 1, ease: "power2.out", transformOrigin: "50% 90%", immediateRender: false }, 1.98);
+          tl.fromTo(q(".hs"), { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.4, ease: "back.out(3)", stagger: 0.08, transformOrigin: "50% 50%" }, 2.05);
+          tl.fromTo(q(".sparkle"), { scale: 0, rotation: -90 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(3)", stagger: 0.08 }, 2.0);
+          tl.to(q(".sparkle"), { rotation: 60, duration: 2.5, ease: "sine.inOut" }, 2.5);
+          tl.to(q(".leafL"), { rotation: -8, duration: 0.6, yoyo: true, repeat: 3, ease: "sine.inOut", svgOrigin: "58.4 28.8" }, 2.2);
+          tl.to(q(".leafR"), { rotation: 8, duration: 0.7, yoyo: true, repeat: 3, ease: "sine.inOut", svgOrigin: "71.1 22" }, 2.3);
+          tl.fromTo(q(".cta"), { scale: 1 }, { scale: 1.05, duration: 0.5, yoyo: true, repeat: 3, ease: "sine.inOut", immediateRender: false }, 2.6);
+          window.__timelines["s10-outro"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

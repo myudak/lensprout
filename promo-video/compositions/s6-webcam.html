@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #s6 .panel {
+          position: absolute;
+          inset: 0;
+          border-radius: 32px;
+          overflow: hidden;
+          background:
+            radial-gradient(circle at 20% 15%, rgba(250, 189, 98, 0.9) 0, transparent 50%),
+            radial-gradient(circle at 90% 90%, rgba(166, 191, 160, 0.95) 0, transparent 55%), #f4c9a4;
+          box-shadow: 0 40px 80px -30px rgba(69, 61, 112, 0.45);
+        }
+        #s6 .scr,
+        #s6 .camc {
+          position: absolute;
+          overflow: hidden;
+        }
+        #s6 .scr {
+          background: #fbf7f2;
+          border-radius: 18px;
+          box-shadow: 0 20px 40px -18px rgba(30, 25, 48, 0.45);
+        }
+        #s6 .scr .inner {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 920px;
+          height: 575px;
+          transform-origin: 0 0;
+        }
+        #s6 .camc {
+          position: absolute;
+          overflow: hidden;
+        }
+        #s6 .scr {
+          background: #fbf7f2;
+          border-radius: 18px;
+          box-shadow: 0 20px 40px -18px rgba(30, 25, 48, 0.45);
+        }
+        #s6 .scr .inner {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 920px;
+          height: 575px;
+          transform-origin: 0 0;
+        }
+        #s6 .scr .hdr {
+          height: 52px;
+          background: #efe6dc;
+        }
+        #s6 .scr .blk {
+          position: absolute;
+          border-radius: 14px;
+          background: #ffffff;
+          border: 2px solid #eee3d6;
+        }
+        #s6 .scr .accent {
+          background: #fde3cf;
+          border-color: #f6c7a6;
+        }
+        #s6 .camc {
+          background: radial-gradient(circle at 50% 35%, #c9d9c4 0, #8faa89 100%);
+          border: 6px solid #ffffff;
+          box-shadow: 0 20px 40px -14px rgba(30, 25, 48, 0.5);
+          display: grid;
+          place-items: center;
+        }
+        #s6 .camc svg {
+          width: 62%;
+          height: 62%;
+          overflow: visible;
+        }
+        #s6 .rec {
+          position: absolute;
+          top: 22px;
+          right: 22px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          height: 40px;
+          padding: 0 16px;
+          border-radius: 20px;
+          background: rgba(30, 25, 48, 0.8);
+          color: #fff4e5;
+          font: 800 18px/40px var(--font-body);
+        }
+        #s6 .rec i {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: var(--rec);
+        }
+        #s6 .layout {
+          position: absolute;
+          left: 50%;
+          bottom: -34px;
+          width: 420px;
+          margin-left: -210px;
+          height: 68px;
+          border-radius: 34px;
+          background: var(--purple);
+          overflow: hidden;
+        }
+        #s6 .layout span {
+          position: absolute;
+          inset: 0;
+          text-align: center;
+          font: 800 26px/68px var(--font-body);
+          color: var(--cream);
+          opacity: 0;
+        }
+      </style>
+      <div id="s6" class="scene-root" data-composition-id="s6-webcam" data-duration="5">
+        <div class="scene" data-layout-allow-overlap>
+          <div class="copy">
+            <div class="kicker">
+              <span class="chip-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFF4E5" stroke-width="2.4" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3" /><path d="M15.5 10.5l6-3.5v10l-6-3.5z" /></svg></span>
+              Webcam
+            </div>
+            <h2 class="headline">Your face, <span class="hl">your layout</span></h2>
+            <p class="body">Recorded as its own file, so you can switch layouts per segment with eased transitions.</p>
+          </div>
+          <div class="stagebox">
+            <div class="stage">
+              <div class="panel">
+                <div class="scr">
+                  <img class="inner" src="assets/demo/base.png" alt="" />
+                </div>
+                <div class="camc">
+                  <svg viewBox="-3 -2 108 106" aria-hidden="true">
+                    <g class="m-body">
+                      <ellipse cx="51.5" cy="19" rx="12" ry="6.2" transform="rotate(55 51.5 19)" fill="#E86A47" />
+                      <ellipse cx="78.2" cy="11.8" rx="12.4" ry="6.5" transform="rotate(-55 78.2 11.8)" fill="#E86A47" />
+                      <ellipse cx="91.2" cy="25.3" rx="8.8" ry="5.3" transform="rotate(-25 91.2 25.3)" fill="#FABD62" />
+                      <path d="M1.8 74.1C0 57.6 14.1 31.8 37.6 30.6C47.1 30.1 58.8 28.2 69.4 30.6C82.4 36.5 88.2 51.8 87.6 69.4C87.1 88.2 80 96.5 65.9 98.2C47.1 100 21.2 100 10.6 96.5C3.5 93.5 2.4 83.5 1.8 74.1Z" fill="#E86A47" />
+                      <path d="M87.6 69.4C87.1 88.2 80 96.5 65.9 98.2C47.1 100 21.2 100 10.6 96.5C24 97 52 95.5 68 90C79 86 85 79 87.6 69.4Z" fill="#D4573A" opacity="0.55" />
+                      <g class="m-eye">
+                        <circle cx="48" cy="60.4" r="23.5" fill="#FFF4E5" />
+                        <circle cx="57.1" cy="60.6" r="14.1" fill="#453D70" />
+                        <circle cx="61.2" cy="53.5" r="3.2" fill="#FFFFFF" />
+                      </g>
+                      <path class="m-mouth" d="M64.1 81.8Q70 86.5 75.9 80" fill="none" stroke="#453D70" stroke-width="2.6" stroke-linecap="round" />
+                    </g>
+                  </svg>
+                </div>
+                <div class="rec"><i></i>REC</div>
+              </div>
+              <div class="layout"><span class="l1">Picture in picture</span><span class="l2">Side by side</span><span class="l3">Stacked</span><span class="l4">Camera full</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (function () {
+          const q = (s) => "#s6 " + s;
+          const tl = gsap.timeline({ paused: true });
+          // Layout boxes in stage pixels (1000×640). k scales the screen content to its box.
+          const L = {
+            pip: { scr: [40, 40, 920, 560, 18], cam: [730, 360, 230, 230, 115] },
+            side: { scr: [40, 120, 560, 340, 18], cam: [620, 120, 340, 340, 28] },
+            stack: { scr: [230, 24, 540, 329, 18], cam: [340, 372, 320, 230, 28] },
+            full: { scr: [740, 440, 230, 140, 14], cam: [0, 0, 1000, 640, 0] },
+          };
+          const box = (b) => ({ left: b[0], top: b[1], width: b[2], height: b[3], borderRadius: b[4] });
+          const go = (name, t, d) => {
+            const l = L[name];
+            tl.to(q(".scr"), { ...box(l.scr), opacity: name === "full" ? 0 : 1, duration: d, ease: "power3.inOut" }, t);
+            tl.to(q(".scr .inner"), { scale: l.scr[2] / 920, duration: d, ease: "power3.inOut" }, t);
+            tl.to(q(".camc"), { ...box(l.cam), duration: d, ease: "power3.inOut" }, t);
+          };
+          const label = (cls, t) => {
+            tl.to(q(".layout span"), { opacity: 0, y: -24, duration: 0.18 }, t);
+            tl.fromTo(q(".layout " + cls), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.25, ease: "back.out(2)", immediateRender: false }, t + 0.12);
+          };
+          tl.set(q(".scr"), box(L.pip.scr), 0);
+          tl.set(q(".scr .inner"), { scale: 1 }, 0);
+          tl.set(q(".camc"), box(L.pip.cam), 0);
+          tl.set(q(".layout .l1"), { opacity: 1 }, 0);
+
+          tl.fromTo(q(".scene"), { x: 180, opacity: 0, filter: "blur(10px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.55, ease: "power3.out" }, 0.18);
+          tl.fromTo(q(".copy > *"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.1 }, 0.15);
+          tl.fromTo(q(".panel"), { y: 60, scale: 0.94 }, { y: 0, scale: 1, duration: 0.7, ease: "back.out(1.4)" }, 0.05);
+          tl.fromTo(q(".camc"), { scale: 0 }, { scale: 1, duration: 0.55, ease: "back.out(2)" }, 0.45);
+          tl.fromTo(q(".layout"), { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 0.55);
+          tl.fromTo(q(".rec i"), { opacity: 1 }, { opacity: 0.25, duration: 0.4, yoyo: true, repeat: 9, ease: "sine.inOut" }, 0.4);
+          // The mascot "talks" on camera: a little bob and blink.
+          tl.to(q(".m-body"), { y: -3, duration: 0.3, yoyo: true, repeat: 13, ease: "sine.inOut" }, 0.4);
+          tl.to(q(".m-eye"), { scaleY: 0.1, duration: 0.07, yoyo: true, repeat: 1, svgOrigin: "48 60.4" }, 2.1);
+
+          go("side", 1.25, 0.6);
+          label(".l2", 1.25);
+          go("stack", 2.2, 0.6);
+          label(".l3", 2.2);
+          go("full", 3.1, 0.6);
+          label(".l4", 3.1);
+          tl.to(q(".scene"), { x: -180, opacity: 0, filter: "blur(10px)", duration: 0.36, ease: "power2.in" }, 4.5);
+          window.__timelines["s6-webcam"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

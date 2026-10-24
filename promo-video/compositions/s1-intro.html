@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #s1 .lockup {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 46px;
+        }
+        #s1 .mascot-wrap {
+          width: 400px;
+          height: 393px;
+          flex: none;
+        }
+        #s1 .mascot-wrap svg {
+          display: block;
+          width: 100%;
+          height: 100%;
+          overflow: visible;
+        }
+        #s1 .wordmark {
+          display: flex;
+          font: 600 196px/1 var(--font-head);
+          letter-spacing: -0.02em;
+          padding-bottom: 20px;
+        }
+        #s1 .wordmark span {
+          display: inline-block;
+        }
+        #s1 .wordmark .a {
+          color: var(--purple);
+        }
+        #s1 .wordmark .b {
+          color: var(--coral-text);
+        }
+        #s1 .sparkle {
+          position: absolute;
+          width: 70px;
+          height: 70px;
+        }
+        @container (orientation: portrait) {
+          #s1 .lockup {
+            flex-direction: column;
+            gap: 30px;
+          }
+          #s1 .mascot-wrap {
+            width: 520px;
+            height: 511px;
+          }
+          #s1 .wordmark {
+            font-size: 176px;
+          }
+        }
+      </style>
+      <div id="s1" class="scene-root" data-composition-id="s1-intro" data-duration="6">
+        <div class="scene" data-layout-allow-overlap>
+          <div class="lockup">
+            <div class="mascot-wrap">
+              <svg viewBox="-3 -2 108 106" aria-hidden="true">
+                <g class="leafL"><ellipse cx="51.5" cy="19" rx="12" ry="6.2" transform="rotate(55 51.5 19)" fill="#E86A47" /></g>
+                <g class="leafR"><ellipse cx="78.2" cy="11.8" rx="12.4" ry="6.5" transform="rotate(-55 78.2 11.8)" fill="#E86A47" /></g>
+                <g class="dot"><ellipse cx="91.2" cy="25.3" rx="8.8" ry="5.3" transform="rotate(-25 91.2 25.3)" fill="#FABD62" /></g>
+                <g class="body">
+                  <path class="fill" d="M1.8 74.1C0 57.6 14.1 31.8 37.6 30.6C47.1 30.1 58.8 28.2 69.4 30.6C82.4 36.5 88.2 51.8 87.6 69.4C87.1 88.2 80 96.5 65.9 98.2C47.1 100 21.2 100 10.6 96.5C3.5 93.5 2.4 83.5 1.8 74.1Z" fill="#E86A47" />
+                  <path class="shade" d="M87.6 69.4C87.1 88.2 80 96.5 65.9 98.2C47.1 100 21.2 100 10.6 96.5C24 97 52 95.5 68 90C79 86 85 79 87.6 69.4Z" fill="#D4573A" opacity="0.55" />
+                  <path class="outline" d="M1.8 74.1C0 57.6 14.1 31.8 37.6 30.6C47.1 30.1 58.8 28.2 69.4 30.6C82.4 36.5 88.2 51.8 87.6 69.4C87.1 88.2 80 96.5 65.9 98.2C47.1 100 21.2 100 10.6 96.5C3.5 93.5 2.4 83.5 1.8 74.1Z" fill="none" stroke="#D4573A" stroke-width="2.4" stroke-linejoin="round" />
+                  <g class="eye">
+                    <circle cx="48" cy="60.4" r="23.5" fill="#FFF4E5" />
+                    <g class="pupil">
+                      <circle cx="57.1" cy="60.6" r="14.1" fill="#453D70" />
+                      <circle cx="61.2" cy="53.5" r="3.2" fill="#FFFFFF" />
+                    </g>
+                  </g>
+                  <path class="smile" d="M64.1 81.8Q70 86.5 75.9 80" fill="none" stroke="#453D70" stroke-width="2.6" stroke-linecap="round" />
+                </g>
+              </svg>
+            </div>
+            <div class="wordmark">
+              <span class="a">L</span><span class="a">e</span><span class="a">n</span><span class="a">s</span><span class="b">p</span><span class="b">r</span><span class="b">o</span><span class="b">u</span><span class="b">t</span>
+            </div>
+          </div>
+          <svg class="sparkle sp1" viewBox="-10 -10 20 20" style="left: 22%; top: 20%"><path d="M0 -9Q1.6 -1.6 9 0Q1.6 1.6 0 9Q-1.6 1.6 -9 0Q-1.6 -1.6 0 -9Z" fill="#FABD62" /></svg>
+          <svg class="sparkle sp2" viewBox="-10 -10 20 20" style="right: 18%; top: 26%; width: 52px; height: 52px"><path d="M0 -9Q1.6 -1.6 9 0Q1.6 1.6 0 9Q-1.6 1.6 -9 0Q-1.6 -1.6 0 -9Z" fill="#E86A47" /></svg>
+          <svg class="sparkle sp3" viewBox="-10 -10 20 20" style="right: 24%; bottom: 20%; width: 60px; height: 60px"><path d="M0 -9Q1.6 -1.6 9 0Q1.6 1.6 0 9Q-1.6 1.6 -9 0Q-1.6 -1.6 0 -9Z" fill="#A6BFA0" /></svg>
+        </div>
+      </div>
+      <script>
+        (function () {
+          const R = "#s1";
+          const q = (s) => R + " " + s;
+          function build() {
+            const root = document.querySelector(R);
+            const wrap = root.querySelector(".mascot-wrap");
+            const k = root.getBoundingClientRect().width / (root.offsetWidth || 1) || 1;
+            const rr = root.getBoundingClientRect();
+            const mr = wrap.getBoundingClientRect();
+            // Offset that centers the mascot on the frame before the wordmark arrives.
+            const dx = (rr.left + rr.width / 2 - (mr.left + mr.width / 2)) / k;
+            const dy = (rr.top + rr.height / 2 - (mr.top + mr.height / 2)) / k;
+
+            // Stroke lengths measured once at setup for the draw-on tweens.
+            const outline = root.querySelector(".outline");
+            const smile = root.querySelector(".smile");
+            const L1 = outline.getTotalLength();
+            const L2 = smile.getTotalLength();
+            gsap.set(outline, { strokeDasharray: L1 + " " + L1 });
+            gsap.set(smile, { strokeDasharray: L2 + " " + L2 });
+
+            const tl = gsap.timeline({ paused: true });
+            // 1. The body outline draws itself.
+            tl.fromTo(q(".outline"), { strokeDashoffset: L1 }, { strokeDashoffset: 0, duration: 0.9, ease: "power2.inOut" }, 0.15);
+            // 2. Fill floods in with a squash-and-stretch settle.
+            tl.fromTo(q(".fill"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, 0.9);
+            tl.fromTo(q(".shade"), { opacity: 0 }, { opacity: 0.55, duration: 0.3 }, 0.95);
+            tl.fromTo(q(".body"), { scaleX: 1.14, scaleY: 0.84, svgOrigin: "45 99" }, { scaleX: 1, scaleY: 1, duration: 0.9, ease: "elastic.out(1, 0.45)", svgOrigin: "45 99" }, 0.95);
+            // 3. The lens eye opens, the pupil lands, the smile draws.
+            tl.fromTo(q(".eye"), { scale: 0, svgOrigin: "48 60.4" }, { scale: 1, duration: 0.5, ease: "back.out(2.2)", svgOrigin: "48 60.4" }, 1.15);
+            tl.fromTo(q(".pupil"), { scale: 0, svgOrigin: "57.1 60.6" }, { scale: 1, duration: 0.4, ease: "back.out(2.4)", svgOrigin: "57.1 60.6" }, 1.32);
+            tl.fromTo(q(".smile"), { strokeDashoffset: L2, opacity: 0 }, { strokeDashoffset: 0, opacity: 1, duration: 0.35, ease: "power2.out" }, 1.5);
+            // 4. Sprouts grow from their base, then the apricot seed pops.
+            tl.fromTo(q(".leafL"), { scale: 0, rotation: -35, svgOrigin: "58.4 28.8" }, { scale: 1, rotation: 0, duration: 0.6, ease: "back.out(2.4)", svgOrigin: "58.4 28.8" }, 1.62);
+            tl.fromTo(q(".leafR"), { scale: 0, rotation: 35, svgOrigin: "71.1 22" }, { scale: 1, rotation: 0, duration: 0.6, ease: "back.out(2.4)", svgOrigin: "71.1 22" }, 1.78);
+            tl.fromTo(q(".dot"), { scale: 0, svgOrigin: "91.2 25.3" }, { scale: 1, duration: 0.45, ease: "back.out(3)", svgOrigin: "91.2 25.3" }, 2.0);
+            // 5. Blink.
+            const blink = (t) => {
+              tl.to(q(".eye"), { scaleY: 0.08, duration: 0.08, ease: "power2.in", svgOrigin: "48 60.4" }, t);
+              tl.to(q(".eye"), { scaleY: 1, duration: 0.14, ease: "power2.out", svgOrigin: "48 60.4" }, t + 0.08);
+            };
+            blink(2.4);
+            // 6. Mascot steps aside and the wordmark cascades in.
+            tl.fromTo(q(".mascot-wrap"), { x: dx, y: dy }, { x: 0, y: 0, duration: 0.75, ease: "power3.inOut" }, 2.75);
+            tl.fromTo(q(".wordmark span"), { opacity: 0, y: 90, rotation: 8 }, { opacity: 1, y: 0, rotation: 0, duration: 0.6, ease: "back.out(1.8)", stagger: 0.045 }, 3.0);
+            // Pupil glances at the name, then back.
+            tl.to(q(".pupil"), { x: 3.5, duration: 0.25, ease: "power2.out" }, 3.3);
+            tl.to(q(".pupil"), { x: 0, duration: 0.3, ease: "power2.inOut" }, 4.0);
+            blink(4.5);
+            // Ambient: leaves sway, sparkles twinkle.
+            tl.to(q(".leafL"), { rotation: -7, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 3, svgOrigin: "58.4 28.8" }, 2.6);
+            tl.to(q(".leafR"), { rotation: 7, duration: 0.8, ease: "sine.inOut", yoyo: true, repeat: 3, svgOrigin: "71.1 22" }, 2.7);
+            tl.fromTo(q(".sparkle"), { scale: 0, rotation: -60 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(3)", stagger: 0.12 }, 3.3);
+            tl.to(q(".sparkle"), { rotation: 45, duration: 2, ease: "sine.inOut" }, 3.9);
+            // Transition out (push left), shared by every scene.
+            tl.to(q(".scene"), { x: -180, opacity: 0, filter: "blur(10px)", duration: 0.36, ease: "power2.in" }, 5.5);
+            window.__timelines["s1-intro"] = tl;
+          }
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+          else build();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

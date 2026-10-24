@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #s4 .shot {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 1000px;
+          height: 625px;
+          border-radius: 24px;
+          overflow: hidden;
+          border: 4px solid #ffffff;
+          box-shadow: 0 40px 80px -30px rgba(69, 61, 112, 0.45);
+        }
+        #s4 .shot img {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+        #s4 .tlcard {
+          position: absolute;
+          left: 60px;
+          top: 360px;
+          width: 920px;
+          height: 290px;
+          padding: 22px 26px;
+          font-family: var(--font-body);
+        }
+        #s4 .ruler {
+          position: relative;
+          height: 34px;
+          margin-left: 60px;
+          border-bottom: 2px solid var(--line);
+        }
+        #s4 .ruler span {
+          position: absolute;
+          top: 0;
+          font: 700 16px/1 var(--font-body);
+          color: #8a819f;
+          transform: translateX(-50%);
+        }
+        #s4 .row {
+          position: relative;
+          height: 64px;
+          margin-top: 10px;
+          display: flex;
+          align-items: center;
+        }
+        #s4 .row .lbl {
+          width: 60px;
+          font: 800 16px/1 var(--font-body);
+          color: #8a819f;
+        }
+        #s4 .lane {
+          position: relative;
+          flex: 1;
+          height: 52px;
+        }
+        #s4 .seg {
+          position: absolute;
+          top: 0;
+          height: 52px;
+          border-radius: 14px;
+          border: 3px solid rgba(69, 61, 112, 0.25);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          font: 800 20px/1 var(--font-body);
+          color: var(--purple);
+          transform-origin: 0 50%;
+        }
+        #s4 .zoom {
+          background: #dcd6ef;
+        }
+        #s4 .text {
+          background: #fbe3bd;
+        }
+        #s4 .speed {
+          background: #f5d1dc;
+        }
+        #s4 .cut {
+          background: repeating-linear-gradient(-45deg, #fbd3c5 0 10px, #fff1ea 10px 20px);
+          border-color: rgba(185, 64, 37, 0.45);
+          color: var(--coral-text);
+        }
+        #s4 .blur {
+          background: #e6e2ec;
+        }
+        #s4 .playhead {
+          position: absolute;
+          left: 86px;
+          top: 26px;
+          width: 4px;
+          height: 240px;
+          background: var(--coral-text);
+          border-radius: 2px;
+        }
+        #s4 .playhead::before {
+          content: "";
+          position: absolute;
+          left: -9px;
+          top: -6px;
+          width: 22px;
+          height: 22px;
+          border-radius: 6px 6px 11px 11px;
+          background: var(--coral-text);
+        }
+      </style>
+      <div id="s4" class="scene-root" data-composition-id="s4-editor" data-duration="5">
+        <div class="scene" data-layout-allow-overlap>
+          <div class="copy">
+            <div class="kicker">
+              <span class="chip-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFF4E5" stroke-width="2.6" stroke-linecap="round"><path d="M3 7h12M3 12h18M3 17h9" /></svg></span>
+              Editor
+            </div>
+            <h2 class="headline">Edit on a <span class="hl">real</span> timeline</h2>
+            <p class="body">Zoom, trim, speed, text and blur segments across tracks, with undo and redo.</p>
+          </div>
+          <div class="stagebox">
+            <div class="stage">
+              <div class="shot"><img src="assets/screens/editor.png" alt="" /></div>
+              <div class="tlcard card">
+                <div class="ruler">
+                  <span style="left: 0%">00:00</span><span style="left: 20%">00:02</span><span style="left: 40%">00:04</span><span style="left: 60%">00:06</span><span style="left: 80%">00:08</span><span style="left: 100%">00:10</span>
+                </div>
+                <div class="row">
+                  <div class="lbl">01</div>
+                  <div class="lane"><div class="seg zoom" style="left: 18%; width: 52%">Zoom 2.0×</div></div>
+                </div>
+                <div class="row">
+                  <div class="lbl">02</div>
+                  <div class="lane">
+                    <div class="seg text" style="left: 0%; width: 27%">Text</div>
+                    <div class="seg speed" style="left: 34%; width: 28%">Speed 1.5×</div>
+                    <div class="seg cut" style="left: 64%; width: 13%">Cut</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="lbl">03</div>
+                  <div class="lane"><div class="seg blur" style="left: 66%; width: 32%">Blur</div></div>
+                </div>
+                <div class="playhead"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (function () {
+          const q = (s) => "#s4 " + s;
+          const tl = gsap.timeline({ paused: true });
+          tl.fromTo(q(".scene"), { x: 180, opacity: 0, filter: "blur(10px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.55, ease: "power3.out" }, 0.18);
+          tl.fromTo(q(".copy > *"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.1 }, 0.15);
+          tl.fromTo(q(".shot"), { y: 70, scale: 0.92, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.8, ease: "power3.out" }, 0.1);
+          tl.fromTo(q(".shot img"), { scale: 1 }, { scale: 1.06, duration: 4.4, ease: "sine.inOut", transformOrigin: "30% 30%" }, 0.1);
+          tl.fromTo(q(".tlcard"), { y: 140, opacity: 0, rotation: -2 }, { y: 0, opacity: 1, rotation: 0, duration: 0.7, ease: "back.out(1.5)" }, 0.55);
+          // Segments land on their tracks one by one.
+          tl.fromTo(q(".seg"), { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.45, ease: "back.out(1.6)", stagger: 0.16 }, 1.0);
+          // Playhead sweeps across while the cut snaps shut.
+          tl.fromTo(q(".playhead"), { x: 0 }, { x: 760, duration: 3.2, ease: "none" }, 1.1);
+          tl.to(q(".cut"), { scaleY: 0.86, duration: 0.12, yoyo: true, repeat: 1 }, 2.95);
+          tl.to(q(".zoom"), { y: -6, duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" }, 1.85);
+          tl.to(q(".scene"), { x: -180, opacity: 0, filter: "blur(10px)", duration: 0.36, ease: "power2.in" }, 4.5);
+          window.__timelines["s4-editor"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>
