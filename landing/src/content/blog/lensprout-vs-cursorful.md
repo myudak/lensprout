@@ -62,7 +62,7 @@ Cursorful's free plan is generous for personal use: auto zoom, editing, unlimite
 
 ## Availability
 
-Lensprout is not on the Chrome Web Store yet; the listing is coming soon. Cursorful is available today.
+Both are available on the Chrome Web Store ([Lensprout](https://chromewebstore.google.com/detail/lensprout/eoikohnhcikanpomopphklcicidmlkaj)).
 
 ## Verdict
 

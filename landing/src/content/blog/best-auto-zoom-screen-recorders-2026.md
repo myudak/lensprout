@@ -34,7 +34,7 @@ Yes, Lensprout is our tool. We have tried to describe the others fairly, from th
 
 ## Lensprout
 
-A Chrome extension that records your screen or a window through Chrome's picker, and turns clicks and typing on web pages into editable zooms. Everything happens on your device, every feature is free for everyone, and the code is MIT licensed. Extras include smart trim, a 3D stage with device frames, generated click and key sounds, presets, and vertical 9:16 fill. It does not have captions, share links or cursor smoothing, and its auto zoom only sees web pages in Chrome. It's coming soon to the Chrome Web Store.
+A Chrome extension that records your screen or a window through Chrome's picker, and turns clicks and typing on web pages into editable zooms. Everything happens on your device, every feature is free for everyone, and the code is MIT licensed. Extras include smart trim, a 3D stage with device frames, generated click and key sounds, presets, and vertical 9:16 fill. It does not have captions, share links or cursor smoothing, and its auto zoom only sees web pages in Chrome. It's available on the [Chrome Web Store](https://chromewebstore.google.com/detail/lensprout/eoikohnhcikanpomopphklcicidmlkaj).
 
 **Best for:** web app demos, people who can't upload recordings, and anyone who wants a free tool they can inspect.
 

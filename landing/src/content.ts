@@ -146,8 +146,8 @@ export const FAQ: { q: string; a: string }[] = [
     a: 'An MP4 video with sound, or an animated GIF (480, 720 or 960 px wide, 10 to 20 frames per second, looping or not).',
   },
   {
-    q: 'When can I install it?',
-    a: 'Lensprout is not on the Chrome Web Store yet. The listing is coming soon.',
+    q: 'How do I install it?',
+    a: 'Add Lensprout from the Chrome Web Store, then pin it to the toolbar. It works in Chrome 116 or newer.',
   },
 ];
 

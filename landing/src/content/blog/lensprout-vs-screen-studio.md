@@ -59,7 +59,7 @@ Both handle vertical output. Screen Studio offers 16:9, 1:1 and 9:16 plus a prev
 
 ## Availability
 
-Screen Studio is available now for macOS. Lensprout is coming soon to the Chrome Web Store.
+Screen Studio is available for macOS. Lensprout is available on the [Chrome Web Store](https://chromewebstore.google.com/detail/lensprout/eoikohnhcikanpomopphklcicidmlkaj).
 
 ## Verdict
 

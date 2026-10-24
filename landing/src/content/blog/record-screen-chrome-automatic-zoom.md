@@ -9,7 +9,7 @@ related: [make-gif-of-screen-in-chrome, vertical-9-16-video-from-screen-recordin
 
 A plain screen recording is hard to watch: the interesting part is a small button in a big screen, and viewers lose the mouse. Automatic zoom fixes that by moving in on each action. This guide shows how to do it in Chrome with Lensprout, from setup to export, in about five minutes.
 
-> Lensprout is coming soon to the Chrome Web Store. The steps below describe the extension as it works today.
+> Install Lensprout from the [Chrome Web Store](https://chromewebstore.google.com/detail/lensprout/eoikohnhcikanpomopphklcicidmlkaj), then follow the steps below.
 
 ## Before you start
 

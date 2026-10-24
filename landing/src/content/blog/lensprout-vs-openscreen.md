@@ -26,7 +26,7 @@ OpenScreen's README says the project is **archived and no longer maintained**, a
 | Type | Chrome extension | Desktop app (Electron) |
 | Platforms | Desktop Chrome | macOS, Windows and Linux |
 | License | MIT | MIT |
-| Status | In development; Chrome Web Store listing coming soon | Archived, no longer maintained |
+| Status | Available on the Chrome Web Store | Archived, no longer maintained |
 | Automatic zoom | From clicks and typing on web pages | Auto or manual zooms that follow the cursor |
 | Audio | Microphone mixed with system audio | Microphone and system audio (varies by OS) |
 | Webcam | Five layouts, per segment | Picture in picture with shapes and mirroring |

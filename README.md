@@ -10,7 +10,7 @@ Record your screen in Chrome, get smooth automatic zooms on every click and keys
 ![Chrome MV3](https://img.shields.io/badge/Chrome-Manifest%20V3-E86A47?logo=googlechrome&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-453D70?logo=typescript&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/license-MIT-A6BFA0)
-![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-coming%20soon-FABD62)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-add%20to%20Chrome-FABD62?logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/lensprout/eoikohnhcikanpomopphklcicidmlkaj)
 
 <a href="landing/public/media/auto-zoom-demo.mp4"><img src="docs/media/auto-zoom.gif" alt="An exported Lensprout video: the camera zooms into clicks and typing, the webcam bubble switches to side by side, and a modal tilts in 3D" width="800"></a>
 
@@ -83,7 +83,7 @@ Plain screen recordings are hard to watch: the action is tiny and the viewer has
 
 ## Install
 
-**Chrome Web Store:** coming soon.
+**Chrome Web Store:** [add Lensprout to Chrome](https://chromewebstore.google.com/detail/lensprout/eoikohnhcikanpomopphklcicidmlkaj).
 
 **From source:**
 

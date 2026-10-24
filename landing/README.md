@@ -32,7 +32,7 @@ npm run check      # needs a build first: screenshots + axe + overflow checks
 
 ## Placeholders
 
-- "Add to Chrome" links to the on-page `#get` section, which says the Chrome Web Store listing is coming soon. Set `CHROME_STORE_URL` once a listing exists.
+- "Add to Chrome" buttons use `CHROME_STORE_URL` in `src/site.ts` (the live store listing).
 
 ## Deploy
 

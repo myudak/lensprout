@@ -4,8 +4,8 @@
  */
 export const SITE_URL = 'https://lensprout.myudak.com';
 export const SITE_NAME = 'Lensprout';
-/** Placeholder until the Chrome Web Store listing exists: jumps to the "get it" section. */
-export const CHROME_STORE_URL = '/#get';
+/** The Chrome Web Store listing. */
+export const CHROME_STORE_URL = 'https://chromewebstore.google.com/detail/lensprout/eoikohnhcikanpomopphklcicidmlkaj';
 /** Placeholder until the public repository exists. */
 export const GITHUB_URL = '/#pricing';
 export const GITHUB_IS_PLACEHOLDER = true;
