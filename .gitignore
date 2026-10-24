@@ -27,3 +27,9 @@ artifacts/
 __pycache__/
 *.log
 .env*
+
+# Generated store captures and render output
+store/raw/
+store/build/
+promo-video/out/
+promo-video/CLAUDE.md
