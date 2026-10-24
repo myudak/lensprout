@@ -5,7 +5,7 @@ import SectionHeading from '../SectionHeading.astro';
 import AnimatedMascot from '../AnimatedMascot';
 import AddToChrome from '../AddToChrome.astro';
 import { INCLUDED, PRICING_TIERS } from '../../content';
-import { GITHUB_IS_PLACEHOLDER, GITHUB_URL } from '../../site';
+import { GITHUB_URL } from '../../site';
 ---
 
 <section
@@ -120,22 +120,13 @@ import { GITHUB_IS_PLACEHOLDER, GITHUB_URL } from '../../site';
       >
         Read the license
       </a>
-      {
-        GITHUB_IS_PLACEHOLDER ? (
-          <span class="bg-card inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold">
-            <HugeiconsIcon icon={Github01Icon} size={18} strokeWidth={2} />
-            Repo coming soon
-          </span>
-        ) : (
-          <a
-            href={GITHUB_URL}
-            class="bg-card inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold"
-          >
-            <HugeiconsIcon icon={Github01Icon} size={18} strokeWidth={2} />
-            GitHub
-          </a>
-        )
-      }
+      <a
+        href={GITHUB_URL}
+        class="bg-card inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold"
+      >
+        <HugeiconsIcon icon={Github01Icon} size={18} strokeWidth={2} />
+        Source on GitHub
+      </a>
     </div>
   </div>
 </section>

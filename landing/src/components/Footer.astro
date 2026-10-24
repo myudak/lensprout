@@ -1,9 +1,10 @@
 ---
 import { Logo } from '../brand/brand';
-import { NAV } from '../site';
+import { GITHUB_URL, NAV } from '../site';
 
 const links = [
   ...NAV,
+  { href: GITHUB_URL, label: 'GitHub' },
   { href: '/privacy/', label: 'Privacy policy' },
   { href: '/license.txt', label: 'MIT license' },
   { href: '/rss.xml', label: 'RSS' },
