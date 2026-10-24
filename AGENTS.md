@@ -35,9 +35,3 @@ From `landing/`: `npm ci`, `npm run dev`, `npm run build`.
   - The optional wallpaper pack (`scripts/build-wallpapers.py` → `local-assets/`) holds Apple and Microsoft images. It stays local and never ships.
   - Never copy another product's code, branding, IDs or endpoints.
 - **Scope:** cloud sharing, native apps and collaboration are out of scope unless a task asks for them.
-
-## Docs and verification
-
-- When behavior or a contract changes, update ARCHITECTURE, add a DECISIONS row, and add a line to [CHANGELOG](CHANGELOG.md).
-- Report checks exactly as they ran; record failures and skipped checks as such.
-- Project docs use repository-relative paths.
