@@ -41,7 +41,3 @@ From `landing/`: `npm ci`, `npm run dev`, `npm run build`.
 - When behavior or a contract changes, update ARCHITECTURE, add a DECISIONS row, and add a line to [CHANGELOG](CHANGELOG.md).
 - Report checks exactly as they ran; record failures and skipped checks as such.
 - Project docs use repository-relative paths.
-
-## Git
-
-Commits are authored by the repository owner only. Do not add AI co-author lines or attribution trailers to commits or pull requests.
