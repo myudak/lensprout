@@ -31,5 +31,6 @@ __pycache__/
 # Generated store captures and render output
 store/raw/
 store/build/
-promo-video/out/
-promo-video/CLAUDE.md
+
+# Promo video project: kept local only
+promo-video/
