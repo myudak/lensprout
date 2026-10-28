@@ -151,6 +151,6 @@ docs/               product spec, architecture, decisions, media
 
 ## License and credits
 
-[MIT](extension/LICENSE).
+[MIT](LICENSE).
 
 Built with [shadcn/ui](https://ui.shadcn.com), [Magic UI](https://magicui.design), [Base UI](https://base-ui.com), [Hugeicons](https://hugeicons.com), [Mediabunny](https://mediabunny.dev) and [gifenc](https://github.com/mattdesl/gifenc). Fonts are Fredoka and Nunito (OFL). Full third-party notices are generated into `extension/public/THIRD_PARTY_NOTICES.txt`.
